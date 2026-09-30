@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -228,165 +228,25 @@ class Groupcast(Cluster):
             endpoints: typing.List[uint] = field(default_factory=lambda: [])
 
     class Attributes:
-        @dataclass
-        class Membership(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
+        Membership = _attr(__module__, __qualname__, "Membership", 0x00000065, 0x00000000, "typing.Optional[typing.List[Groupcast.Structs.MembershipStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        MaxMembershipCount = _attr(__module__, __qualname__, "MaxMembershipCount", 0x00000065, 0x00000001, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[Groupcast.Structs.MembershipStruct]])
+        MaxMcastAddrCount = _attr(__module__, __qualname__, "MaxMcastAddrCount", 0x00000065, 0x00000002, "typing.Optional[uint]", None)
 
-            value: typing.Optional[typing.List[Groupcast.Structs.MembershipStruct]] = None
+        UsedMcastAddrCount = _attr(__module__, __qualname__, "UsedMcastAddrCount", 0x00000065, 0x00000003, "typing.Optional[uint]", None)
 
-        @dataclass
-        class MaxMembershipCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
+        FabricUnderTest = _attr(__module__, __qualname__, "FabricUnderTest", 0x00000065, 0x00000004, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000065, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000065, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[uint] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000065, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class MaxMcastAddrCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000065, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class UsedMcastAddrCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class FabricUnderTest(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000065
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000065, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

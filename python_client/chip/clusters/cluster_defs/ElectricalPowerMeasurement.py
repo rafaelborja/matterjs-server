@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -163,389 +163,53 @@ class ElectricalPowerMeasurement(Cluster):
             measurement: typing.Union[Nullable, int] = NullValue
 
     class Attributes:
-        @dataclass
-        class PowerMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=ElectricalPowerMeasurement.Enums.PowerModeEnum)
-
-            value: ElectricalPowerMeasurement.Enums.PowerModeEnum = 0
-
-        @dataclass
-        class NumberOfMeasurementTypes(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class Accuracy(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[Globals.Structs.MeasurementAccuracyStruct])
-
-            value: typing.List[Globals.Structs.MeasurementAccuracyStruct] = field(default_factory=lambda: [])
-
-        @dataclass
-        class Ranges(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ElectricalPowerMeasurement.Structs.MeasurementRangeStruct]])
-
-            value: typing.Optional[typing.List[ElectricalPowerMeasurement.Structs.MeasurementRangeStruct]] = None
-
-        @dataclass
-        class Voltage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class ActiveCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class ReactiveCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        PowerMode = _attr(__module__, __qualname__, "PowerMode", 0x00000090, 0x00000000, "ElectricalPowerMeasurement.Enums.PowerModeEnum", 0)
 
-            value: typing.Union[None, Nullable, int] = None
+        NumberOfMeasurementTypes = _attr(__module__, __qualname__, "NumberOfMeasurementTypes", 0x00000090, 0x00000001, "uint", 0)
 
-        @dataclass
-        class ApparentCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        Accuracy = _attr(__module__, __qualname__, "Accuracy", 0x00000090, 0x00000002, "typing.List[Globals.Structs.MeasurementAccuracyStruct]", None, "[]")
 
-            value: typing.Union[None, Nullable, int] = None
+        Ranges = _attr(__module__, __qualname__, "Ranges", 0x00000090, 0x00000003, "typing.Optional[typing.List[ElectricalPowerMeasurement.Structs.MeasurementRangeStruct]]", None)
 
-        @dataclass
-        class ActivePower(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, int])
+        Voltage = _attr(__module__, __qualname__, "Voltage", 0x00000090, 0x00000004, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[Nullable, int] = NullValue
+        ActiveCurrent = _attr(__module__, __qualname__, "ActiveCurrent", 0x00000090, 0x00000005, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class ReactivePower(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        ReactiveCurrent = _attr(__module__, __qualname__, "ReactiveCurrent", 0x00000090, 0x00000006, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        ApparentCurrent = _attr(__module__, __qualname__, "ApparentCurrent", 0x00000090, 0x00000007, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class ApparentPower(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        ActivePower = _attr(__module__, __qualname__, "ActivePower", 0x00000090, 0x00000008, "typing.Union[Nullable, int]", NullValue)
 
-            value: typing.Union[None, Nullable, int] = None
+        ReactivePower = _attr(__module__, __qualname__, "ReactivePower", 0x00000090, 0x00000009, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class RMSVoltage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        ApparentPower = _attr(__module__, __qualname__, "ApparentPower", 0x00000090, 0x0000000A, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        RMSVoltage = _attr(__module__, __qualname__, "RMSVoltage", 0x00000090, 0x0000000B, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class RMSCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        RMSCurrent = _attr(__module__, __qualname__, "RMSCurrent", 0x00000090, 0x0000000C, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        RMSPower = _attr(__module__, __qualname__, "RMSPower", 0x00000090, 0x0000000D, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class RMSPower(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        Frequency = _attr(__module__, __qualname__, "Frequency", 0x00000090, 0x0000000E, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        HarmonicCurrents = _attr(__module__, __qualname__, "HarmonicCurrents", 0x00000090, 0x0000000F, "typing.Union[None, Nullable, typing.List[ElectricalPowerMeasurement.Structs.HarmonicMeasurementStruct]]", None)
 
-        @dataclass
-        class Frequency(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        HarmonicPhases = _attr(__module__, __qualname__, "HarmonicPhases", 0x00000090, 0x00000010, "typing.Union[None, Nullable, typing.List[ElectricalPowerMeasurement.Structs.HarmonicMeasurementStruct]]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        PowerFactor = _attr(__module__, __qualname__, "PowerFactor", 0x00000090, 0x00000011, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class HarmonicCurrents(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, typing.List[ElectricalPowerMeasurement.Structs.HarmonicMeasurementStruct]])
+        NeutralCurrent = _attr(__module__, __qualname__, "NeutralCurrent", 0x00000090, 0x00000012, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, typing.List[ElectricalPowerMeasurement.Structs.HarmonicMeasurementStruct]] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000090, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class HarmonicPhases(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, typing.List[ElectricalPowerMeasurement.Structs.HarmonicMeasurementStruct]])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000090, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[None, Nullable, typing.List[ElectricalPowerMeasurement.Structs.HarmonicMeasurementStruct]] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000090, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class PowerFactor(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000090, 0x0000FFFC, "uint", 0)
 
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class NeutralCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000090
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000090, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -391,386 +391,50 @@ class CommodityTariff(Cluster):
             dayEntry: CommodityTariff.Structs.DayEntryStruct = field(default_factory=lambda: CommodityTariff.Structs.DayEntryStruct())
 
     class Attributes:
-        @dataclass
-        class TariffInfo(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, CommodityTariff.Structs.TariffInformationStruct])
-
-            value: typing.Union[Nullable, CommodityTariff.Structs.TariffInformationStruct] = NullValue
-
-        @dataclass
-        class TariffUnit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, Globals.Enums.TariffUnitEnum])
-
-            value: typing.Union[Nullable, Globals.Enums.TariffUnitEnum] = NullValue
-
-        @dataclass
-        class StartDate(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
-
-            value: typing.Union[Nullable, uint] = NullValue
-
-        @dataclass
-        class DayEntries(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayEntryStruct]])
-
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayEntryStruct]] = NullValue
-
-        @dataclass
-        class DayPatterns(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayPatternStruct]])
-
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayPatternStruct]] = NullValue
-
-        @dataclass
-        class CalendarPeriods(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.CalendarPeriodStruct]])
-
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.CalendarPeriodStruct]] = NullValue
-
-        @dataclass
-        class IndividualDays(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayStruct]])
+        TariffInfo = _attr(__module__, __qualname__, "TariffInfo", 0x00000700, 0x00000000, "typing.Union[Nullable, CommodityTariff.Structs.TariffInformationStruct]", NullValue)
 
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayStruct]] = NullValue
+        TariffUnit = _attr(__module__, __qualname__, "TariffUnit", 0x00000700, 0x00000001, "typing.Union[Nullable, Globals.Enums.TariffUnitEnum]", NullValue)
 
-        @dataclass
-        class CurrentDay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, CommodityTariff.Structs.DayStruct])
+        StartDate = _attr(__module__, __qualname__, "StartDate", 0x00000700, 0x00000002, "typing.Union[Nullable, uint]", NullValue)
 
-            value: typing.Union[Nullable, CommodityTariff.Structs.DayStruct] = NullValue
+        DayEntries = _attr(__module__, __qualname__, "DayEntries", 0x00000700, 0x00000003, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayEntryStruct]]", NullValue)
 
-        @dataclass
-        class NextDay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, CommodityTariff.Structs.DayStruct])
+        DayPatterns = _attr(__module__, __qualname__, "DayPatterns", 0x00000700, 0x00000004, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayPatternStruct]]", NullValue)
 
-            value: typing.Union[Nullable, CommodityTariff.Structs.DayStruct] = NullValue
+        CalendarPeriods = _attr(__module__, __qualname__, "CalendarPeriods", 0x00000700, 0x00000005, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.CalendarPeriodStruct]]", NullValue)
 
-        @dataclass
-        class CurrentDayEntry(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, CommodityTariff.Structs.DayEntryStruct])
+        IndividualDays = _attr(__module__, __qualname__, "IndividualDays", 0x00000700, 0x00000006, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.DayStruct]]", NullValue)
 
-            value: typing.Union[Nullable, CommodityTariff.Structs.DayEntryStruct] = NullValue
+        CurrentDay = _attr(__module__, __qualname__, "CurrentDay", 0x00000700, 0x00000007, "typing.Union[Nullable, CommodityTariff.Structs.DayStruct]", NullValue)
 
-        @dataclass
-        class CurrentDayEntryDate(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
+        NextDay = _attr(__module__, __qualname__, "NextDay", 0x00000700, 0x00000008, "typing.Union[Nullable, CommodityTariff.Structs.DayStruct]", NullValue)
 
-            value: typing.Union[Nullable, uint] = NullValue
+        CurrentDayEntry = _attr(__module__, __qualname__, "CurrentDayEntry", 0x00000700, 0x00000009, "typing.Union[Nullable, CommodityTariff.Structs.DayEntryStruct]", NullValue)
 
-        @dataclass
-        class NextDayEntry(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, CommodityTariff.Structs.DayEntryStruct])
+        CurrentDayEntryDate = _attr(__module__, __qualname__, "CurrentDayEntryDate", 0x00000700, 0x0000000A, "typing.Union[Nullable, uint]", NullValue)
 
-            value: typing.Union[Nullable, CommodityTariff.Structs.DayEntryStruct] = NullValue
+        NextDayEntry = _attr(__module__, __qualname__, "NextDayEntry", 0x00000700, 0x0000000B, "typing.Union[Nullable, CommodityTariff.Structs.DayEntryStruct]", NullValue)
 
-        @dataclass
-        class NextDayEntryDate(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
+        NextDayEntryDate = _attr(__module__, __qualname__, "NextDayEntryDate", 0x00000700, 0x0000000C, "typing.Union[Nullable, uint]", NullValue)
 
-            value: typing.Union[Nullable, uint] = NullValue
+        TariffComponents = _attr(__module__, __qualname__, "TariffComponents", 0x00000700, 0x0000000D, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]]", NullValue)
 
-        @dataclass
-        class TariffComponents(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]])
+        TariffPeriods = _attr(__module__, __qualname__, "TariffPeriods", 0x00000700, 0x0000000E, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffPeriodStruct]]", NullValue)
 
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]] = NullValue
+        CurrentTariffComponents = _attr(__module__, __qualname__, "CurrentTariffComponents", 0x00000700, 0x0000000F, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]]", NullValue)
 
-        @dataclass
-        class TariffPeriods(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffPeriodStruct]])
+        NextTariffComponents = _attr(__module__, __qualname__, "NextTariffComponents", 0x00000700, 0x00000010, "typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]]", NullValue)
 
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffPeriodStruct]] = NullValue
+        DefaultRandomizationOffset = _attr(__module__, __qualname__, "DefaultRandomizationOffset", 0x00000700, 0x00000011, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class CurrentTariffComponents(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]])
+        DefaultRandomizationType = _attr(__module__, __qualname__, "DefaultRandomizationType", 0x00000700, 0x00000012, "typing.Union[None, Nullable, CommodityTariff.Enums.DayEntryRandomizationTypeEnum]", None)
 
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]] = NullValue
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000700, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class NextTariffComponents(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000700, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[Nullable, typing.List[CommodityTariff.Structs.TariffComponentStruct]] = NullValue
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000700, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class DefaultRandomizationOffset(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000700, 0x0000FFFC, "uint", 0)
 
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class DefaultRandomizationType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, CommodityTariff.Enums.DayEntryRandomizationTypeEnum])
-
-            value: typing.Union[None, Nullable, CommodityTariff.Enums.DayEntryRandomizationTypeEnum] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000700
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000700, 0x0000FFFD, "uint", 0)

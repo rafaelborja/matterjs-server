@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .ModeSelect import ModeSelect
 
@@ -130,277 +130,39 @@ class AmbientContextSensing(Cluster):
             confidence: typing.Optional[uint] = None
 
     class Attributes:
-        @dataclass
-        class HumanActivityDetected(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class ObjectIdentified(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class AudioContextDetected(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class AmbientContextType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[AmbientContextSensing.Structs.AmbientContextTypeStruct]])
-
-            value: typing.Optional[typing.List[AmbientContextSensing.Structs.AmbientContextTypeStruct]] = None
-
-        @dataclass
-        class AmbientContextTypeSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ModeSelect.Structs.SemanticTagStruct]])
-
-            value: typing.Optional[typing.List[ModeSelect.Structs.SemanticTagStruct]] = None
-
-        @dataclass
-        class ObjectCountReached(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class ObjectCountConfig(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[AmbientContextSensing.Structs.ObjectCountConfigStruct])
+        HumanActivityDetected = _attr(__module__, __qualname__, "HumanActivityDetected", 0x00000431, 0x00000000, "typing.Optional[bool]", None)
 
-            value: typing.Optional[AmbientContextSensing.Structs.ObjectCountConfigStruct] = None
+        ObjectIdentified = _attr(__module__, __qualname__, "ObjectIdentified", 0x00000431, 0x00000001, "typing.Optional[bool]", None)
 
-        @dataclass
-        class ObjectCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AudioContextDetected = _attr(__module__, __qualname__, "AudioContextDetected", 0x00000431, 0x00000002, "typing.Optional[bool]", None)
 
-            value: typing.Optional[uint] = None
+        AmbientContextType = _attr(__module__, __qualname__, "AmbientContextType", 0x00000431, 0x00000003, "typing.Optional[typing.List[AmbientContextSensing.Structs.AmbientContextTypeStruct]]", None)
 
-        @dataclass
-        class SimultaneousDetectionLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AmbientContextTypeSupported = _attr(__module__, __qualname__, "AmbientContextTypeSupported", 0x00000431, 0x00000004, "typing.Optional[typing.List[ModeSelect.Structs.SemanticTagStruct]]", None)
 
-            value: typing.Optional[uint] = None
+        ObjectCountReached = _attr(__module__, __qualname__, "ObjectCountReached", 0x00000431, 0x00000005, "typing.Optional[bool]", None)
 
-        @dataclass
-        class HoldTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ObjectCountConfig = _attr(__module__, __qualname__, "ObjectCountConfig", 0x00000431, 0x00000006, "typing.Optional[AmbientContextSensing.Structs.ObjectCountConfigStruct]", None)
 
-            value: typing.Optional[uint] = None
+        ObjectCount = _attr(__module__, __qualname__, "ObjectCount", 0x00000431, 0x00000007, "typing.Optional[uint]", None)
 
-        @dataclass
-        class HoldTimeLimits(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[AmbientContextSensing.Structs.HoldTimeLimitsStruct])
+        SimultaneousDetectionLimit = _attr(__module__, __qualname__, "SimultaneousDetectionLimit", 0x00000431, 0x00000008, "typing.Optional[uint]", None)
 
-            value: typing.Optional[AmbientContextSensing.Structs.HoldTimeLimitsStruct] = None
+        HoldTime = _attr(__module__, __qualname__, "HoldTime", 0x00000431, 0x00000009, "typing.Optional[uint]", None)
 
-        @dataclass
-        class PredictedActivity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
+        HoldTimeLimits = _attr(__module__, __qualname__, "HoldTimeLimits", 0x00000431, 0x0000000A, "typing.Optional[AmbientContextSensing.Structs.HoldTimeLimitsStruct]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
+        PredictedActivity = _attr(__module__, __qualname__, "PredictedActivity", 0x00000431, 0x0000000B, "typing.Optional[typing.List[AmbientContextSensing.Structs.PredictedActivityStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[AmbientContextSensing.Structs.PredictedActivityStruct]])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000431, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[typing.List[AmbientContextSensing.Structs.PredictedActivityStruct]] = None
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000431, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000431, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000431, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000431
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000431, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

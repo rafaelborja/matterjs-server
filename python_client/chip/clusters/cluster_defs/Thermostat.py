@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -650,1061 +650,137 @@ class Thermostat(Cluster):
             timeout: typing.Optional[uint] = None
 
     class Attributes:
-        @dataclass
-        class LocalTemperature(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, int])
-
-            value: typing.Union[Nullable, int] = NullValue
-
-        @dataclass
-        class OutdoorTemperature(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class Occupancy(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Bitmaps.OccupancyBitmap])
-
-            value: typing.Optional[Thermostat.Bitmaps.OccupancyBitmap] = None
-
-        @dataclass
-        class AbsMinHeatSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class AbsMaxHeatSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class AbsMinCoolSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class AbsMaxCoolSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        LocalTemperature = _attr(__module__, __qualname__, "LocalTemperature", 0x00000201, 0x00000000, "typing.Union[Nullable, int]", NullValue)
 
-            value: typing.Optional[int] = None
+        OutdoorTemperature = _attr(__module__, __qualname__, "OutdoorTemperature", 0x00000201, 0x00000001, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class PICoolingDemand(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Occupancy = _attr(__module__, __qualname__, "Occupancy", 0x00000201, 0x00000002, "typing.Optional[Thermostat.Bitmaps.OccupancyBitmap]", None)
 
-            value: typing.Optional[uint] = None
+        AbsMinHeatSetpointLimit = _attr(__module__, __qualname__, "AbsMinHeatSetpointLimit", 0x00000201, 0x00000003, "typing.Optional[int]", None)
 
-        @dataclass
-        class PIHeatingDemand(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AbsMaxHeatSetpointLimit = _attr(__module__, __qualname__, "AbsMaxHeatSetpointLimit", 0x00000201, 0x00000004, "typing.Optional[int]", None)
 
-            value: typing.Optional[uint] = None
+        AbsMinCoolSetpointLimit = _attr(__module__, __qualname__, "AbsMinCoolSetpointLimit", 0x00000201, 0x00000005, "typing.Optional[int]", None)
 
-        @dataclass
-        class HVACSystemTypeConfiguration(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AbsMaxCoolSetpointLimit = _attr(__module__, __qualname__, "AbsMaxCoolSetpointLimit", 0x00000201, 0x00000006, "typing.Optional[int]", None)
 
-            value: typing.Optional[uint] = None
+        PICoolingDemand = _attr(__module__, __qualname__, "PICoolingDemand", 0x00000201, 0x00000007, "typing.Optional[uint]", None)
 
-        @dataclass
-        class LocalTemperatureCalibration(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        PIHeatingDemand = _attr(__module__, __qualname__, "PIHeatingDemand", 0x00000201, 0x00000008, "typing.Optional[uint]", None)
 
-            value: typing.Optional[int] = None
+        HVACSystemTypeConfiguration = _attr(__module__, __qualname__, "HVACSystemTypeConfiguration", 0x00000201, 0x00000009, "typing.Optional[uint]", None)
 
-        @dataclass
-        class OccupiedCoolingSetpoint(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        LocalTemperatureCalibration = _attr(__module__, __qualname__, "LocalTemperatureCalibration", 0x00000201, 0x00000010, "typing.Optional[int]", None)
 
-            value: typing.Optional[int] = None
+        OccupiedCoolingSetpoint = _attr(__module__, __qualname__, "OccupiedCoolingSetpoint", 0x00000201, 0x00000011, "typing.Optional[int]", None)
 
-        @dataclass
-        class OccupiedHeatingSetpoint(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        OccupiedHeatingSetpoint = _attr(__module__, __qualname__, "OccupiedHeatingSetpoint", 0x00000201, 0x00000012, "typing.Optional[int]", None)
 
-            value: typing.Optional[int] = None
+        UnoccupiedCoolingSetpoint = _attr(__module__, __qualname__, "UnoccupiedCoolingSetpoint", 0x00000201, 0x00000013, "typing.Optional[int]", None)
 
-        @dataclass
-        class UnoccupiedCoolingSetpoint(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000013
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        UnoccupiedHeatingSetpoint = _attr(__module__, __qualname__, "UnoccupiedHeatingSetpoint", 0x00000201, 0x00000014, "typing.Optional[int]", None)
 
-            value: typing.Optional[int] = None
+        MinHeatSetpointLimit = _attr(__module__, __qualname__, "MinHeatSetpointLimit", 0x00000201, 0x00000015, "typing.Optional[int]", None)
 
-        @dataclass
-        class UnoccupiedHeatingSetpoint(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000014
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        MaxHeatSetpointLimit = _attr(__module__, __qualname__, "MaxHeatSetpointLimit", 0x00000201, 0x00000016, "typing.Optional[int]", None)
 
-            value: typing.Optional[int] = None
+        MinCoolSetpointLimit = _attr(__module__, __qualname__, "MinCoolSetpointLimit", 0x00000201, 0x00000017, "typing.Optional[int]", None)
 
-        @dataclass
-        class MinHeatSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000015
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        MaxCoolSetpointLimit = _attr(__module__, __qualname__, "MaxCoolSetpointLimit", 0x00000201, 0x00000018, "typing.Optional[int]", None)
 
-            value: typing.Optional[int] = None
+        MinSetpointDeadBand = _attr(__module__, __qualname__, "MinSetpointDeadBand", 0x00000201, 0x00000019, "typing.Optional[int]", None)
 
-        @dataclass
-        class MaxHeatSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000016
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        RemoteSensing = _attr(__module__, __qualname__, "RemoteSensing", 0x00000201, 0x0000001A, "typing.Optional[Thermostat.Bitmaps.RemoteSensingBitmap]", None)
 
-            value: typing.Optional[int] = None
+        ControlSequenceOfOperation = _attr(__module__, __qualname__, "ControlSequenceOfOperation", 0x00000201, 0x0000001B, "Thermostat.Enums.ControlSequenceOfOperationEnum", 0)
 
-        @dataclass
-        class MinCoolSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        SystemMode = _attr(__module__, __qualname__, "SystemMode", 0x00000201, 0x0000001C, "Thermostat.Enums.SystemModeEnum", 0)
 
-            value: typing.Optional[int] = None
+        ThermostatRunningMode = _attr(__module__, __qualname__, "ThermostatRunningMode", 0x00000201, 0x0000001E, "typing.Optional[Thermostat.Enums.ThermostatRunningModeEnum]", None)
 
-        @dataclass
-        class MaxCoolSetpointLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000018
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        TemperatureSetpointHold = _attr(__module__, __qualname__, "TemperatureSetpointHold", 0x00000201, 0x00000023, "typing.Optional[Thermostat.Enums.TemperatureSetpointHoldEnum]", None)
 
-            value: typing.Optional[int] = None
+        TemperatureSetpointHoldDuration = _attr(__module__, __qualname__, "TemperatureSetpointHoldDuration", 0x00000201, 0x00000024, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class MinSetpointDeadBand(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000019
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
+        ThermostatProgrammingOperationMode = _attr(__module__, __qualname__, "ThermostatProgrammingOperationMode", 0x00000201, 0x00000025, "typing.Optional[uint]", None)
 
-            value: typing.Optional[int] = None
+        ThermostatRunningState = _attr(__module__, __qualname__, "ThermostatRunningState", 0x00000201, 0x00000029, "typing.Optional[Thermostat.Bitmaps.RelayStateBitmap]", None)
 
-        @dataclass
-        class RemoteSensing(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Bitmaps.RemoteSensingBitmap])
+        SetpointChangeSource = _attr(__module__, __qualname__, "SetpointChangeSource", 0x00000201, 0x00000030, "typing.Optional[Thermostat.Enums.SetpointChangeSourceEnum]", None)
 
-            value: typing.Optional[Thermostat.Bitmaps.RemoteSensingBitmap] = None
+        SetpointChangeAmount = _attr(__module__, __qualname__, "SetpointChangeAmount", 0x00000201, 0x00000031, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class ControlSequenceOfOperation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=Thermostat.Enums.ControlSequenceOfOperationEnum)
+        SetpointChangeSourceTimestamp = _attr(__module__, __qualname__, "SetpointChangeSourceTimestamp", 0x00000201, 0x00000032, "typing.Optional[uint]", None)
 
-            value: Thermostat.Enums.ControlSequenceOfOperationEnum = 0
+        OccupiedSetback = _attr(__module__, __qualname__, "OccupiedSetback", 0x00000201, 0x00000034, "typing.Optional[uint]", None)
 
-        @dataclass
-        class SystemMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=Thermostat.Enums.SystemModeEnum)
+        OccupiedSetbackMin = _attr(__module__, __qualname__, "OccupiedSetbackMin", 0x00000201, 0x00000035, "typing.Optional[uint]", None)
 
-            value: Thermostat.Enums.SystemModeEnum = 0
+        OccupiedSetbackMax = _attr(__module__, __qualname__, "OccupiedSetbackMax", 0x00000201, 0x00000036, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ThermostatRunningMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.ThermostatRunningModeEnum])
+        UnoccupiedSetback = _attr(__module__, __qualname__, "UnoccupiedSetback", 0x00000201, 0x00000037, "typing.Optional[uint]", None)
 
-            value: typing.Optional[Thermostat.Enums.ThermostatRunningModeEnum] = None
+        UnoccupiedSetbackMin = _attr(__module__, __qualname__, "UnoccupiedSetbackMin", 0x00000201, 0x00000038, "typing.Optional[uint]", None)
 
-        @dataclass
-        class TemperatureSetpointHold(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000023
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.TemperatureSetpointHoldEnum])
+        UnoccupiedSetbackMax = _attr(__module__, __qualname__, "UnoccupiedSetbackMax", 0x00000201, 0x00000039, "typing.Optional[uint]", None)
 
-            value: typing.Optional[Thermostat.Enums.TemperatureSetpointHoldEnum] = None
+        EmergencyHeatDelta = _attr(__module__, __qualname__, "EmergencyHeatDelta", 0x00000201, 0x0000003A, "typing.Optional[uint]", None)
 
-        @dataclass
-        class TemperatureSetpointHoldDuration(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000024
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        ACType = _attr(__module__, __qualname__, "ACType", 0x00000201, 0x00000040, "typing.Optional[Thermostat.Enums.ACTypeEnum]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ACCapacity = _attr(__module__, __qualname__, "ACCapacity", 0x00000201, 0x00000041, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ThermostatProgrammingOperationMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000025
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ACRefrigerantType = _attr(__module__, __qualname__, "ACRefrigerantType", 0x00000201, 0x00000042, "typing.Optional[Thermostat.Enums.ACRefrigerantTypeEnum]", None)
 
-            value: typing.Optional[uint] = None
+        ACCompressorType = _attr(__module__, __qualname__, "ACCompressorType", 0x00000201, 0x00000043, "typing.Optional[Thermostat.Enums.ACCompressorTypeEnum]", None)
 
-        @dataclass
-        class ThermostatRunningState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000029
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Bitmaps.RelayStateBitmap])
+        ACErrorCode = _attr(__module__, __qualname__, "ACErrorCode", 0x00000201, 0x00000044, "typing.Optional[Thermostat.Bitmaps.ACErrorCodeBitmap]", None)
 
-            value: typing.Optional[Thermostat.Bitmaps.RelayStateBitmap] = None
+        ACLouverPosition = _attr(__module__, __qualname__, "ACLouverPosition", 0x00000201, 0x00000045, "typing.Optional[Thermostat.Enums.ACLouverPositionEnum]", None)
 
-        @dataclass
-        class SetpointChangeSource(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.SetpointChangeSourceEnum])
+        ACCoilTemperature = _attr(__module__, __qualname__, "ACCoilTemperature", 0x00000201, 0x00000046, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Optional[Thermostat.Enums.SetpointChangeSourceEnum] = None
+        ACCapacityformat = _attr(__module__, __qualname__, "ACCapacityformat", 0x00000201, 0x00000047, "typing.Optional[Thermostat.Enums.ACCapacityFormatEnum]", None)
 
-        @dataclass
-        class SetpointChangeAmount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        PresetTypes = _attr(__module__, __qualname__, "PresetTypes", 0x00000201, 0x00000048, "typing.Optional[typing.List[Thermostat.Structs.PresetTypeStruct]]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        ScheduleTypes = _attr(__module__, __qualname__, "ScheduleTypes", 0x00000201, 0x00000049, "typing.Optional[typing.List[Thermostat.Structs.ScheduleTypeStruct]]", None)
 
-        @dataclass
-        class SetpointChangeSourceTimestamp(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000032
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfPresets = _attr(__module__, __qualname__, "NumberOfPresets", 0x00000201, 0x0000004A, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        NumberOfSchedules = _attr(__module__, __qualname__, "NumberOfSchedules", 0x00000201, 0x0000004B, "typing.Optional[uint]", None)
 
-        @dataclass
-        class OccupiedSetback(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000034
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfScheduleTransitions = _attr(__module__, __qualname__, "NumberOfScheduleTransitions", 0x00000201, 0x0000004C, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        NumberOfScheduleTransitionPerDay = _attr(__module__, __qualname__, "NumberOfScheduleTransitionPerDay", 0x00000201, 0x0000004D, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class OccupiedSetbackMin(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000035
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ActivePresetHandle = _attr(__module__, __qualname__, "ActivePresetHandle", 0x00000201, 0x0000004E, "typing.Union[None, Nullable, bytes]", None)
 
-            value: typing.Optional[uint] = None
+        ActiveScheduleHandle = _attr(__module__, __qualname__, "ActiveScheduleHandle", 0x00000201, 0x0000004F, "typing.Union[None, Nullable, bytes]", None)
 
-        @dataclass
-        class OccupiedSetbackMax(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Presets = _attr(__module__, __qualname__, "Presets", 0x00000201, 0x00000050, "typing.Optional[typing.List[Thermostat.Structs.PresetStruct]]", None)
 
-            value: typing.Optional[uint] = None
+        Schedules = _attr(__module__, __qualname__, "Schedules", 0x00000201, 0x00000051, "typing.Optional[typing.List[Thermostat.Structs.ScheduleStruct]]", None)
 
-        @dataclass
-        class UnoccupiedSetback(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000037
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        SetpointHoldExpiryTimestamp = _attr(__module__, __qualname__, "SetpointHoldExpiryTimestamp", 0x00000201, 0x00000052, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[uint] = None
+        MaxThermostatSuggestions = _attr(__module__, __qualname__, "MaxThermostatSuggestions", 0x00000201, 0x00000053, "typing.Optional[uint]", None)
 
-        @dataclass
-        class UnoccupiedSetbackMin(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000038
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ThermostatSuggestions = _attr(__module__, __qualname__, "ThermostatSuggestions", 0x00000201, 0x00000054, "typing.Optional[typing.List[Thermostat.Structs.ThermostatSuggestionStruct]]", None)
 
-            value: typing.Optional[uint] = None
+        CurrentThermostatSuggestion = _attr(__module__, __qualname__, "CurrentThermostatSuggestion", 0x00000201, 0x00000055, "typing.Union[None, Nullable, Thermostat.Structs.ThermostatSuggestionStruct]", None)
 
-        @dataclass
-        class UnoccupiedSetbackMax(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000039
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ThermostatSuggestionNotFollowingReason = _attr(__module__, __qualname__, "ThermostatSuggestionNotFollowingReason", 0x00000201, 0x00000056, "typing.Union[None, Nullable, Thermostat.Bitmaps.ThermostatSuggestionNotFollowingReasonBitmap]", None)
 
-            value: typing.Optional[uint] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000201, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class EmergencyHeatDelta(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000003A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000201, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[uint] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000201, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class ACType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000040
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.ACTypeEnum])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000201, 0x0000FFFC, "uint", 0)
 
-            value: typing.Optional[Thermostat.Enums.ACTypeEnum] = None
-
-        @dataclass
-        class ACCapacity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000041
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ACRefrigerantType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000042
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.ACRefrigerantTypeEnum])
-
-            value: typing.Optional[Thermostat.Enums.ACRefrigerantTypeEnum] = None
-
-        @dataclass
-        class ACCompressorType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000043
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.ACCompressorTypeEnum])
-
-            value: typing.Optional[Thermostat.Enums.ACCompressorTypeEnum] = None
-
-        @dataclass
-        class ACErrorCode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000044
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Bitmaps.ACErrorCodeBitmap])
-
-            value: typing.Optional[Thermostat.Bitmaps.ACErrorCodeBitmap] = None
-
-        @dataclass
-        class ACLouverPosition(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000045
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.ACLouverPositionEnum])
-
-            value: typing.Optional[Thermostat.Enums.ACLouverPositionEnum] = None
-
-        @dataclass
-        class ACCoilTemperature(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000046
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class ACCapacityformat(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000047
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Thermostat.Enums.ACCapacityFormatEnum])
-
-            value: typing.Optional[Thermostat.Enums.ACCapacityFormatEnum] = None
-
-        @dataclass
-        class PresetTypes(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[Thermostat.Structs.PresetTypeStruct]])
-
-            value: typing.Optional[typing.List[Thermostat.Structs.PresetTypeStruct]] = None
-
-        @dataclass
-        class ScheduleTypes(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000049
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[Thermostat.Structs.ScheduleTypeStruct]])
-
-            value: typing.Optional[typing.List[Thermostat.Structs.ScheduleTypeStruct]] = None
-
-        @dataclass
-        class NumberOfPresets(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000004A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class NumberOfSchedules(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000004B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class NumberOfScheduleTransitions(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000004C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class NumberOfScheduleTransitionPerDay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000004D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class ActivePresetHandle(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000004E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, bytes])
-
-            value: typing.Union[None, Nullable, bytes] = None
-
-        @dataclass
-        class ActiveScheduleHandle(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000004F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, bytes])
-
-            value: typing.Union[None, Nullable, bytes] = None
-
-        @dataclass
-        class Presets(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000050
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[Thermostat.Structs.PresetStruct]])
-
-            value: typing.Optional[typing.List[Thermostat.Structs.PresetStruct]] = None
-
-        @dataclass
-        class Schedules(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000051
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[Thermostat.Structs.ScheduleStruct]])
-
-            value: typing.Optional[typing.List[Thermostat.Structs.ScheduleStruct]] = None
-
-        @dataclass
-        class SetpointHoldExpiryTimestamp(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000052
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class MaxThermostatSuggestions(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000053
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ThermostatSuggestions(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000054
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[Thermostat.Structs.ThermostatSuggestionStruct]])
-
-            value: typing.Optional[typing.List[Thermostat.Structs.ThermostatSuggestionStruct]] = None
-
-        @dataclass
-        class CurrentThermostatSuggestion(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000055
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, Thermostat.Structs.ThermostatSuggestionStruct])
-
-            value: typing.Union[None, Nullable, Thermostat.Structs.ThermostatSuggestionStruct] = None
-
-        @dataclass
-        class ThermostatSuggestionNotFollowingReason(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000056
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, Thermostat.Bitmaps.ThermostatSuggestionNotFollowingReasonBitmap])
-
-            value: typing.Union[None, Nullable, Thermostat.Bitmaps.ThermostatSuggestionNotFollowingReasonBitmap] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000201
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000201, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

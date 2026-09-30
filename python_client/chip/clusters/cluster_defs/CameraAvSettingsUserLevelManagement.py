@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -250,242 +250,32 @@ class CameraAvSettingsUserLevelManagement(Cluster):
             zoomDelta: typing.Optional[int] = None
 
     class Attributes:
-        @dataclass
-        class MptzPosition(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
+        MptzPosition = _attr(__module__, __qualname__, "MptzPosition", 0x00000552, 0x00000000, "typing.Optional[CameraAvSettingsUserLevelManagement.Structs.MPTZStruct]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        MaxPresets = _attr(__module__, __qualname__, "MaxPresets", 0x00000552, 0x00000001, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[CameraAvSettingsUserLevelManagement.Structs.MPTZStruct])
+        MptzPresets = _attr(__module__, __qualname__, "MptzPresets", 0x00000552, 0x00000002, "typing.Optional[typing.List[CameraAvSettingsUserLevelManagement.Structs.MPTZPresetStruct]]", None)
 
-            value: typing.Optional[CameraAvSettingsUserLevelManagement.Structs.MPTZStruct] = None
+        DptzStreams = _attr(__module__, __qualname__, "DptzStreams", 0x00000552, 0x00000003, "typing.Optional[typing.List[CameraAvSettingsUserLevelManagement.Structs.DPTZStruct]]", None)
 
-        @dataclass
-        class MaxPresets(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
+        ZoomMax = _attr(__module__, __qualname__, "ZoomMax", 0x00000552, 0x00000004, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        TiltMin = _attr(__module__, __qualname__, "TiltMin", 0x00000552, 0x00000005, "typing.Optional[int]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        TiltMax = _attr(__module__, __qualname__, "TiltMax", 0x00000552, 0x00000006, "typing.Optional[int]", None)
 
-            value: typing.Optional[uint] = None
+        PanMin = _attr(__module__, __qualname__, "PanMin", 0x00000552, 0x00000007, "typing.Optional[int]", None)
 
-        @dataclass
-        class MptzPresets(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
+        PanMax = _attr(__module__, __qualname__, "PanMax", 0x00000552, 0x00000008, "typing.Optional[int]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        MovementState = _attr(__module__, __qualname__, "MovementState", 0x00000552, 0x00000009, "typing.Optional[CameraAvSettingsUserLevelManagement.Enums.PhysicalMovementEnum]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[CameraAvSettingsUserLevelManagement.Structs.MPTZPresetStruct]])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000552, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[typing.List[CameraAvSettingsUserLevelManagement.Structs.MPTZPresetStruct]] = None
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000552, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class DptzStreams(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000552, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000552, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[CameraAvSettingsUserLevelManagement.Structs.DPTZStruct]])
-
-            value: typing.Optional[typing.List[CameraAvSettingsUserLevelManagement.Structs.DPTZStruct]] = None
-
-        @dataclass
-        class ZoomMax(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class TiltMin(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class TiltMax(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class PanMin(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class PanMax(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[int])
-
-            value: typing.Optional[int] = None
-
-        @dataclass
-        class MovementState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[CameraAvSettingsUserLevelManagement.Enums.PhysicalMovementEnum])
-
-            value: typing.Optional[CameraAvSettingsUserLevelManagement.Enums.PhysicalMovementEnum] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000552
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000552, 0x0000FFFD, "uint", 0)

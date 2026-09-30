@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -130,469 +130,63 @@ class PumpConfigurationAndControl(Cluster):
             kRemoteTemperature = 0x100
 
     class Attributes:
-        @dataclass
-        class MaxPressure(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, int])
-
-            value: typing.Union[Nullable, int] = NullValue
-
-        @dataclass
-        class MaxSpeed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
-
-            value: typing.Union[Nullable, uint] = NullValue
-
-        @dataclass
-        class MaxFlow(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
-
-            value: typing.Union[Nullable, uint] = NullValue
-
-        @dataclass
-        class MinConstPressure(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class MaxConstPressure(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class MinCompPressure(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
-
-            value: typing.Union[None, Nullable, int] = None
-
-        @dataclass
-        class MaxCompPressure(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        MaxPressure = _attr(__module__, __qualname__, "MaxPressure", 0x00000200, 0x00000000, "typing.Union[Nullable, int]", NullValue)
 
-            value: typing.Union[None, Nullable, int] = None
+        MaxSpeed = _attr(__module__, __qualname__, "MaxSpeed", 0x00000200, 0x00000001, "typing.Union[Nullable, uint]", NullValue)
 
-        @dataclass
-        class MinConstSpeed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        MaxFlow = _attr(__module__, __qualname__, "MaxFlow", 0x00000200, 0x00000002, "typing.Union[Nullable, uint]", NullValue)
 
-            value: typing.Union[None, Nullable, uint] = None
+        MinConstPressure = _attr(__module__, __qualname__, "MinConstPressure", 0x00000200, 0x00000003, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class MaxConstSpeed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        MaxConstPressure = _attr(__module__, __qualname__, "MaxConstPressure", 0x00000200, 0x00000004, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        MinCompPressure = _attr(__module__, __qualname__, "MinCompPressure", 0x00000200, 0x00000005, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class MinConstFlow(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        MaxCompPressure = _attr(__module__, __qualname__, "MaxCompPressure", 0x00000200, 0x00000006, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        MinConstSpeed = _attr(__module__, __qualname__, "MinConstSpeed", 0x00000200, 0x00000007, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class MaxConstFlow(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        MaxConstSpeed = _attr(__module__, __qualname__, "MaxConstSpeed", 0x00000200, 0x00000008, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        MinConstFlow = _attr(__module__, __qualname__, "MinConstFlow", 0x00000200, 0x00000009, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class MinConstTemp(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        MaxConstFlow = _attr(__module__, __qualname__, "MaxConstFlow", 0x00000200, 0x0000000A, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        MinConstTemp = _attr(__module__, __qualname__, "MinConstTemp", 0x00000200, 0x0000000B, "typing.Union[None, Nullable, int]", None)
 
-        @dataclass
-        class MaxConstTemp(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, int])
+        MaxConstTemp = _attr(__module__, __qualname__, "MaxConstTemp", 0x00000200, 0x0000000C, "typing.Union[None, Nullable, int]", None)
 
-            value: typing.Union[None, Nullable, int] = None
+        PumpStatus = _attr(__module__, __qualname__, "PumpStatus", 0x00000200, 0x00000010, "typing.Optional[PumpConfigurationAndControl.Bitmaps.PumpStatusBitmap]", None)
 
-        @dataclass
-        class PumpStatus(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PumpConfigurationAndControl.Bitmaps.PumpStatusBitmap])
+        EffectiveOperationMode = _attr(__module__, __qualname__, "EffectiveOperationMode", 0x00000200, 0x00000011, "PumpConfigurationAndControl.Enums.OperationModeEnum", 0)
 
-            value: typing.Optional[PumpConfigurationAndControl.Bitmaps.PumpStatusBitmap] = None
+        EffectiveControlMode = _attr(__module__, __qualname__, "EffectiveControlMode", 0x00000200, 0x00000012, "PumpConfigurationAndControl.Enums.ControlModeEnum", 0)
 
-        @dataclass
-        class EffectiveOperationMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=PumpConfigurationAndControl.Enums.OperationModeEnum)
+        Capacity = _attr(__module__, __qualname__, "Capacity", 0x00000200, 0x00000013, "typing.Union[Nullable, int]", NullValue)
 
-            value: PumpConfigurationAndControl.Enums.OperationModeEnum = 0
+        Speed = _attr(__module__, __qualname__, "Speed", 0x00000200, 0x00000014, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class EffectiveControlMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=PumpConfigurationAndControl.Enums.ControlModeEnum)
+        LifetimeRunningHours = _attr(__module__, __qualname__, "LifetimeRunningHours", 0x00000200, 0x00000015, "typing.Union[None, Nullable, uint]", None)
 
-            value: PumpConfigurationAndControl.Enums.ControlModeEnum = 0
+        Power = _attr(__module__, __qualname__, "Power", 0x00000200, 0x00000016, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Capacity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000013
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, int])
+        LifetimeEnergyConsumed = _attr(__module__, __qualname__, "LifetimeEnergyConsumed", 0x00000200, 0x00000017, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[Nullable, int] = NullValue
+        OperationMode = _attr(__module__, __qualname__, "OperationMode", 0x00000200, 0x00000020, "PumpConfigurationAndControl.Enums.OperationModeEnum", 0)
 
-        @dataclass
-        class Speed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000014
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        ControlMode = _attr(__module__, __qualname__, "ControlMode", 0x00000200, 0x00000021, "typing.Optional[PumpConfigurationAndControl.Enums.ControlModeEnum]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        AlarmMask = _attr(__module__, __qualname__, "AlarmMask", 0x00000200, 0x00000022, "typing.Optional[uint]", None)
 
-        @dataclass
-        class LifetimeRunningHours(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000015
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000200, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[None, Nullable, uint] = None
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000200, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class Power(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000016
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000200, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[None, Nullable, uint] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000200, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class LifetimeEnergyConsumed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class OperationMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000020
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=PumpConfigurationAndControl.Enums.OperationModeEnum)
-
-            value: PumpConfigurationAndControl.Enums.OperationModeEnum = 0
-
-        @dataclass
-        class ControlMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000021
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PumpConfigurationAndControl.Enums.ControlModeEnum])
-
-            value: typing.Optional[PumpConfigurationAndControl.Enums.ControlModeEnum] = None
-
-        @dataclass
-        class AlarmMask(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000022
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000200
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000200, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

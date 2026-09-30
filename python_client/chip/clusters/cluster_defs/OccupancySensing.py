@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -112,309 +112,43 @@ class OccupancySensing(Cluster):
             holdTimeDefault: uint = 0
 
     class Attributes:
-        @dataclass
-        class Occupancy(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=OccupancySensing.Bitmaps.OccupancyBitmap)
-
-            value: OccupancySensing.Bitmaps.OccupancyBitmap = 0
-
-        @dataclass
-        class OccupancySensorType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=OccupancySensing.Enums.OccupancySensorTypeEnum)
-
-            value: OccupancySensing.Enums.OccupancySensorTypeEnum = 0
-
-        @dataclass
-        class OccupancySensorTypeBitmap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=OccupancySensing.Bitmaps.OccupancySensorTypeBitmap)
-
-            value: OccupancySensing.Bitmaps.OccupancySensorTypeBitmap = 0
-
-        @dataclass
-        class HoldTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class HoldTimeLimits(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[OccupancySensing.Structs.HoldTimeLimitsStruct])
-
-            value: typing.Optional[OccupancySensing.Structs.HoldTimeLimitsStruct] = None
-
-        @dataclass
-        class PIROccupiedToUnoccupiedDelay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class PIRUnoccupiedToOccupiedDelay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Occupancy = _attr(__module__, __qualname__, "Occupancy", 0x00000406, 0x00000000, "OccupancySensing.Bitmaps.OccupancyBitmap", 0)
 
-            value: typing.Optional[uint] = None
+        OccupancySensorType = _attr(__module__, __qualname__, "OccupancySensorType", 0x00000406, 0x00000001, "OccupancySensing.Enums.OccupancySensorTypeEnum", 0)
 
-        @dataclass
-        class PIRUnoccupiedToOccupiedThreshold(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        OccupancySensorTypeBitmap = _attr(__module__, __qualname__, "OccupancySensorTypeBitmap", 0x00000406, 0x00000002, "OccupancySensing.Bitmaps.OccupancySensorTypeBitmap", 0)
 
-            value: typing.Optional[uint] = None
+        HoldTime = _attr(__module__, __qualname__, "HoldTime", 0x00000406, 0x00000003, "typing.Optional[uint]", None)
 
-        @dataclass
-        class UltrasonicOccupiedToUnoccupiedDelay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000020
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        HoldTimeLimits = _attr(__module__, __qualname__, "HoldTimeLimits", 0x00000406, 0x00000004, "typing.Optional[OccupancySensing.Structs.HoldTimeLimitsStruct]", None)
 
-            value: typing.Optional[uint] = None
+        PIROccupiedToUnoccupiedDelay = _attr(__module__, __qualname__, "PIROccupiedToUnoccupiedDelay", 0x00000406, 0x00000010, "typing.Optional[uint]", None)
 
-        @dataclass
-        class UltrasonicUnoccupiedToOccupiedDelay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000021
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        PIRUnoccupiedToOccupiedDelay = _attr(__module__, __qualname__, "PIRUnoccupiedToOccupiedDelay", 0x00000406, 0x00000011, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        PIRUnoccupiedToOccupiedThreshold = _attr(__module__, __qualname__, "PIRUnoccupiedToOccupiedThreshold", 0x00000406, 0x00000012, "typing.Optional[uint]", None)
 
-        @dataclass
-        class UltrasonicUnoccupiedToOccupiedThreshold(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000022
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        UltrasonicOccupiedToUnoccupiedDelay = _attr(__module__, __qualname__, "UltrasonicOccupiedToUnoccupiedDelay", 0x00000406, 0x00000020, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        UltrasonicUnoccupiedToOccupiedDelay = _attr(__module__, __qualname__, "UltrasonicUnoccupiedToOccupiedDelay", 0x00000406, 0x00000021, "typing.Optional[uint]", None)
 
-        @dataclass
-        class PhysicalContactOccupiedToUnoccupiedDelay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        UltrasonicUnoccupiedToOccupiedThreshold = _attr(__module__, __qualname__, "UltrasonicUnoccupiedToOccupiedThreshold", 0x00000406, 0x00000022, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        PhysicalContactOccupiedToUnoccupiedDelay = _attr(__module__, __qualname__, "PhysicalContactOccupiedToUnoccupiedDelay", 0x00000406, 0x00000030, "typing.Optional[uint]", None)
 
-        @dataclass
-        class PhysicalContactUnoccupiedToOccupiedDelay(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        PhysicalContactUnoccupiedToOccupiedDelay = _attr(__module__, __qualname__, "PhysicalContactUnoccupiedToOccupiedDelay", 0x00000406, 0x00000031, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        PhysicalContactUnoccupiedToOccupiedThreshold = _attr(__module__, __qualname__, "PhysicalContactUnoccupiedToOccupiedThreshold", 0x00000406, 0x00000032, "typing.Optional[uint]", None)
 
-        @dataclass
-        class PhysicalContactUnoccupiedToOccupiedThreshold(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000406, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000032
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000406, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000406, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[uint] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000406, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000406
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000406, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

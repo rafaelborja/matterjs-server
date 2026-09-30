@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -174,181 +174,27 @@ class OvenCavityOperationalState(Cluster):
             commandResponseState: OvenCavityOperationalState.Structs.ErrorStateStruct = field(default_factory=lambda: OvenCavityOperationalState.Structs.ErrorStateStruct())
 
     class Attributes:
-        @dataclass
-        class PhaseList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
+        PhaseList = _attr(__module__, __qualname__, "PhaseList", 0x00000048, 0x00000000, "typing.Union[Nullable, typing.List[str]]", NullValue)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        CurrentPhase = _attr(__module__, __qualname__, "CurrentPhase", 0x00000048, 0x00000001, "typing.Union[Nullable, uint]", NullValue)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, typing.List[str]])
+        CountdownTime = _attr(__module__, __qualname__, "CountdownTime", 0x00000048, 0x00000002, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[Nullable, typing.List[str]] = NullValue
+        OperationalStateList = _attr(__module__, __qualname__, "OperationalStateList", 0x00000048, 0x00000003, "typing.List[OvenCavityOperationalState.Structs.OperationalStateStruct]", None, "[]")
 
-        @dataclass
-        class CurrentPhase(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
+        OperationalState = _attr(__module__, __qualname__, "OperationalState", 0x00000048, 0x00000004, "OvenCavityOperationalState.Enums.OperationalStateEnum", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        OperationalError = _attr(__module__, __qualname__, "OperationalError", 0x00000048, 0x00000005, "OvenCavityOperationalState.Structs.ErrorStateStruct", None, "OvenCavityOperationalState.Structs.ErrorStateStruct()")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000048, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[Nullable, uint] = NullValue
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000048, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class CountdownTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000048, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000048, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class OperationalStateList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[OvenCavityOperationalState.Structs.OperationalStateStruct])
-
-            value: typing.List[OvenCavityOperationalState.Structs.OperationalStateStruct] = field(default_factory=lambda: [])
-
-        @dataclass
-        class OperationalState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=OvenCavityOperationalState.Enums.OperationalStateEnum)
-
-            value: OvenCavityOperationalState.Enums.OperationalStateEnum = 0
-
-        @dataclass
-        class OperationalError(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=OvenCavityOperationalState.Structs.ErrorStateStruct)
-
-            value: OvenCavityOperationalState.Structs.ErrorStateStruct = field(default_factory=lambda: OvenCavityOperationalState.Structs.ErrorStateStruct())
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000048
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000048, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

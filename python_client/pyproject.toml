@@ -23,8 +23,8 @@ license = "Apache-2.0"
 name = "matter-python-client"
 readme = "README.md"
 requires-python = ">=3.12"
-# The version is set by CI on release
-version = "0.0.0"
+# Personal low-memory experiment, not an upstream release
+version = "1.4.0+lowmem.1"
 
 [project.urls]
 "Homepage" = "https://github.com/matter-js/matterjs-server"

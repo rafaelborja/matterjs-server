@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -130,293 +130,41 @@ class WiFiNetworkDiagnostics(Cluster):
 
 
     class Attributes:
-        @dataclass
-        class Bssid(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, bytes])
-
-            value: typing.Union[Nullable, bytes] = NullValue
-
-        @dataclass
-        class SecurityType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, WiFiNetworkDiagnostics.Enums.SecurityTypeEnum])
-
-            value: typing.Union[Nullable, WiFiNetworkDiagnostics.Enums.SecurityTypeEnum] = NullValue
-
-        @dataclass
-        class WiFiVersion(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, WiFiNetworkDiagnostics.Enums.WiFiVersionEnum])
-
-            value: typing.Union[Nullable, WiFiNetworkDiagnostics.Enums.WiFiVersionEnum] = NullValue
-
-        @dataclass
-        class ChannelNumber(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
-
-            value: typing.Union[Nullable, uint] = NullValue
-
-        @dataclass
-        class Rssi(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, int])
-
-            value: typing.Union[Nullable, int] = NullValue
-
-        @dataclass
-        class BeaconLostCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class BeaconRxCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        Bssid = _attr(__module__, __qualname__, "Bssid", 0x00000036, 0x00000000, "typing.Union[Nullable, bytes]", NullValue)
 
-            value: typing.Union[None, Nullable, uint] = None
+        SecurityType = _attr(__module__, __qualname__, "SecurityType", 0x00000036, 0x00000001, "typing.Union[Nullable, WiFiNetworkDiagnostics.Enums.SecurityTypeEnum]", NullValue)
 
-        @dataclass
-        class PacketMulticastRxCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        WiFiVersion = _attr(__module__, __qualname__, "WiFiVersion", 0x00000036, 0x00000002, "typing.Union[Nullable, WiFiNetworkDiagnostics.Enums.WiFiVersionEnum]", NullValue)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ChannelNumber = _attr(__module__, __qualname__, "ChannelNumber", 0x00000036, 0x00000003, "typing.Union[Nullable, uint]", NullValue)
 
-        @dataclass
-        class PacketMulticastTxCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        Rssi = _attr(__module__, __qualname__, "Rssi", 0x00000036, 0x00000004, "typing.Union[Nullable, int]", NullValue)
 
-            value: typing.Union[None, Nullable, uint] = None
+        BeaconLostCount = _attr(__module__, __qualname__, "BeaconLostCount", 0x00000036, 0x00000005, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class PacketUnicastRxCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        BeaconRxCount = _attr(__module__, __qualname__, "BeaconRxCount", 0x00000036, 0x00000006, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        PacketMulticastRxCount = _attr(__module__, __qualname__, "PacketMulticastRxCount", 0x00000036, 0x00000007, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class PacketUnicastTxCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        PacketMulticastTxCount = _attr(__module__, __qualname__, "PacketMulticastTxCount", 0x00000036, 0x00000008, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        PacketUnicastRxCount = _attr(__module__, __qualname__, "PacketUnicastRxCount", 0x00000036, 0x00000009, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class CurrentMaxRate(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        PacketUnicastTxCount = _attr(__module__, __qualname__, "PacketUnicastTxCount", 0x00000036, 0x0000000A, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        CurrentMaxRate = _attr(__module__, __qualname__, "CurrentMaxRate", 0x00000036, 0x0000000B, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class OverrunCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
+        OverrunCount = _attr(__module__, __qualname__, "OverrunCount", 0x00000036, 0x0000000C, "typing.Union[None, Nullable, uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000036, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000036, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[None, Nullable, uint] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000036, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000036, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000036, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -389,261 +389,37 @@ class MediaPlayback(Cluster):
             data: typing.Optional[str] = None
 
     class Attributes:
-        @dataclass
-        class CurrentState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
+        CurrentState = _attr(__module__, __qualname__, "CurrentState", 0x00000506, 0x00000000, "MediaPlayback.Enums.PlaybackStateEnum", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        StartTime = _attr(__module__, __qualname__, "StartTime", 0x00000506, 0x00000001, "typing.Union[None, Nullable, uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=MediaPlayback.Enums.PlaybackStateEnum)
+        Duration = _attr(__module__, __qualname__, "Duration", 0x00000506, 0x00000002, "typing.Union[None, Nullable, uint]", None)
 
-            value: MediaPlayback.Enums.PlaybackStateEnum = 0
+        SampledPosition = _attr(__module__, __qualname__, "SampledPosition", 0x00000506, 0x00000003, "typing.Union[None, Nullable, MediaPlayback.Structs.PlaybackPositionStruct]", None)
 
-        @dataclass
-        class StartTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
+        PlaybackSpeed = _attr(__module__, __qualname__, "PlaybackSpeed", 0x00000506, 0x00000004, "typing.Optional[float32]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        SeekRangeEnd = _attr(__module__, __qualname__, "SeekRangeEnd", 0x00000506, 0x00000005, "typing.Union[None, Nullable, uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        SeekRangeStart = _attr(__module__, __qualname__, "SeekRangeStart", 0x00000506, 0x00000006, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ActiveAudioTrack = _attr(__module__, __qualname__, "ActiveAudioTrack", 0x00000506, 0x00000007, "typing.Union[None, Nullable, MediaPlayback.Structs.TrackStruct]", None)
 
-        @dataclass
-        class Duration(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
+        AvailableAudioTracks = _attr(__module__, __qualname__, "AvailableAudioTracks", 0x00000506, 0x00000008, "typing.Union[None, Nullable, typing.List[MediaPlayback.Structs.TrackStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        ActiveTextTrack = _attr(__module__, __qualname__, "ActiveTextTrack", 0x00000506, 0x00000009, "typing.Union[None, Nullable, MediaPlayback.Structs.TrackStruct]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        AvailableTextTracks = _attr(__module__, __qualname__, "AvailableTextTracks", 0x00000506, 0x0000000A, "typing.Union[None, Nullable, typing.List[MediaPlayback.Structs.TrackStruct]]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000506, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class SampledPosition(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000506, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000506, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, MediaPlayback.Structs.PlaybackPositionStruct])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000506, 0x0000FFFC, "uint", 0)
 
-            value: typing.Union[None, Nullable, MediaPlayback.Structs.PlaybackPositionStruct] = None
-
-        @dataclass
-        class PlaybackSpeed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
-
-            value: typing.Optional[float32] = None
-
-        @dataclass
-        class SeekRangeEnd(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class SeekRangeStart(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class ActiveAudioTrack(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, MediaPlayback.Structs.TrackStruct])
-
-            value: typing.Union[None, Nullable, MediaPlayback.Structs.TrackStruct] = None
-
-        @dataclass
-        class AvailableAudioTracks(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, typing.List[MediaPlayback.Structs.TrackStruct]])
-
-            value: typing.Union[None, Nullable, typing.List[MediaPlayback.Structs.TrackStruct]] = None
-
-        @dataclass
-        class ActiveTextTrack(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, MediaPlayback.Structs.TrackStruct])
-
-            value: typing.Union[None, Nullable, MediaPlayback.Structs.TrackStruct] = None
-
-        @dataclass
-        class AvailableTextTracks(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, typing.List[MediaPlayback.Structs.TrackStruct]])
-
-            value: typing.Union[None, Nullable, typing.List[MediaPlayback.Structs.TrackStruct]] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000506
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000506, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

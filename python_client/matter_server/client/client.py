@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any, Final, Literal, Self, cast
 import uuid
 
 from chip.clusters import Objects as Clusters
+from chip.clusters.ClusterObjects import missing_cluster_modules, preload_clusters
 from chip.clusters.Types import NullValue
 from matter_server.common.errors import (
     MatterError,
@@ -72,6 +73,24 @@ if TYPE_CHECKING:
 SUB_WILDCARD: Final = "*"
 
 # pylint: disable=too-many-public-methods,too-many-locals,too-many-branches
+
+
+def _cluster_id(attribute_path: str) -> int:
+    """Cluster id of an ENDPOINT/CLUSTER/ATTRIBUTE path."""
+    return int(attribute_path.split("/", 2)[1])
+
+
+def _cluster_ids_in_message(msg: object) -> set[int]:
+    """Cluster ids an incoming event names whose modules are not loaded yet."""
+    if not isinstance(msg, EventMessage):
+        return set()
+    if msg.event in (EventType.NODE_ADDED, EventType.NODE_UPDATED) and isinstance(msg.data, dict):
+        ids = {_cluster_id(p) for p in msg.data.get("attributes", {})}
+    elif msg.event == EventType.ATTRIBUTE_UPDATED:
+        ids = {_cluster_id(msg.data[1])}
+    else:
+        return set()
+    return ids if missing_cluster_modules(ids) else set()
 
 
 class MatterClient:
@@ -816,6 +835,10 @@ class MatterClient:
             nodes_msg = cast(SuccessResultMessage, await self.connection.receive_message_or_raise())
             # a full dump of all nodes will be the result of the start_listening command
             # create MatterNode objects from the basic MatterNodeData objects
+            # Import the cluster modules these nodes use in one executor hop, not on the event loop.
+            await self._preload_clusters(
+                {_cluster_id(p) for x in nodes_msg.result for p in x.get("attributes", {})}
+            )
             nodes = [MatterNode(dataclass_from_dict(MatterNodeData, x)) for x in nodes_msg.result]
             self._nodes = {node.node_id: node for node in nodes}
             # once we've hit this point we're all set
@@ -826,11 +849,18 @@ class MatterClient:
             # keep reading incoming messages
             while not self._stop_called:
                 msg = await self.connection.receive_message_or_raise()
+                if cluster_ids := _cluster_ids_in_message(msg):
+                    await self._preload_clusters(cluster_ids)
                 self._handle_incoming_message(msg)
         except ConnectionClosed:
             pass
         finally:
             await self.disconnect()
+
+    async def _preload_clusters(self, cluster_ids: set[int]) -> None:
+        """Import cluster modules not loaded yet in the executor (no-op when all are loaded)."""
+        if missing_cluster_modules(cluster_ids):
+            await asyncio.get_running_loop().run_in_executor(None, preload_clusters, cluster_ids)
 
     async def disconnect(self) -> None:
         """Disconnect the client and cleanup."""

@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -251,354 +251,46 @@ class WindowCovering(Cluster):
             ignored: typing.Optional[uint] = None
 
     class Attributes:
-        @dataclass
-        class Type(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=WindowCovering.Enums.Type)
-
-            value: WindowCovering.Enums.Type = 0
-
-        @dataclass
-        class NumberOfActuationsLift(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class NumberOfActuationsTilt(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ConfigStatus(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=WindowCovering.Bitmaps.ConfigStatus)
-
-            value: WindowCovering.Bitmaps.ConfigStatus = 0
-
-        @dataclass
-        class CurrentPositionLiftPercentage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class CurrentPositionTiltPercentage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class OperationalStatus(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=WindowCovering.Bitmaps.OperationalStatus)
+        Type = _attr(__module__, __qualname__, "Type", 0x00000102, 0x00000000, "WindowCovering.Enums.Type", 0)
 
-            value: WindowCovering.Bitmaps.OperationalStatus = 0
+        NumberOfActuationsLift = _attr(__module__, __qualname__, "NumberOfActuationsLift", 0x00000102, 0x00000005, "typing.Optional[uint]", None)
 
-        @dataclass
-        class TargetPositionLiftPercent100ths(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        NumberOfActuationsTilt = _attr(__module__, __qualname__, "NumberOfActuationsTilt", 0x00000102, 0x00000006, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ConfigStatus = _attr(__module__, __qualname__, "ConfigStatus", 0x00000102, 0x00000007, "WindowCovering.Bitmaps.ConfigStatus", 0)
 
-        @dataclass
-        class TargetPositionTiltPercent100ths(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        CurrentPositionLiftPercentage = _attr(__module__, __qualname__, "CurrentPositionLiftPercentage", 0x00000102, 0x00000008, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        CurrentPositionTiltPercentage = _attr(__module__, __qualname__, "CurrentPositionTiltPercentage", 0x00000102, 0x00000009, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class EndProductType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=WindowCovering.Enums.EndProductType)
+        OperationalStatus = _attr(__module__, __qualname__, "OperationalStatus", 0x00000102, 0x0000000A, "WindowCovering.Bitmaps.OperationalStatus", 0)
 
-            value: WindowCovering.Enums.EndProductType = 0
+        TargetPositionLiftPercent100ths = _attr(__module__, __qualname__, "TargetPositionLiftPercent100ths", 0x00000102, 0x0000000B, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class CurrentPositionLiftPercent100ths(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        TargetPositionTiltPercent100ths = _attr(__module__, __qualname__, "TargetPositionTiltPercent100ths", 0x00000102, 0x0000000C, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        EndProductType = _attr(__module__, __qualname__, "EndProductType", 0x00000102, 0x0000000D, "WindowCovering.Enums.EndProductType", 0)
 
-        @dataclass
-        class CurrentPositionTiltPercent100ths(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        CurrentPositionLiftPercent100ths = _attr(__module__, __qualname__, "CurrentPositionLiftPercent100ths", 0x00000102, 0x0000000E, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        CurrentPositionTiltPercent100ths = _attr(__module__, __qualname__, "CurrentPositionTiltPercent100ths", 0x00000102, 0x0000000F, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Mode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=WindowCovering.Bitmaps.Mode)
+        Mode = _attr(__module__, __qualname__, "Mode", 0x00000102, 0x00000017, "WindowCovering.Bitmaps.Mode", 0)
 
-            value: WindowCovering.Bitmaps.Mode = 0
+        SafetyStatus = _attr(__module__, __qualname__, "SafetyStatus", 0x00000102, 0x0000001A, "typing.Optional[WindowCovering.Bitmaps.SafetyStatus]", None)
 
-        @dataclass
-        class SafetyStatus(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[WindowCovering.Bitmaps.SafetyStatus])
+        WagoTravelTimeUp = _attr(__module__, __qualname__, "WagoTravelTimeUp", 0x00000102, 0x15340001, "typing.Optional[uint]", None)
 
-            value: typing.Optional[WindowCovering.Bitmaps.SafetyStatus] = None
+        WagoTravelTimeDown = _attr(__module__, __qualname__, "WagoTravelTimeDown", 0x00000102, 0x15340002, "typing.Optional[uint]", None)
 
-        @dataclass
-        class WagoTravelTimeUp(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x15340001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        WagoSlatRotationTime = _attr(__module__, __qualname__, "WagoSlatRotationTime", 0x00000102, 0x15340003, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000102, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class WagoTravelTimeDown(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x15340002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000102, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[uint] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000102, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class WagoSlatRotationTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000102, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x15340003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000102
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000102, 0x0000FFFD, "uint", 0)

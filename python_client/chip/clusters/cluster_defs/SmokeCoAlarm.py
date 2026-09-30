@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -151,309 +151,43 @@ class SmokeCoAlarm(Cluster):
 
 
     class Attributes:
-        @dataclass
-        class ExpressedState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=SmokeCoAlarm.Enums.ExpressedStateEnum)
-
-            value: SmokeCoAlarm.Enums.ExpressedStateEnum = 0
-
-        @dataclass
-        class SmokeState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum])
-
-            value: typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum] = None
-
-        @dataclass
-        class COState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum])
-
-            value: typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum] = None
-
-        @dataclass
-        class BatteryAlert(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=SmokeCoAlarm.Enums.AlarmStateEnum)
-
-            value: SmokeCoAlarm.Enums.AlarmStateEnum = 0
-
-        @dataclass
-        class DeviceMuted(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.MuteStateEnum])
-
-            value: typing.Optional[SmokeCoAlarm.Enums.MuteStateEnum] = None
-
-        @dataclass
-        class TestInProgress(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
-
-            value: bool = False
-
-        @dataclass
-        class HardwareFaultAlert(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
+        ExpressedState = _attr(__module__, __qualname__, "ExpressedState", 0x0000005C, 0x00000000, "SmokeCoAlarm.Enums.ExpressedStateEnum", 0)
 
-            value: bool = False
+        SmokeState = _attr(__module__, __qualname__, "SmokeState", 0x0000005C, 0x00000001, "typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum]", None)
 
-        @dataclass
-        class EndOfServiceAlert(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=SmokeCoAlarm.Enums.EndOfServiceEnum)
+        COState = _attr(__module__, __qualname__, "COState", 0x0000005C, 0x00000002, "typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum]", None)
 
-            value: SmokeCoAlarm.Enums.EndOfServiceEnum = 0
+        BatteryAlert = _attr(__module__, __qualname__, "BatteryAlert", 0x0000005C, 0x00000003, "SmokeCoAlarm.Enums.AlarmStateEnum", 0)
 
-        @dataclass
-        class InterconnectSmokeAlarm(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum])
+        DeviceMuted = _attr(__module__, __qualname__, "DeviceMuted", 0x0000005C, 0x00000004, "typing.Optional[SmokeCoAlarm.Enums.MuteStateEnum]", None)
 
-            value: typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum] = None
+        TestInProgress = _attr(__module__, __qualname__, "TestInProgress", 0x0000005C, 0x00000005, "bool", False)
 
-        @dataclass
-        class InterconnectCOAlarm(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum])
+        HardwareFaultAlert = _attr(__module__, __qualname__, "HardwareFaultAlert", 0x0000005C, 0x00000006, "bool", False)
 
-            value: typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum] = None
+        EndOfServiceAlert = _attr(__module__, __qualname__, "EndOfServiceAlert", 0x0000005C, 0x00000007, "SmokeCoAlarm.Enums.EndOfServiceEnum", 0)
 
-        @dataclass
-        class ContaminationState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.ContaminationStateEnum])
+        InterconnectSmokeAlarm = _attr(__module__, __qualname__, "InterconnectSmokeAlarm", 0x0000005C, 0x00000008, "typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum]", None)
 
-            value: typing.Optional[SmokeCoAlarm.Enums.ContaminationStateEnum] = None
+        InterconnectCOAlarm = _attr(__module__, __qualname__, "InterconnectCOAlarm", 0x0000005C, 0x00000009, "typing.Optional[SmokeCoAlarm.Enums.AlarmStateEnum]", None)
 
-        @dataclass
-        class SmokeSensitivityLevel(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[SmokeCoAlarm.Enums.SensitivityEnum])
+        ContaminationState = _attr(__module__, __qualname__, "ContaminationState", 0x0000005C, 0x0000000A, "typing.Optional[SmokeCoAlarm.Enums.ContaminationStateEnum]", None)
 
-            value: typing.Optional[SmokeCoAlarm.Enums.SensitivityEnum] = None
+        SmokeSensitivityLevel = _attr(__module__, __qualname__, "SmokeSensitivityLevel", 0x0000005C, 0x0000000B, "typing.Optional[SmokeCoAlarm.Enums.SensitivityEnum]", None)
 
-        @dataclass
-        class ExpiryDate(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ExpiryDate = _attr(__module__, __qualname__, "ExpiryDate", 0x0000005C, 0x0000000C, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        Unmounted = _attr(__module__, __qualname__, "Unmounted", 0x0000005C, 0x0000000D, "typing.Optional[bool]", None)
 
-        @dataclass
-        class Unmounted(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x0000005C, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000D
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x0000005C, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x0000005C, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[bool] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x0000005C, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005C
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x0000005C, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

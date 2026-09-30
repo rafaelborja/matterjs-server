@@ -4,8 +4,8 @@
  Users can import chip.clusters.Objects to get all cluster definitions.
 """
 
-# Re-export all cluster classes from per-cluster files
-from chip.clusters.cluster_defs import *  # noqa: F401,F403
+# Cluster classes resolve from their per-cluster files on first access.
+from chip.clusters import cluster_defs as _cluster_defs
 
 # Also re-export base classes and primitive types for backward compatibility
 from chip.clusters.ClusterObjects import (  # noqa: F401
@@ -178,3 +178,15 @@ __all__ = [
     "WindowCovering",
     "ZoneManagement",
 ]
+
+
+def __getattr__(name: str) -> object:
+    if name in _cluster_defs._NAMES:
+        value = getattr(_cluster_defs, name)
+        globals()[name] = value
+        return value
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | _cluster_defs._NAMES)

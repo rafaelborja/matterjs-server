@@ -5,6 +5,7 @@ custom_clusters.py build upon.
 """
 
 import enum
+import sys
 import typing
 from dataclasses import asdict, dataclass, field, make_dataclass
 from typing import Any, ClassVar, Dict, List, Mapping, Union
@@ -201,12 +202,119 @@ class ClusterObject:
         raise NotImplementedError()
 
 
+# The registries import the owning cluster module on the first lookup of an id, so only the
+# clusters that are actually used get loaded. The id -> module index is generated.
+from .cluster_index import CLUSTER_ID_TO_MODULE as _CLUSTER_ID_TO_MODULE  # noqa: E402
+_LOADED_CLUSTER_MODULES: typing.Set[str] = set()
+
+
+def _load_cluster_module(module: str) -> None:
+    if module in _LOADED_CLUSTER_MODULES:
+        return
+    __import__("chip.clusters.cluster_defs." + module)
+    _LOADED_CLUSTER_MODULES.add(module)
+
+
+def _load_all_cluster_modules() -> None:
+    for module in sorted(set(_CLUSTER_ID_TO_MODULE.values())):
+        _load_cluster_module(module)
+
+
+# Let callers import the modules for known cluster ids off the event loop.
+def missing_cluster_modules(cluster_ids: typing.Iterable[int]) -> typing.Set[str]:
+    """Cluster modules for these ids that are not imported yet (never imports)."""
+    return {
+        module
+        for module in (_CLUSTER_ID_TO_MODULE.get(i) for i in cluster_ids)
+        if module is not None
+        and module not in _LOADED_CLUSTER_MODULES
+        and "chip.clusters.cluster_defs." + module not in sys.modules
+    }
+
+
+def preload_clusters(cluster_ids: typing.Iterable[int]) -> int:
+    """Import the modules for these cluster ids; run it in an executor. Returns how many loaded."""
+    modules = missing_cluster_modules(cluster_ids)
+    for module in sorted(modules):
+        _load_cluster_module(module)
+    return len(modules)
+
+
+class _LazyRegistry(dict):
+    """Cluster-id keyed registry that loads the cluster module on a missing id."""
+
+    def _resolve(self, key) -> bool:
+        if dict.__contains__(self, key):
+            return True
+        try:
+            module = _CLUSTER_ID_TO_MODULE.get(key)
+        except TypeError:
+            return False
+        if module is None or module in _LOADED_CLUSTER_MODULES:
+            return False
+        _load_cluster_module(module)
+        return dict.__contains__(self, key)
+
+    def __contains__(self, key) -> bool:
+        return self._resolve(key)
+
+    def __missing__(self, key):
+        if self._resolve(key):
+            return dict.__getitem__(self, key)
+        raise KeyError(key)
+
+    def get(self, key, default=None):
+        return dict.__getitem__(self, key) if self._resolve(key) else default
+
+    def __iter__(self):
+        _load_all_cluster_modules()
+        return dict.__iter__(self)
+
+    def __reversed__(self):
+        _load_all_cluster_modules()
+        return dict.__reversed__(self)
+
+    def __len__(self) -> int:
+        _load_all_cluster_modules()
+        return dict.__len__(self)
+
+    def keys(self):
+        _load_all_cluster_modules()
+        return dict.keys(self)
+
+    def values(self):
+        _load_all_cluster_modules()
+        return dict.values(self)
+
+    def items(self):
+        _load_all_cluster_modules()
+        return dict.items(self)
+
+    def copy(self):
+        _load_all_cluster_modules()
+        return dict(dict.items(self))
+
+    def __eq__(self, other):
+        _load_all_cluster_modules()
+        return dict.__eq__(self, other)
+
+    def __ne__(self, other):
+        _load_all_cluster_modules()
+        return dict.__ne__(self, other)
+
+    __hash__ = None
+
+    def __repr__(self) -> str:
+        _load_all_cluster_modules()
+        return dict.__repr__(self)
+
+
 # Global registration dictionaries populated via __init_subclass__
-ALL_CLUSTERS: typing.Dict = {}
-ALL_ATTRIBUTES: typing.Dict = {}
-ALL_ACCEPTED_COMMANDS: typing.Dict = {}
-ALL_GENERATED_COMMANDS: typing.Dict = {}
-ALL_EVENTS: typing.Dict = {}
+ALL_CLUSTERS: typing.Dict = _LazyRegistry()
+ALL_ATTRIBUTES: typing.Dict = _LazyRegistry()
+ALL_ACCEPTED_COMMANDS: typing.Dict = _LazyRegistry()
+ALL_GENERATED_COMMANDS: typing.Dict = _LazyRegistry()
+ALL_EVENTS: typing.Dict = _LazyRegistry()
 
 
 class ClusterCommand(ClusterObject):
@@ -214,11 +322,11 @@ class ClusterCommand(ClusterObject):
         super().__init_subclass__(*args, **kwargs)
         try:
             if cls.is_client:
-                if cls.cluster_id not in ALL_ACCEPTED_COMMANDS:
+                if not dict.__contains__(ALL_ACCEPTED_COMMANDS, cls.cluster_id):
                     ALL_ACCEPTED_COMMANDS[cls.cluster_id] = {}
                 ALL_ACCEPTED_COMMANDS[cls.cluster_id][cls.command_id] = cls
             else:
-                if cls.cluster_id not in ALL_GENERATED_COMMANDS:
+                if not dict.__contains__(ALL_GENERATED_COMMANDS, cls.cluster_id):
                     ALL_GENERATED_COMMANDS[cls.cluster_id] = {}
                 ALL_GENERATED_COMMANDS[cls.cluster_id][cls.command_id] = cls
         except NotImplementedError:
@@ -262,7 +370,7 @@ class ClusterAttributeDescriptor:
     def __init_subclass__(cls, *args, **kwargs) -> None:
         super().__init_subclass__(*args, **kwargs)
         if cls.standard_attribute:
-            if cls.cluster_id not in ALL_ATTRIBUTES:
+            if not dict.__contains__(ALL_ATTRIBUTES, cls.cluster_id):
                 ALL_ATTRIBUTES[cls.cluster_id] = {}
             ALL_ATTRIBUTES[cls.cluster_id][cls.attribute_id] = cls
 
@@ -335,10 +443,54 @@ class ClusterAttributeDescriptor:
         )
 
 
+
+# Shared base for generated attribute classes (one dataclass instead of one per attribute).
+_ATTR_MISSING = object()
+
+
+@dataclass(init=False)
+class _CompactAttributeDescriptor(ClusterAttributeDescriptor):
+    standard_attribute = False  # the base itself is not registered
+    value: typing.Any = None
+
+    def __init__(self, value: typing.Any = _ATTR_MISSING) -> None:
+        if value is _ATTR_MISSING:
+            cls = type(self)
+            if cls._default_factory is None:
+                value = cls._default
+            else:
+                value = eval(cls._default_factory, sys.modules[cls.__module__].__dict__)
+        self.value = value
+
+    @ChipUtility.classproperty
+    def attribute_type(cls) -> ClusterObjectFieldDescriptor:
+        t = cls.__dict__.get("_type_cache", _ATTR_MISSING)
+        if t is _ATTR_MISSING:
+            t = eval(cls._type_src, sys.modules[cls.__module__].__dict__)
+            type.__setattr__(cls, "_type_cache", t)
+        return ClusterObjectFieldDescriptor(Type=t)
+
+
+def _attr(module: str, owner_qualname: str, name: str, cluster_id: int, attribute_id: int,
+          type_src: str, default: typing.Any = None, default_factory: typing.Optional[str] = None) -> type:
+    ns = {
+        "__module__": module,
+        "__qualname__": owner_qualname + "." + name,
+        "standard_attribute": True,
+        "cluster_id": cluster_id,
+        "attribute_id": attribute_id,
+        "_type_src": type_src,
+        "_default": default,
+        "_default_factory": default_factory,
+    }
+    if default_factory is None:
+        ns["value"] = default
+    return type(name, (_CompactAttributeDescriptor,), ns)
+
 class ClusterEvent(ClusterObject):
     def __init_subclass__(cls, *args, **kwargs) -> None:
         super().__init_subclass__(*args, **kwargs)
-        if cls.cluster_id not in ALL_EVENTS:
+        if not dict.__contains__(ALL_EVENTS, cls.cluster_id):
             ALL_EVENTS[cls.cluster_id] = {}
         ALL_EVENTS[cls.cluster_id][cls.event_id] = cls
 

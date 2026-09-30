@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -259,290 +259,38 @@ class GeneralCommissioning(Cluster):
             errorCode: GeneralCommissioning.Enums.CommissioningErrorEnum = 0
 
     class Attributes:
-        @dataclass
-        class Breadcrumb(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class BasicCommissioningInfo(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=GeneralCommissioning.Structs.BasicCommissioningInfo)
-
-            value: GeneralCommissioning.Structs.BasicCommissioningInfo = field(default_factory=lambda: GeneralCommissioning.Structs.BasicCommissioningInfo())
-
-        @dataclass
-        class RegulatoryConfig(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=GeneralCommissioning.Enums.RegulatoryLocationTypeEnum)
-
-            value: GeneralCommissioning.Enums.RegulatoryLocationTypeEnum = 0
-
-        @dataclass
-        class LocationCapability(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=GeneralCommissioning.Enums.RegulatoryLocationTypeEnum)
-
-            value: GeneralCommissioning.Enums.RegulatoryLocationTypeEnum = 0
-
-        @dataclass
-        class SupportsConcurrentConnection(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
-
-            value: bool = False
-
-        @dataclass
-        class TCAcceptedVersion(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class TCMinRequiredVersion(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Breadcrumb = _attr(__module__, __qualname__, "Breadcrumb", 0x00000030, 0x00000000, "uint", 0)
 
-            value: typing.Optional[uint] = None
+        BasicCommissioningInfo = _attr(__module__, __qualname__, "BasicCommissioningInfo", 0x00000030, 0x00000001, "GeneralCommissioning.Structs.BasicCommissioningInfo", None, "GeneralCommissioning.Structs.BasicCommissioningInfo()")
 
-        @dataclass
-        class TCAcknowledgements(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Globals.Bitmaps.map16])
+        RegulatoryConfig = _attr(__module__, __qualname__, "RegulatoryConfig", 0x00000030, 0x00000002, "GeneralCommissioning.Enums.RegulatoryLocationTypeEnum", 0)
 
-            value: typing.Optional[Globals.Bitmaps.map16] = None
+        LocationCapability = _attr(__module__, __qualname__, "LocationCapability", 0x00000030, 0x00000003, "GeneralCommissioning.Enums.RegulatoryLocationTypeEnum", 0)
 
-        @dataclass
-        class TCAcknowledgementsRequired(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        SupportsConcurrentConnection = _attr(__module__, __qualname__, "SupportsConcurrentConnection", 0x00000030, 0x00000004, "bool", False)
 
-            value: typing.Optional[bool] = None
+        TCAcceptedVersion = _attr(__module__, __qualname__, "TCAcceptedVersion", 0x00000030, 0x00000005, "typing.Optional[uint]", None)
 
-        @dataclass
-        class TCUpdateDeadline(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        TCMinRequiredVersion = _attr(__module__, __qualname__, "TCMinRequiredVersion", 0x00000030, 0x00000006, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        TCAcknowledgements = _attr(__module__, __qualname__, "TCAcknowledgements", 0x00000030, 0x00000007, "typing.Optional[Globals.Bitmaps.map16]", None)
 
-        @dataclass
-        class RecoveryIdentifier(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bytes])
+        TCAcknowledgementsRequired = _attr(__module__, __qualname__, "TCAcknowledgementsRequired", 0x00000030, 0x00000008, "typing.Optional[bool]", None)
 
-            value: typing.Optional[bytes] = None
+        TCUpdateDeadline = _attr(__module__, __qualname__, "TCUpdateDeadline", 0x00000030, 0x00000009, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class NetworkRecoveryReason(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, GeneralCommissioning.Enums.NetworkRecoveryReasonEnum])
+        RecoveryIdentifier = _attr(__module__, __qualname__, "RecoveryIdentifier", 0x00000030, 0x0000000A, "typing.Optional[bytes]", None)
 
-            value: typing.Union[None, Nullable, GeneralCommissioning.Enums.NetworkRecoveryReasonEnum] = None
+        NetworkRecoveryReason = _attr(__module__, __qualname__, "NetworkRecoveryReason", 0x00000030, 0x0000000B, "typing.Union[None, Nullable, GeneralCommissioning.Enums.NetworkRecoveryReasonEnum]", None)
 
-        @dataclass
-        class IsCommissioningWithoutPower(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
+        IsCommissioningWithoutPower = _attr(__module__, __qualname__, "IsCommissioningWithoutPower", 0x00000030, 0x0000000C, "typing.Optional[bool]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000030, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000030, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[bool] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000030, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000030, 0x0000FFFC, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000030, 0x0000FFFD, "uint", 0)

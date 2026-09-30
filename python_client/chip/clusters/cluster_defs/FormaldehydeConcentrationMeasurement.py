@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -105,258 +105,34 @@ class FormaldehydeConcentrationMeasurement(Cluster):
             kAverageMeasurement = 0x20
 
     class Attributes:
-        @dataclass
-        class MeasuredValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
+        MeasuredValue = _attr(__module__, __qualname__, "MeasuredValue", 0x0000042B, 0x00000000, "typing.Union[None, Nullable, float32]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        MinMeasuredValue = _attr(__module__, __qualname__, "MinMeasuredValue", 0x0000042B, 0x00000001, "typing.Union[None, Nullable, float32]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, float32])
+        MaxMeasuredValue = _attr(__module__, __qualname__, "MaxMeasuredValue", 0x0000042B, 0x00000002, "typing.Union[None, Nullable, float32]", None)
 
-            value: typing.Union[None, Nullable, float32] = None
+        PeakMeasuredValue = _attr(__module__, __qualname__, "PeakMeasuredValue", 0x0000042B, 0x00000003, "typing.Union[None, Nullable, float32]", None)
 
-        @dataclass
-        class MinMeasuredValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
+        PeakMeasuredValueWindow = _attr(__module__, __qualname__, "PeakMeasuredValueWindow", 0x0000042B, 0x00000004, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        AverageMeasuredValue = _attr(__module__, __qualname__, "AverageMeasuredValue", 0x0000042B, 0x00000005, "typing.Union[None, Nullable, float32]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, float32])
+        AverageMeasuredValueWindow = _attr(__module__, __qualname__, "AverageMeasuredValueWindow", 0x0000042B, 0x00000006, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, float32] = None
+        Uncertainty = _attr(__module__, __qualname__, "Uncertainty", 0x0000042B, 0x00000007, "typing.Optional[float32]", None)
 
-        @dataclass
-        class MaxMeasuredValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
+        MeasurementUnit = _attr(__module__, __qualname__, "MeasurementUnit", 0x0000042B, 0x00000008, "typing.Optional[FormaldehydeConcentrationMeasurement.Enums.MeasurementUnitEnum]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        MeasurementMedium = _attr(__module__, __qualname__, "MeasurementMedium", 0x0000042B, 0x00000009, "FormaldehydeConcentrationMeasurement.Enums.MeasurementMediumEnum", 0)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, float32])
+        LevelValue = _attr(__module__, __qualname__, "LevelValue", 0x0000042B, 0x0000000A, "typing.Optional[FormaldehydeConcentrationMeasurement.Enums.LevelValueEnum]", None)
 
-            value: typing.Union[None, Nullable, float32] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x0000042B, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class PeakMeasuredValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x0000042B, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x0000042B, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, float32])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x0000042B, 0x0000FFFC, "uint", 0)
 
-            value: typing.Union[None, Nullable, float32] = None
-
-        @dataclass
-        class PeakMeasuredValueWindow(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class AverageMeasuredValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, float32])
-
-            value: typing.Union[None, Nullable, float32] = None
-
-        @dataclass
-        class AverageMeasuredValueWindow(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class Uncertainty(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
-
-            value: typing.Optional[float32] = None
-
-        @dataclass
-        class MeasurementUnit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[FormaldehydeConcentrationMeasurement.Enums.MeasurementUnitEnum])
-
-            value: typing.Optional[FormaldehydeConcentrationMeasurement.Enums.MeasurementUnitEnum] = None
-
-        @dataclass
-        class MeasurementMedium(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=FormaldehydeConcentrationMeasurement.Enums.MeasurementMediumEnum)
-
-            value: FormaldehydeConcentrationMeasurement.Enums.MeasurementMediumEnum = 0
-
-        @dataclass
-        class LevelValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[FormaldehydeConcentrationMeasurement.Enums.LevelValueEnum])
-
-            value: typing.Optional[FormaldehydeConcentrationMeasurement.Enums.LevelValueEnum] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000042B
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x0000042B, 0x0000FFFD, "uint", 0)

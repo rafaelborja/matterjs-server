@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -326,597 +326,79 @@ class PowerSource(Cluster):
             kReplaceable = 0x8
 
     class Attributes:
-        @dataclass
-        class Status(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=PowerSource.Enums.PowerSourceStatusEnum)
-
-            value: PowerSource.Enums.PowerSourceStatusEnum = 0
-
-        @dataclass
-        class Order(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class Description(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=str)
-
-            value: str = ""
-
-        @dataclass
-        class WiredAssessedInputVoltage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class WiredAssessedInputFrequency(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class WiredCurrentType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PowerSource.Enums.WiredCurrentTypeEnum])
-
-            value: typing.Optional[PowerSource.Enums.WiredCurrentTypeEnum] = None
-
-        @dataclass
-        class WiredAssessedCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        Status = _attr(__module__, __qualname__, "Status", 0x0000002F, 0x00000000, "PowerSource.Enums.PowerSourceStatusEnum", 0)
 
-            value: typing.Union[None, Nullable, uint] = None
+        Order = _attr(__module__, __qualname__, "Order", 0x0000002F, 0x00000001, "uint", 0)
 
-        @dataclass
-        class WiredNominalVoltage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Description = _attr(__module__, __qualname__, "Description", 0x0000002F, 0x00000002, "str", "")
 
-            value: typing.Optional[uint] = None
+        WiredAssessedInputVoltage = _attr(__module__, __qualname__, "WiredAssessedInputVoltage", 0x0000002F, 0x00000003, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class WiredMaximumCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        WiredAssessedInputFrequency = _attr(__module__, __qualname__, "WiredAssessedInputFrequency", 0x0000002F, 0x00000004, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[uint] = None
+        WiredCurrentType = _attr(__module__, __qualname__, "WiredCurrentType", 0x0000002F, 0x00000005, "typing.Optional[PowerSource.Enums.WiredCurrentTypeEnum]", None)
 
-        @dataclass
-        class WiredPresent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        WiredAssessedCurrent = _attr(__module__, __qualname__, "WiredAssessedCurrent", 0x0000002F, 0x00000006, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[bool] = None
+        WiredNominalVoltage = _attr(__module__, __qualname__, "WiredNominalVoltage", 0x0000002F, 0x00000007, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ActiveWiredFaults(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[PowerSource.Enums.WiredFaultEnum]])
+        WiredMaximumCurrent = _attr(__module__, __qualname__, "WiredMaximumCurrent", 0x0000002F, 0x00000008, "typing.Optional[uint]", None)
 
-            value: typing.Optional[typing.List[PowerSource.Enums.WiredFaultEnum]] = None
+        WiredPresent = _attr(__module__, __qualname__, "WiredPresent", 0x0000002F, 0x00000009, "typing.Optional[bool]", None)
 
-        @dataclass
-        class BatVoltage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        ActiveWiredFaults = _attr(__module__, __qualname__, "ActiveWiredFaults", 0x0000002F, 0x0000000A, "typing.Optional[typing.List[PowerSource.Enums.WiredFaultEnum]]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        BatVoltage = _attr(__module__, __qualname__, "BatVoltage", 0x0000002F, 0x0000000B, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class BatPercentRemaining(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        BatPercentRemaining = _attr(__module__, __qualname__, "BatPercentRemaining", 0x0000002F, 0x0000000C, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        BatTimeRemaining = _attr(__module__, __qualname__, "BatTimeRemaining", 0x0000002F, 0x0000000D, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class BatTimeRemaining(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        BatChargeLevel = _attr(__module__, __qualname__, "BatChargeLevel", 0x0000002F, 0x0000000E, "typing.Optional[PowerSource.Enums.BatChargeLevelEnum]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        BatReplacementNeeded = _attr(__module__, __qualname__, "BatReplacementNeeded", 0x0000002F, 0x0000000F, "typing.Optional[bool]", None)
 
-        @dataclass
-        class BatChargeLevel(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PowerSource.Enums.BatChargeLevelEnum])
+        BatReplaceability = _attr(__module__, __qualname__, "BatReplaceability", 0x0000002F, 0x00000010, "typing.Optional[PowerSource.Enums.BatReplaceabilityEnum]", None)
 
-            value: typing.Optional[PowerSource.Enums.BatChargeLevelEnum] = None
+        BatPresent = _attr(__module__, __qualname__, "BatPresent", 0x0000002F, 0x00000011, "typing.Optional[bool]", None)
 
-        @dataclass
-        class BatReplacementNeeded(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        ActiveBatFaults = _attr(__module__, __qualname__, "ActiveBatFaults", 0x0000002F, 0x00000012, "typing.Optional[typing.List[PowerSource.Enums.BatFaultEnum]]", None)
 
-            value: typing.Optional[bool] = None
+        BatReplacementDescription = _attr(__module__, __qualname__, "BatReplacementDescription", 0x0000002F, 0x00000013, "typing.Optional[str]", None)
 
-        @dataclass
-        class BatReplaceability(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PowerSource.Enums.BatReplaceabilityEnum])
+        BatCommonDesignation = _attr(__module__, __qualname__, "BatCommonDesignation", 0x0000002F, 0x00000014, "typing.Optional[PowerSource.Enums.BatCommonDesignationEnum]", None)
 
-            value: typing.Optional[PowerSource.Enums.BatReplaceabilityEnum] = None
+        BatANSIDesignation = _attr(__module__, __qualname__, "BatANSIDesignation", 0x0000002F, 0x00000015, "typing.Optional[str]", None)
 
-        @dataclass
-        class BatPresent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        BatIECDesignation = _attr(__module__, __qualname__, "BatIECDesignation", 0x0000002F, 0x00000016, "typing.Optional[str]", None)
 
-            value: typing.Optional[bool] = None
+        BatApprovedChemistry = _attr(__module__, __qualname__, "BatApprovedChemistry", 0x0000002F, 0x00000017, "typing.Optional[PowerSource.Enums.BatApprovedChemistryEnum]", None)
 
-        @dataclass
-        class ActiveBatFaults(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[PowerSource.Enums.BatFaultEnum]])
+        BatCapacity = _attr(__module__, __qualname__, "BatCapacity", 0x0000002F, 0x00000018, "typing.Optional[uint]", None)
 
-            value: typing.Optional[typing.List[PowerSource.Enums.BatFaultEnum]] = None
+        BatQuantity = _attr(__module__, __qualname__, "BatQuantity", 0x0000002F, 0x00000019, "typing.Optional[uint]", None)
 
-        @dataclass
-        class BatReplacementDescription(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000013
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
+        BatChargeState = _attr(__module__, __qualname__, "BatChargeState", 0x0000002F, 0x0000001A, "typing.Optional[PowerSource.Enums.BatChargeStateEnum]", None)
 
-            value: typing.Optional[str] = None
+        BatTimeToFullCharge = _attr(__module__, __qualname__, "BatTimeToFullCharge", 0x0000002F, 0x0000001B, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class BatCommonDesignation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000014
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PowerSource.Enums.BatCommonDesignationEnum])
+        BatFunctionalWhileCharging = _attr(__module__, __qualname__, "BatFunctionalWhileCharging", 0x0000002F, 0x0000001C, "typing.Optional[bool]", None)
 
-            value: typing.Optional[PowerSource.Enums.BatCommonDesignationEnum] = None
+        BatChargingCurrent = _attr(__module__, __qualname__, "BatChargingCurrent", 0x0000002F, 0x0000001D, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class BatANSIDesignation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000015
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
+        ActiveBatChargeFaults = _attr(__module__, __qualname__, "ActiveBatChargeFaults", 0x0000002F, 0x0000001E, "typing.Optional[typing.List[PowerSource.Enums.BatChargeFaultEnum]]", None)
 
-            value: typing.Optional[str] = None
+        EndpointList = _attr(__module__, __qualname__, "EndpointList", 0x0000002F, 0x0000001F, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class BatIECDesignation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000016
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x0000002F, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[str] = None
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x0000002F, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class BatApprovedChemistry(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PowerSource.Enums.BatApprovedChemistryEnum])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x0000002F, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[PowerSource.Enums.BatApprovedChemistryEnum] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x0000002F, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class BatCapacity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000018
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class BatQuantity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000019
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class BatChargeState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[PowerSource.Enums.BatChargeStateEnum])
-
-            value: typing.Optional[PowerSource.Enums.BatChargeStateEnum] = None
-
-        @dataclass
-        class BatTimeToFullCharge(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class BatFunctionalWhileCharging(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class BatChargingCurrent(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class ActiveBatChargeFaults(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[PowerSource.Enums.BatChargeFaultEnum]])
-
-            value: typing.Optional[typing.List[PowerSource.Enums.BatChargeFaultEnum]] = None
-
-        @dataclass
-        class EndpointList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000002F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x0000002F, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

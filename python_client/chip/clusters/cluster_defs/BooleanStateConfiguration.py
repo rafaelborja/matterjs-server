@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -100,213 +100,31 @@ class BooleanStateConfiguration(Cluster):
             alarmsToEnableDisable: BooleanStateConfiguration.Bitmaps.AlarmModeBitmap = 0
 
     class Attributes:
-        @dataclass
-        class CurrentSensitivityLevel(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
+        CurrentSensitivityLevel = _attr(__module__, __qualname__, "CurrentSensitivityLevel", 0x00000080, 0x00000000, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        SupportedSensitivityLevels = _attr(__module__, __qualname__, "SupportedSensitivityLevels", 0x00000080, 0x00000001, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        DefaultSensitivityLevel = _attr(__module__, __qualname__, "DefaultSensitivityLevel", 0x00000080, 0x00000002, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        AlarmsActive = _attr(__module__, __qualname__, "AlarmsActive", 0x00000080, 0x00000003, "typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap]", None)
 
-        @dataclass
-        class SupportedSensitivityLevels(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
+        AlarmsSuppressed = _attr(__module__, __qualname__, "AlarmsSuppressed", 0x00000080, 0x00000004, "typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        AlarmsEnabled = _attr(__module__, __qualname__, "AlarmsEnabled", 0x00000080, 0x00000005, "typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AlarmsSupported = _attr(__module__, __qualname__, "AlarmsSupported", 0x00000080, 0x00000006, "typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap]", None)
 
-            value: typing.Optional[uint] = None
+        SensorFault = _attr(__module__, __qualname__, "SensorFault", 0x00000080, 0x00000007, "typing.Optional[BooleanStateConfiguration.Bitmaps.SensorFaultBitmap]", None)
 
-        @dataclass
-        class DefaultSensitivityLevel(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000080, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000080, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000080, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[uint] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000080, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class AlarmsActive(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap])
-
-            value: typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap] = None
-
-        @dataclass
-        class AlarmsSuppressed(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap])
-
-            value: typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap] = None
-
-        @dataclass
-        class AlarmsEnabled(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap])
-
-            value: typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap] = None
-
-        @dataclass
-        class AlarmsSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap])
-
-            value: typing.Optional[BooleanStateConfiguration.Bitmaps.AlarmModeBitmap] = None
-
-        @dataclass
-        class SensorFault(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[BooleanStateConfiguration.Bitmaps.SensorFaultBitmap])
-
-            value: typing.Optional[BooleanStateConfiguration.Bitmaps.SensorFaultBitmap] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000080, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

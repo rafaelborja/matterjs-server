@@ -1,5 +1,9 @@
 # Python Client for the OHF Matter Server
 
+> **Low-memory experiment (personal fork).** This branch is a personal experiment to run Home Assistant on very limited hardware. It is not an official release and is not supported by or affiliated with the Open Home Foundation or the matter-js maintainers. Use it at your own risk. Upstream is https://github.com/matter-js/matterjs-server.
+>
+> Compared with 1.4.0: Matter cluster definitions are loaded only for the clusters your devices use, attribute classes share one base class instead of one dataclass each, and the client preloads the clusters it needs in a background thread, so nothing is imported on the event loop.
+
 A PyPI package (`matter-python-client`) providing Python bindings for the [OHF Matter Server](https://github.com/matter-js/matterjs-server). This is a drop-in replacement for the client portion of [`python-matter-server`](https://github.com/matter-js/python-matter-server), with custom cluster definitions updated to match the Matter.js server.
 
 ## Origin

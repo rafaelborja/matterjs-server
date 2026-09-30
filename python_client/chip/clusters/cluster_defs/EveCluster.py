@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -78,418 +78,54 @@ class EveCluster(Cluster):
     clusterRevision: uint = 0
 
     class Attributes:
-        @dataclass
-        class GetConfig(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bytes])
-
-            value: typing.Optional[bytes] = None
-
-        @dataclass
-        class SetConfig(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bytes])
-
-            value: typing.Optional[bytes] = None
-
-        @dataclass
-        class LoggingMetadata(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bytes])
-
-            value: typing.Optional[bytes] = None
-
-        @dataclass
-        class LoggingData(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bytes])
-
-            value: typing.Optional[bytes] = None
-
-        @dataclass
-        class TimesOpened(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class LastEventTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class Voltage(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
+        GetConfig = _attr(__module__, __qualname__, "GetConfig", 0x130AFC01, 0x130A0000, "typing.Optional[bytes]", None)
 
-            value: typing.Optional[float32] = None
+        SetConfig = _attr(__module__, __qualname__, "SetConfig", 0x130AFC01, 0x130A0001, "typing.Optional[bytes]", None)
 
-        @dataclass
-        class Current(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
+        LoggingMetadata = _attr(__module__, __qualname__, "LoggingMetadata", 0x130AFC01, 0x130A0002, "typing.Optional[bytes]", None)
 
-            value: typing.Optional[float32] = None
+        LoggingData = _attr(__module__, __qualname__, "LoggingData", 0x130AFC01, 0x130A0003, "typing.Optional[bytes]", None)
 
-        @dataclass
-        class Watt(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
+        TimesOpened = _attr(__module__, __qualname__, "TimesOpened", 0x130AFC01, 0x130A0006, "typing.Optional[uint]", None)
 
-            value: typing.Optional[float32] = None
+        LastEventTime = _attr(__module__, __qualname__, "LastEventTime", 0x130AFC01, 0x130A0007, "typing.Optional[uint]", None)
 
-        @dataclass
-        class WattAccumulated(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
+        Voltage = _attr(__module__, __qualname__, "Voltage", 0x130AFC01, 0x130A0008, "typing.Optional[float32]", None)
 
-            value: typing.Optional[float32] = None
+        Current = _attr(__module__, __qualname__, "Current", 0x130AFC01, 0x130A0009, "typing.Optional[float32]", None)
 
-        @dataclass
-        class StatusFault(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Watt = _attr(__module__, __qualname__, "Watt", 0x130AFC01, 0x130A000A, "typing.Optional[float32]", None)
 
-            value: typing.Optional[uint] = None
+        WattAccumulated = _attr(__module__, __qualname__, "WattAccumulated", 0x130AFC01, 0x130A000B, "typing.Optional[float32]", None)
 
-        @dataclass
-        class MotionSensitivity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A000D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        StatusFault = _attr(__module__, __qualname__, "StatusFault", 0x130AFC01, 0x130A000C, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        MotionSensitivity = _attr(__module__, __qualname__, "MotionSensitivity", 0x130AFC01, 0x130A000D, "typing.Optional[uint]", None)
 
-        @dataclass
-        class WattAccumulatedControlPoint(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A000E
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        WattAccumulatedControlPoint = _attr(__module__, __qualname__, "WattAccumulatedControlPoint", 0x130AFC01, 0x130A000E, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        ObstructionDetected = _attr(__module__, __qualname__, "ObstructionDetected", 0x130AFC01, 0x130A0010, "typing.Optional[bool]", None)
 
-        @dataclass
-        class ObstructionDetected(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        ChildLock = _attr(__module__, __qualname__, "ChildLock", 0x130AFC01, 0x130A0011, "typing.Optional[bool]", None)
 
-            value: typing.Optional[bool] = None
+        Rloc16 = _attr(__module__, __qualname__, "Rloc16", 0x130AFC01, 0x130A0012, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ChildLock(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        Altitude = _attr(__module__, __qualname__, "Altitude", 0x130AFC01, 0x130A0013, "typing.Optional[float32]", None)
 
-            value: typing.Optional[bool] = None
+        Pressure = _attr(__module__, __qualname__, "Pressure", 0x130AFC01, 0x130A0014, "typing.Optional[float32]", None)
 
-        @dataclass
-        class Rloc16(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        WeatherTrend = _attr(__module__, __qualname__, "WeatherTrend", 0x130AFC01, 0x130A0015, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        WindowOpenMode = _attr(__module__, __qualname__, "WindowOpenMode", 0x130AFC01, 0x130A0017, "typing.Optional[bool]", None)
 
-        @dataclass
-        class Altitude(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0013
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
+        ValvePosition = _attr(__module__, __qualname__, "ValvePosition", 0x130AFC01, 0x130A0018, "typing.Optional[uint]", None)
 
-            value: typing.Optional[float32] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x130AFC01, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class Pressure(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0014
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[float32])
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x130AFC01, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[float32] = None
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x130AFC01, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class WeatherTrend(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0015
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x130AFC01, 0x0000FFFC, "uint", 0)
 
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class WindowOpenMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class ValvePosition(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x130A0018
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x130AFC01
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x130AFC01, 0x0000FFFD, "uint", 0)

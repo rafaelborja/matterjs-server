@@ -9,6 +9,22 @@ from __future__ import annotations
 from chip.clusters import Objects as all_clusters
 from chip.clusters.ClusterObjects import Cluster
 
+
+class _LazyClusterSet:
+    """The set of cluster classes, resolved from their names on first read."""
+
+    __slots__ = ("_names", "_value")
+
+    def __init__(self, names: tuple[str, ...]) -> None:
+        self._names = names
+        self._value: set[type[Cluster]] | None = None
+
+    def __get__(self, obj: object, owner: type | None = None) -> set[type[Cluster]]:
+        if self._value is None:
+            self._value = {getattr(all_clusters, n) for n in self._names}
+        return self._value
+
+
 ALL_TYPES: dict[int, type[DeviceType]] = {}
 
 
@@ -26,976 +42,1158 @@ class DeviceType:
 
 class Aggregator(DeviceType):
     device_type: int = 0x000E
-    clusters: set[type[Cluster]] = {
-        all_clusters.Actions,
-        all_clusters.CommissionerControl,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Actions",
+            "CommissionerControl",
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class AirPurifier(DeviceType):
     device_type: int = 0x002D
-    clusters: set[type[Cluster]] = {
-        all_clusters.ActivatedCarbonFilterMonitoring,
-        all_clusters.Descriptor,
-        all_clusters.FanControl,
-        all_clusters.Groups,
-        all_clusters.HepaFilterMonitoring,
-        all_clusters.Identify,
-        all_clusters.OnOff,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ActivatedCarbonFilterMonitoring",
+            "Descriptor",
+            "FanControl",
+            "Groups",
+            "HepaFilterMonitoring",
+            "Identify",
+            "OnOff",
+        )
+    )
 
 
 class AirQualitySensor(DeviceType):
     device_type: int = 0x002C
-    clusters: set[type[Cluster]] = {
-        all_clusters.AirQuality,
-        all_clusters.CarbonDioxideConcentrationMeasurement,
-        all_clusters.CarbonMonoxideConcentrationMeasurement,
-        all_clusters.Descriptor,
-        all_clusters.FormaldehydeConcentrationMeasurement,
-        all_clusters.Identify,
-        all_clusters.NitrogenDioxideConcentrationMeasurement,
-        all_clusters.OzoneConcentrationMeasurement,
-        all_clusters.Pm10ConcentrationMeasurement,
-        all_clusters.Pm1ConcentrationMeasurement,
-        all_clusters.Pm25ConcentrationMeasurement,
-        all_clusters.RadonConcentrationMeasurement,
-        all_clusters.RelativeHumidityMeasurement,
-        all_clusters.TemperatureMeasurement,
-        all_clusters.TotalVolatileOrganicCompoundsConcentrationMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "AirQuality",
+            "CarbonDioxideConcentrationMeasurement",
+            "CarbonMonoxideConcentrationMeasurement",
+            "Descriptor",
+            "FormaldehydeConcentrationMeasurement",
+            "Identify",
+            "NitrogenDioxideConcentrationMeasurement",
+            "OzoneConcentrationMeasurement",
+            "Pm10ConcentrationMeasurement",
+            "Pm1ConcentrationMeasurement",
+            "Pm25ConcentrationMeasurement",
+            "RadonConcentrationMeasurement",
+            "RelativeHumidityMeasurement",
+            "TemperatureMeasurement",
+            "TotalVolatileOrganicCompoundsConcentrationMeasurement",
+        )
+    )
 
 
 class AudioDoorbell(DeviceType):
     device_type: int = 0x0141
-    clusters: set[type[Cluster]] = {
-        all_clusters.CameraAvStreamManagement,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.PushAvStreamTransport,
-        all_clusters.Switch,
-        all_clusters.WebRtcTransportProvider,
-        all_clusters.WebRtcTransportRequestor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CameraAvStreamManagement",
+            "Descriptor",
+            "Identify",
+            "PushAvStreamTransport",
+            "Switch",
+            "WebRtcTransportProvider",
+            "WebRtcTransportRequestor",
+        )
+    )
 
 
 class BasicVideoPlayer(DeviceType):
     device_type: int = 0x0028
-    clusters: set[type[Cluster]] = {
-        all_clusters.AudioOutput,
-        all_clusters.Channel,
-        all_clusters.ContentControl,
-        all_clusters.Descriptor,
-        all_clusters.KeypadInput,
-        all_clusters.LowPower,
-        all_clusters.MediaInput,
-        all_clusters.MediaPlayback,
-        all_clusters.Messages,
-        all_clusters.OnOff,
-        all_clusters.TargetNavigator,
-        all_clusters.WakeOnLan,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "AudioOutput",
+            "Channel",
+            "ContentControl",
+            "Descriptor",
+            "KeypadInput",
+            "LowPower",
+            "MediaInput",
+            "MediaPlayback",
+            "Messages",
+            "OnOff",
+            "TargetNavigator",
+            "WakeOnLan",
+        )
+    )
 
 
 class BatteryStorage(DeviceType):
     device_type: int = 0x0018
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class BridgedNode(DeviceType):
     device_type: int = 0x0013
-    clusters: set[type[Cluster]] = {
-        all_clusters.AdministratorCommissioning,
-        all_clusters.BridgedDeviceBasicInformation,
-        all_clusters.Descriptor,
-        all_clusters.EcosystemInformation,
-        all_clusters.PowerSource,
-        all_clusters.PowerSourceConfiguration,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "AdministratorCommissioning",
+            "BridgedDeviceBasicInformation",
+            "Descriptor",
+            "EcosystemInformation",
+            "PowerSource",
+            "PowerSourceConfiguration",
+        )
+    )
 
 
 class CameraController(DeviceType):
     device_type: int = 0x0147
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.WebRtcTransportRequestor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "WebRtcTransportRequestor",
+        )
+    )
 
 
 class Camera(DeviceType):
     device_type: int = 0x0142
-    clusters: set[type[Cluster]] = {
-        all_clusters.CameraAvSettingsUserLevelManagement,
-        all_clusters.CameraAvStreamManagement,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.OccupancySensing,
-        all_clusters.PushAvStreamTransport,
-        all_clusters.WebRtcTransportProvider,
-        all_clusters.WebRtcTransportRequestor,
-        all_clusters.ZoneManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CameraAvSettingsUserLevelManagement",
+            "CameraAvStreamManagement",
+            "Descriptor",
+            "Identify",
+            "OccupancySensing",
+            "PushAvStreamTransport",
+            "WebRtcTransportProvider",
+            "WebRtcTransportRequestor",
+            "ZoneManagement",
+        )
+    )
 
 
 class CastingVideoClient(DeviceType):
     device_type: int = 0x0029
-    clusters: set[type[Cluster]] = {
-        all_clusters.ContentAppObserver,
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ContentAppObserver",
+            "Descriptor",
+        )
+    )
 
 
 class CastingVideoPlayer(DeviceType):
     device_type: int = 0x0023
-    clusters: set[type[Cluster]] = {
-        all_clusters.AccountLogin,
-        all_clusters.ApplicationLauncher,
-        all_clusters.AudioOutput,
-        all_clusters.Channel,
-        all_clusters.ContentControl,
-        all_clusters.ContentLauncher,
-        all_clusters.Descriptor,
-        all_clusters.KeypadInput,
-        all_clusters.LowPower,
-        all_clusters.MediaInput,
-        all_clusters.MediaPlayback,
-        all_clusters.Messages,
-        all_clusters.OnOff,
-        all_clusters.TargetNavigator,
-        all_clusters.WakeOnLan,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "AccountLogin",
+            "ApplicationLauncher",
+            "AudioOutput",
+            "Channel",
+            "ContentControl",
+            "ContentLauncher",
+            "Descriptor",
+            "KeypadInput",
+            "LowPower",
+            "MediaInput",
+            "MediaPlayback",
+            "Messages",
+            "OnOff",
+            "TargetNavigator",
+            "WakeOnLan",
+        )
+    )
 
 
 class Chime(DeviceType):
     device_type: int = 0x0146
-    clusters: set[type[Cluster]] = {
-        all_clusters.Chime,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Chime",
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class ClosureController(DeviceType):
     device_type: int = 0x023E
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+        )
+    )
 
 
 class Closure(DeviceType):
     device_type: int = 0x0230
-    clusters: set[type[Cluster]] = {
-        all_clusters.ClosureControl,
-        all_clusters.ClosureDimension,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.WindowCovering,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ClosureControl",
+            "ClosureDimension",
+            "Descriptor",
+            "Identify",
+            "WindowCovering",
+        )
+    )
 
 
 class ClosurePanel(DeviceType):
     device_type: int = 0x0231
-    clusters: set[type[Cluster]] = {
-        all_clusters.ClosureControl,
-        all_clusters.ClosureDimension,
-        all_clusters.Descriptor,
-        all_clusters.WindowCovering,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ClosureControl",
+            "ClosureDimension",
+            "Descriptor",
+            "WindowCovering",
+        )
+    )
 
 
 class ColorDimmerSwitch(DeviceType):
     device_type: int = 0x0105
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class ColorTemperatureLight(DeviceType):
     device_type: int = 0x010C
-    clusters: set[type[Cluster]] = {
-        all_clusters.ColorControl,
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ColorControl",
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class ContactSensor(DeviceType):
     device_type: int = 0x0015
-    clusters: set[type[Cluster]] = {
-        all_clusters.BooleanState,
-        all_clusters.BooleanStateConfiguration,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "BooleanState",
+            "BooleanStateConfiguration",
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class ContentApp(DeviceType):
     device_type: int = 0x0024
-    clusters: set[type[Cluster]] = {
-        all_clusters.AccountLogin,
-        all_clusters.ApplicationBasic,
-        all_clusters.ApplicationLauncher,
-        all_clusters.Channel,
-        all_clusters.ContentLauncher,
-        all_clusters.Descriptor,
-        all_clusters.KeypadInput,
-        all_clusters.MediaPlayback,
-        all_clusters.TargetNavigator,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "AccountLogin",
+            "ApplicationBasic",
+            "ApplicationLauncher",
+            "Channel",
+            "ContentLauncher",
+            "Descriptor",
+            "KeypadInput",
+            "MediaPlayback",
+            "TargetNavigator",
+        )
+    )
 
 
 class ControlBridge(DeviceType):
     device_type: int = 0x0840
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class CookSurface(DeviceType):
     device_type: int = 0x0077
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.OnOff,
-        all_clusters.TemperatureControl,
-        all_clusters.TemperatureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "OnOff",
+            "TemperatureControl",
+            "TemperatureMeasurement",
+        )
+    )
 
 
 class Cooktop(DeviceType):
     device_type: int = 0x0078
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.OnOff,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "OnOff",
+        )
+    )
 
 
 class DeviceEnergyManagement(DeviceType):
     device_type: int = 0x050D
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.DeviceEnergyManagement,
-        all_clusters.DeviceEnergyManagementMode,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "DeviceEnergyManagement",
+            "DeviceEnergyManagementMode",
+        )
+    )
 
 
 class DimmableLight(DeviceType):
     device_type: int = 0x0101
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class DimmablePlugInUnit(DeviceType):
     device_type: int = 0x010B
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class DimmerSwitch(DeviceType):
     device_type: int = 0x0104
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class Dishwasher(DeviceType):
     device_type: int = 0x0075
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.DishwasherAlarm,
-        all_clusters.DishwasherMode,
-        all_clusters.Identify,
-        all_clusters.OnOff,
-        all_clusters.OperationalState,
-        all_clusters.TemperatureControl,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "DishwasherAlarm",
+            "DishwasherMode",
+            "Identify",
+            "OnOff",
+            "OperationalState",
+            "TemperatureControl",
+        )
+    )
 
 
 class DoorLockController(DeviceType):
     device_type: int = 0x000B
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+        )
+    )
 
 
 class DoorLock(DeviceType):
     device_type: int = 0x000A
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.DoorLock,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "DoorLock",
+            "Groups",
+            "Identify",
+            "ScenesManagement",
+        )
+    )
 
 
 class Doorbell(DeviceType):
     device_type: int = 0x0148
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.Switch,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "Switch",
+        )
+    )
 
 
 class ElectricalEnergyTariff(DeviceType):
     device_type: int = 0x0513
-    clusters: set[type[Cluster]] = {
-        all_clusters.CommodityPrice,
-        all_clusters.CommodityTariff,
-        all_clusters.Descriptor,
-        all_clusters.ElectricalGridConditions,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CommodityPrice",
+            "CommodityTariff",
+            "Descriptor",
+            "ElectricalGridConditions",
+        )
+    )
 
 
 class ElectricalMeter(DeviceType):
     device_type: int = 0x0514
-    clusters: set[type[Cluster]] = {
-        all_clusters.CommodityMetering,
-        all_clusters.Descriptor,
-        all_clusters.ElectricalEnergyMeasurement,
-        all_clusters.ElectricalPowerMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CommodityMetering",
+            "Descriptor",
+            "ElectricalEnergyMeasurement",
+            "ElectricalPowerMeasurement",
+        )
+    )
 
 
 class ElectricalSensor(DeviceType):
     device_type: int = 0x0510
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.ElectricalEnergyMeasurement,
-        all_clusters.ElectricalPowerMeasurement,
-        all_clusters.PowerTopology,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "ElectricalEnergyMeasurement",
+            "ElectricalPowerMeasurement",
+            "PowerTopology",
+        )
+    )
 
 
 class ElectricalUtilityMeter(DeviceType):
     device_type: int = 0x0511
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.MeterIdentification,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "MeterIdentification",
+        )
+    )
 
 
 class EnergyEvse(DeviceType):
     device_type: int = 0x050C
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.EnergyEvse,
-        all_clusters.EnergyEvseMode,
-        all_clusters.Identify,
-        all_clusters.TemperatureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "EnergyEvse",
+            "EnergyEvseMode",
+            "Identify",
+            "TemperatureMeasurement",
+        )
+    )
 
 
 class ExtendedColorLight(DeviceType):
     device_type: int = 0x010D
-    clusters: set[type[Cluster]] = {
-        all_clusters.ColorControl,
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ColorControl",
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class ExtractorHood(DeviceType):
     device_type: int = 0x007A
-    clusters: set[type[Cluster]] = {
-        all_clusters.ActivatedCarbonFilterMonitoring,
-        all_clusters.Descriptor,
-        all_clusters.FanControl,
-        all_clusters.HepaFilterMonitoring,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ActivatedCarbonFilterMonitoring",
+            "Descriptor",
+            "FanControl",
+            "HepaFilterMonitoring",
+            "Identify",
+        )
+    )
 
 
 class Fan(DeviceType):
     device_type: int = 0x002B
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.FanControl,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.OnOff,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "FanControl",
+            "Groups",
+            "Identify",
+            "OnOff",
+        )
+    )
 
 
 class FloodlightCamera(DeviceType):
     device_type: int = 0x0144
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+        )
+    )
 
 
 class FlowSensor(DeviceType):
     device_type: int = 0x0306
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.FlowMeasurement,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "FlowMeasurement",
+            "Identify",
+        )
+    )
 
 
 class GenericSwitch(DeviceType):
     device_type: int = 0x000F
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.Switch,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "Switch",
+        )
+    )
 
 
 class HeatPump(DeviceType):
     device_type: int = 0x0309
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class HumiditySensor(DeviceType):
     device_type: int = 0x0307
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.RelativeHumidityMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "RelativeHumidityMeasurement",
+        )
+    )
 
 
 class Intercom(DeviceType):
     device_type: int = 0x0140
-    clusters: set[type[Cluster]] = {
-        all_clusters.CameraAvSettingsUserLevelManagement,
-        all_clusters.CameraAvStreamManagement,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.WebRtcTransportProvider,
-        all_clusters.WebRtcTransportRequestor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CameraAvSettingsUserLevelManagement",
+            "CameraAvStreamManagement",
+            "Descriptor",
+            "Identify",
+            "WebRtcTransportProvider",
+            "WebRtcTransportRequestor",
+        )
+    )
 
 
 class IrrigationSystem(DeviceType):
     device_type: int = 0x0040
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.FlowMeasurement,
-        all_clusters.Identify,
-        all_clusters.OperationalState,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "FlowMeasurement",
+            "Identify",
+            "OperationalState",
+        )
+    )
 
 
 class JointFabricAdministrator(DeviceType):
     device_type: int = 0x0130
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.JointFabricAdministrator,
-        all_clusters.JointFabricDatastore,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "JointFabricAdministrator",
+            "JointFabricDatastore",
+        )
+    )
 
 
 class LaundryDryer(DeviceType):
     device_type: int = 0x007C
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.LaundryDryerControls,
-        all_clusters.LaundryWasherMode,
-        all_clusters.OnOff,
-        all_clusters.OperationalState,
-        all_clusters.TemperatureControl,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "LaundryDryerControls",
+            "LaundryWasherMode",
+            "OnOff",
+            "OperationalState",
+            "TemperatureControl",
+        )
+    )
 
 
 class LaundryWasher(DeviceType):
     device_type: int = 0x0073
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.LaundryWasherControls,
-        all_clusters.LaundryWasherMode,
-        all_clusters.OnOff,
-        all_clusters.OperationalState,
-        all_clusters.TemperatureControl,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "LaundryWasherControls",
+            "LaundryWasherMode",
+            "OnOff",
+            "OperationalState",
+            "TemperatureControl",
+        )
+    )
 
 
 class LightSensor(DeviceType):
     device_type: int = 0x0106
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.IlluminanceMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "IlluminanceMeasurement",
+        )
+    )
 
 
 class MeterReferencePoint(DeviceType):
     device_type: int = 0x0512
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class MicrowaveOven(DeviceType):
     device_type: int = 0x0079
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.FanControl,
-        all_clusters.Identify,
-        all_clusters.MicrowaveOvenControl,
-        all_clusters.MicrowaveOvenMode,
-        all_clusters.OperationalState,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "FanControl",
+            "Identify",
+            "MicrowaveOvenControl",
+            "MicrowaveOvenMode",
+            "OperationalState",
+        )
+    )
 
 
 class ModeSelect(DeviceType):
     device_type: int = 0x0027
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.ModeSelect,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "ModeSelect",
+        )
+    )
 
 
 class MountedDimmableLoadControl(DeviceType):
     device_type: int = 0x0110
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class MountedOnOffControl(DeviceType):
     device_type: int = 0x010F
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class NetworkInfrastructureManager(DeviceType):
     device_type: int = 0x0090
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.ThreadBorderRouterManagement,
-        all_clusters.ThreadNetworkDiagnostics,
-        all_clusters.ThreadNetworkDirectory,
-        all_clusters.WiFiNetworkManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "ThreadBorderRouterManagement",
+            "ThreadNetworkDiagnostics",
+            "ThreadNetworkDirectory",
+            "WiFiNetworkManagement",
+        )
+    )
 
 
 class OccupancySensor(DeviceType):
     device_type: int = 0x0107
-    clusters: set[type[Cluster]] = {
-        all_clusters.BooleanStateConfiguration,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.OccupancySensing,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "BooleanStateConfiguration",
+            "Descriptor",
+            "Identify",
+            "OccupancySensing",
+        )
+    )
 
 
 class OnOffLight(DeviceType):
     device_type: int = 0x0100
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class OnOffLightSwitch(DeviceType):
     device_type: int = 0x0103
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class OnOffPlugInUnit(DeviceType):
     device_type: int = 0x010A
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.ScenesManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "ScenesManagement",
+        )
+    )
 
 
 class OnOffSensor(DeviceType):
     device_type: int = 0x0850
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class OtaProvider(DeviceType):
     device_type: int = 0x0014
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.OtaSoftwareUpdateProvider,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "OtaSoftwareUpdateProvider",
+        )
+    )
 
 
 class OtaRequestor(DeviceType):
     device_type: int = 0x0012
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.OtaSoftwareUpdateRequestor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "OtaSoftwareUpdateRequestor",
+        )
+    )
 
 
 class Oven(DeviceType):
     device_type: int = 0x007B
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class PowerSource(DeviceType):
     device_type: int = 0x0011
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.PowerSource,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "PowerSource",
+        )
+    )
 
 
 class PressureSensor(DeviceType):
     device_type: int = 0x0305
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.PressureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "PressureMeasurement",
+        )
+    )
 
 
 class PumpController(DeviceType):
     device_type: int = 0x0304
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class Pump(DeviceType):
     device_type: int = 0x0303
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.FlowMeasurement,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-        all_clusters.PressureMeasurement,
-        all_clusters.PumpConfigurationAndControl,
-        all_clusters.ScenesManagement,
-        all_clusters.TemperatureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "FlowMeasurement",
+            "Groups",
+            "Identify",
+            "LevelControl",
+            "OnOff",
+            "PressureMeasurement",
+            "PumpConfigurationAndControl",
+            "ScenesManagement",
+            "TemperatureMeasurement",
+        )
+    )
 
 
 class RainSensor(DeviceType):
     device_type: int = 0x0044
-    clusters: set[type[Cluster]] = {
-        all_clusters.BooleanState,
-        all_clusters.BooleanStateConfiguration,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "BooleanState",
+            "BooleanStateConfiguration",
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class Refrigerator(DeviceType):
     device_type: int = 0x0070
-    clusters: set[type[Cluster]] = {
-        all_clusters.ActivatedCarbonFilterMonitoring,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.RefrigeratorAlarm,
-        all_clusters.RefrigeratorAndTemperatureControlledCabinetMode,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ActivatedCarbonFilterMonitoring",
+            "Descriptor",
+            "Identify",
+            "RefrigeratorAlarm",
+            "RefrigeratorAndTemperatureControlledCabinetMode",
+        )
+    )
 
 
 class RoboticVacuumCleaner(DeviceType):
     device_type: int = 0x0074
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.RvcCleanMode,
-        all_clusters.RvcOperationalState,
-        all_clusters.RvcRunMode,
-        all_clusters.ServiceArea,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "RvcCleanMode",
+            "RvcOperationalState",
+            "RvcRunMode",
+            "ServiceArea",
+        )
+    )
 
 
 class RoomAirConditioner(DeviceType):
     device_type: int = 0x0072
-    clusters: set[type[Cluster]] = {
-        all_clusters.ActivatedCarbonFilterMonitoring,
-        all_clusters.Descriptor,
-        all_clusters.FanControl,
-        all_clusters.Groups,
-        all_clusters.HepaFilterMonitoring,
-        all_clusters.Identify,
-        all_clusters.OnOff,
-        all_clusters.RelativeHumidityMeasurement,
-        all_clusters.ScenesManagement,
-        all_clusters.TemperatureMeasurement,
-        all_clusters.Thermostat,
-        all_clusters.ThermostatUserInterfaceConfiguration,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ActivatedCarbonFilterMonitoring",
+            "Descriptor",
+            "FanControl",
+            "Groups",
+            "HepaFilterMonitoring",
+            "Identify",
+            "OnOff",
+            "RelativeHumidityMeasurement",
+            "ScenesManagement",
+            "TemperatureMeasurement",
+            "Thermostat",
+            "ThermostatUserInterfaceConfiguration",
+        )
+    )
 
 
 class RootNode(DeviceType):
     device_type: int = 0x0016
-    clusters: set[type[Cluster]] = {
-        all_clusters.AccessControl,
-        all_clusters.AdministratorCommissioning,
-        all_clusters.BasicInformation,
-        all_clusters.Descriptor,
-        all_clusters.DiagnosticLogs,
-        all_clusters.EthernetNetworkDiagnostics,
-        all_clusters.GeneralCommissioning,
-        all_clusters.GeneralDiagnostics,
-        all_clusters.GroupKeyManagement,
-        all_clusters.IcdManagement,
-        all_clusters.LocalizationConfiguration,
-        all_clusters.NetworkCommissioning,
-        all_clusters.OperationalCredentials,
-        all_clusters.PowerSourceConfiguration,
-        all_clusters.SoftwareDiagnostics,
-        all_clusters.ThreadNetworkDiagnostics,
-        all_clusters.TimeFormatLocalization,
-        all_clusters.TimeSynchronization,
-        all_clusters.TlsCertificateManagement,
-        all_clusters.TlsClientManagement,
-        all_clusters.UnitLocalization,
-        all_clusters.WiFiNetworkDiagnostics,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "AccessControl",
+            "AdministratorCommissioning",
+            "BasicInformation",
+            "Descriptor",
+            "DiagnosticLogs",
+            "EthernetNetworkDiagnostics",
+            "GeneralCommissioning",
+            "GeneralDiagnostics",
+            "GroupKeyManagement",
+            "IcdManagement",
+            "LocalizationConfiguration",
+            "NetworkCommissioning",
+            "OperationalCredentials",
+            "PowerSourceConfiguration",
+            "SoftwareDiagnostics",
+            "ThreadNetworkDiagnostics",
+            "TimeFormatLocalization",
+            "TimeSynchronization",
+            "TlsCertificateManagement",
+            "TlsClientManagement",
+            "UnitLocalization",
+            "WiFiNetworkDiagnostics",
+        )
+    )
 
 
 class SecondaryNetworkInterface(DeviceType):
     device_type: int = 0x0019
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.EthernetNetworkDiagnostics,
-        all_clusters.NetworkCommissioning,
-        all_clusters.ThreadNetworkDiagnostics,
-        all_clusters.WiFiNetworkDiagnostics,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "EthernetNetworkDiagnostics",
+            "NetworkCommissioning",
+            "ThreadNetworkDiagnostics",
+            "WiFiNetworkDiagnostics",
+        )
+    )
 
 
 class SmokeCoAlarm(DeviceType):
     device_type: int = 0x0076
-    clusters: set[type[Cluster]] = {
-        all_clusters.CarbonMonoxideConcentrationMeasurement,
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.RelativeHumidityMeasurement,
-        all_clusters.SmokeCoAlarm,
-        all_clusters.TemperatureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CarbonMonoxideConcentrationMeasurement",
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "RelativeHumidityMeasurement",
+            "SmokeCoAlarm",
+            "TemperatureMeasurement",
+        )
+    )
 
 
 class SnapshotCamera(DeviceType):
     device_type: int = 0x0145
-    clusters: set[type[Cluster]] = {
-        all_clusters.CameraAvSettingsUserLevelManagement,
-        all_clusters.CameraAvStreamManagement,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.OccupancySensing,
-        all_clusters.ZoneManagement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "CameraAvSettingsUserLevelManagement",
+            "CameraAvStreamManagement",
+            "Descriptor",
+            "Identify",
+            "OccupancySensing",
+            "ZoneManagement",
+        )
+    )
 
 
 class SoilSensor(DeviceType):
     device_type: int = 0x0045
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.SoilMeasurement,
-        all_clusters.TemperatureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "SoilMeasurement",
+            "TemperatureMeasurement",
+        )
+    )
 
 
 class SolarPower(DeviceType):
     device_type: int = 0x0017
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class Speaker(DeviceType):
     device_type: int = 0x0022
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.LevelControl,
-        all_clusters.OnOff,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "LevelControl",
+            "OnOff",
+        )
+    )
 
 
 class TemperatureControlledCabinet(DeviceType):
     device_type: int = 0x0071
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.OvenCavityOperationalState,
-        all_clusters.OvenMode,
-        all_clusters.RefrigeratorAndTemperatureControlledCabinetMode,
-        all_clusters.TemperatureAlarm,
-        all_clusters.TemperatureControl,
-        all_clusters.TemperatureMeasurement,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "OvenCavityOperationalState",
+            "OvenMode",
+            "RefrigeratorAndTemperatureControlledCabinetMode",
+            "TemperatureAlarm",
+            "TemperatureControl",
+            "TemperatureMeasurement",
+        )
+    )
 
 
 class TemperatureSensor(DeviceType):
     device_type: int = 0x0302
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.TemperatureMeasurement,
-        all_clusters.ThermostatUserInterfaceConfiguration,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "TemperatureMeasurement",
+            "ThermostatUserInterfaceConfiguration",
+        )
+    )
 
 
 class ThermostatController(DeviceType):
     device_type: int = 0x030A
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+        )
+    )
 
 
 class Thermostat(DeviceType):
     device_type: int = 0x0301
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.EnergyPreference,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.Thermostat,
-        all_clusters.ThermostatUserInterfaceConfiguration,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "EnergyPreference",
+            "Groups",
+            "Identify",
+            "Thermostat",
+            "ThermostatUserInterfaceConfiguration",
+        )
+    )
 
 
 class ThreadBorderRouter(DeviceType):
     device_type: int = 0x0091
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.ThreadBorderRouterManagement,
-        all_clusters.ThreadNetworkDiagnostics,
-        all_clusters.ThreadNetworkDirectory,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "ThreadBorderRouterManagement",
+            "ThreadNetworkDiagnostics",
+            "ThreadNetworkDirectory",
+        )
+    )
 
 
 class VideoDoorbell(DeviceType):
     device_type: int = 0x0143
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+        )
+    )
 
 
 class VideoRemoteControl(DeviceType):
     device_type: int = 0x002A
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+        )
+    )
 
 
 class WaterFreezeDetector(DeviceType):
     device_type: int = 0x0041
-    clusters: set[type[Cluster]] = {
-        all_clusters.BooleanState,
-        all_clusters.BooleanStateConfiguration,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "BooleanState",
+            "BooleanStateConfiguration",
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class WaterHeater(DeviceType):
     device_type: int = 0x050F
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-        all_clusters.Thermostat,
-        all_clusters.WaterHeaterManagement,
-        all_clusters.WaterHeaterMode,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+            "Thermostat",
+            "WaterHeaterManagement",
+            "WaterHeaterMode",
+        )
+    )
 
 
 class WaterLeakDetector(DeviceType):
     device_type: int = 0x0043
-    clusters: set[type[Cluster]] = {
-        all_clusters.BooleanState,
-        all_clusters.BooleanStateConfiguration,
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "BooleanState",
+            "BooleanStateConfiguration",
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class WaterValve(DeviceType):
     device_type: int = 0x0042
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.FlowMeasurement,
-        all_clusters.Identify,
-        all_clusters.ValveConfigurationAndControl,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "FlowMeasurement",
+            "Identify",
+            "ValveConfigurationAndControl",
+        )
+    )
 
 
 class WindowCoveringController(DeviceType):
     device_type: int = 0x0203
-    clusters: set[type[Cluster]] = {
-        all_clusters.Descriptor,
-        all_clusters.Identify,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "Descriptor",
+            "Identify",
+        )
+    )
 
 
 class WindowCovering(DeviceType):
     device_type: int = 0x0202
-    clusters: set[type[Cluster]] = {
-        all_clusters.ClosureControl,
-        all_clusters.ClosureDimension,
-        all_clusters.Descriptor,
-        all_clusters.Groups,
-        all_clusters.Identify,
-        all_clusters.WindowCovering,
-    }
+    clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]
+        (
+            "ClosureControl",
+            "ClosureDimension",
+            "Descriptor",
+            "Groups",
+            "Identify",
+            "WindowCovering",
+        )
+    )

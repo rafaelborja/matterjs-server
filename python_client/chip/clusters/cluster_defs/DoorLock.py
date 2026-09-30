@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -1058,821 +1058,107 @@ class DoorLock(Cluster):
             credentialData: typing.Union[None, Nullable, bytes] = None
 
     class Attributes:
-        @dataclass
-        class LockState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, DoorLock.Enums.DlLockState])
-
-            value: typing.Union[Nullable, DoorLock.Enums.DlLockState] = NullValue
-
-        @dataclass
-        class LockType(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=DoorLock.Enums.DlLockType)
-
-            value: DoorLock.Enums.DlLockType = 0
-
-        @dataclass
-        class ActuatorEnabled(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
-
-            value: bool = False
-
-        @dataclass
-        class DoorState(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, DoorLock.Enums.DoorStateEnum])
-
-            value: typing.Union[None, Nullable, DoorLock.Enums.DoorStateEnum] = None
-
-        @dataclass
-        class DoorOpenEvents(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class DoorClosedEvents(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class OpenPeriod(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        LockState = _attr(__module__, __qualname__, "LockState", 0x00000101, 0x00000000, "typing.Union[Nullable, DoorLock.Enums.DlLockState]", NullValue)
 
-            value: typing.Optional[uint] = None
+        LockType = _attr(__module__, __qualname__, "LockType", 0x00000101, 0x00000001, "DoorLock.Enums.DlLockType", 0)
 
-        @dataclass
-        class NumberOfTotalUsersSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ActuatorEnabled = _attr(__module__, __qualname__, "ActuatorEnabled", 0x00000101, 0x00000002, "bool", False)
 
-            value: typing.Optional[uint] = None
+        DoorState = _attr(__module__, __qualname__, "DoorState", 0x00000101, 0x00000003, "typing.Union[None, Nullable, DoorLock.Enums.DoorStateEnum]", None)
 
-        @dataclass
-        class NumberOfPINUsersSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        DoorOpenEvents = _attr(__module__, __qualname__, "DoorOpenEvents", 0x00000101, 0x00000004, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        DoorClosedEvents = _attr(__module__, __qualname__, "DoorClosedEvents", 0x00000101, 0x00000005, "typing.Optional[uint]", None)
 
-        @dataclass
-        class NumberOfRFIDUsersSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000013
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        OpenPeriod = _attr(__module__, __qualname__, "OpenPeriod", 0x00000101, 0x00000006, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        NumberOfTotalUsersSupported = _attr(__module__, __qualname__, "NumberOfTotalUsersSupported", 0x00000101, 0x00000011, "typing.Optional[uint]", None)
 
-        @dataclass
-        class NumberOfWeekDaySchedulesSupportedPerUser(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000014
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfPINUsersSupported = _attr(__module__, __qualname__, "NumberOfPINUsersSupported", 0x00000101, 0x00000012, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        NumberOfRFIDUsersSupported = _attr(__module__, __qualname__, "NumberOfRFIDUsersSupported", 0x00000101, 0x00000013, "typing.Optional[uint]", None)
 
-        @dataclass
-        class NumberOfYearDaySchedulesSupportedPerUser(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000015
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfWeekDaySchedulesSupportedPerUser = _attr(__module__, __qualname__, "NumberOfWeekDaySchedulesSupportedPerUser", 0x00000101, 0x00000014, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        NumberOfYearDaySchedulesSupportedPerUser = _attr(__module__, __qualname__, "NumberOfYearDaySchedulesSupportedPerUser", 0x00000101, 0x00000015, "typing.Optional[uint]", None)
 
-        @dataclass
-        class NumberOfHolidaySchedulesSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000016
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfHolidaySchedulesSupported = _attr(__module__, __qualname__, "NumberOfHolidaySchedulesSupported", 0x00000101, 0x00000016, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        MaxPINCodeLength = _attr(__module__, __qualname__, "MaxPINCodeLength", 0x00000101, 0x00000017, "typing.Optional[uint]", None)
 
-        @dataclass
-        class MaxPINCodeLength(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        MinPINCodeLength = _attr(__module__, __qualname__, "MinPINCodeLength", 0x00000101, 0x00000018, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        MaxRFIDCodeLength = _attr(__module__, __qualname__, "MaxRFIDCodeLength", 0x00000101, 0x00000019, "typing.Optional[uint]", None)
 
-        @dataclass
-        class MinPINCodeLength(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000018
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        MinRFIDCodeLength = _attr(__module__, __qualname__, "MinRFIDCodeLength", 0x00000101, 0x0000001A, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        CredentialRulesSupport = _attr(__module__, __qualname__, "CredentialRulesSupport", 0x00000101, 0x0000001B, "typing.Optional[DoorLock.Bitmaps.CredentialRulesBitmap]", None)
 
-        @dataclass
-        class MaxRFIDCodeLength(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000019
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfCredentialsSupportedPerUser = _attr(__module__, __qualname__, "NumberOfCredentialsSupportedPerUser", 0x00000101, 0x0000001C, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        Language = _attr(__module__, __qualname__, "Language", 0x00000101, 0x00000021, "typing.Optional[str]", None)
 
-        @dataclass
-        class MinRFIDCodeLength(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        LEDSettings = _attr(__module__, __qualname__, "LEDSettings", 0x00000101, 0x00000022, "typing.Optional[DoorLock.Enums.LEDSettingEnum]", None)
 
-            value: typing.Optional[uint] = None
+        AutoRelockTime = _attr(__module__, __qualname__, "AutoRelockTime", 0x00000101, 0x00000023, "typing.Optional[uint]", None)
 
-        @dataclass
-        class CredentialRulesSupport(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[DoorLock.Bitmaps.CredentialRulesBitmap])
+        SoundVolume = _attr(__module__, __qualname__, "SoundVolume", 0x00000101, 0x00000024, "typing.Optional[DoorLock.Enums.SoundVolumeEnum]", None)
 
-            value: typing.Optional[DoorLock.Bitmaps.CredentialRulesBitmap] = None
+        OperatingMode = _attr(__module__, __qualname__, "OperatingMode", 0x00000101, 0x00000025, "DoorLock.Enums.OperatingModeEnum", 0)
 
-        @dataclass
-        class NumberOfCredentialsSupportedPerUser(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        SupportedOperatingModes = _attr(__module__, __qualname__, "SupportedOperatingModes", 0x00000101, 0x00000026, "DoorLock.Bitmaps.OperatingModesBitmap", 0)
 
-            value: typing.Optional[uint] = None
+        DefaultConfigurationRegister = _attr(__module__, __qualname__, "DefaultConfigurationRegister", 0x00000101, 0x00000027, "typing.Optional[DoorLock.Bitmaps.ConfigurationRegisterBitmap]", None)
 
-        @dataclass
-        class Language(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000021
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
+        EnableLocalProgramming = _attr(__module__, __qualname__, "EnableLocalProgramming", 0x00000101, 0x00000028, "typing.Optional[bool]", None)
 
-            value: typing.Optional[str] = None
+        EnableOneTouchLocking = _attr(__module__, __qualname__, "EnableOneTouchLocking", 0x00000101, 0x00000029, "typing.Optional[bool]", None)
 
-        @dataclass
-        class LEDSettings(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000022
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[DoorLock.Enums.LEDSettingEnum])
+        EnableInsideStatusLED = _attr(__module__, __qualname__, "EnableInsideStatusLED", 0x00000101, 0x0000002A, "typing.Optional[bool]", None)
 
-            value: typing.Optional[DoorLock.Enums.LEDSettingEnum] = None
+        EnablePrivacyModeButton = _attr(__module__, __qualname__, "EnablePrivacyModeButton", 0x00000101, 0x0000002B, "typing.Optional[bool]", None)
 
-        @dataclass
-        class AutoRelockTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000023
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        LocalProgrammingFeatures = _attr(__module__, __qualname__, "LocalProgrammingFeatures", 0x00000101, 0x0000002C, "typing.Optional[DoorLock.Bitmaps.LocalProgrammingFeaturesBitmap]", None)
 
-            value: typing.Optional[uint] = None
+        WrongCodeEntryLimit = _attr(__module__, __qualname__, "WrongCodeEntryLimit", 0x00000101, 0x00000030, "typing.Optional[uint]", None)
 
-        @dataclass
-        class SoundVolume(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000024
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[DoorLock.Enums.SoundVolumeEnum])
+        UserCodeTemporaryDisableTime = _attr(__module__, __qualname__, "UserCodeTemporaryDisableTime", 0x00000101, 0x00000031, "typing.Optional[uint]", None)
 
-            value: typing.Optional[DoorLock.Enums.SoundVolumeEnum] = None
+        SendPINOverTheAir = _attr(__module__, __qualname__, "SendPINOverTheAir", 0x00000101, 0x00000032, "typing.Optional[bool]", None)
 
-        @dataclass
-        class OperatingMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000025
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=DoorLock.Enums.OperatingModeEnum)
+        RequirePINforRemoteOperation = _attr(__module__, __qualname__, "RequirePINforRemoteOperation", 0x00000101, 0x00000033, "typing.Optional[bool]", None)
 
-            value: DoorLock.Enums.OperatingModeEnum = 0
+        SecurityLevel = _attr(__module__, __qualname__, "SecurityLevel", 0x00000101, 0x00000034, "typing.Optional[uint]", None)
 
-        @dataclass
-        class SupportedOperatingModes(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000026
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=DoorLock.Bitmaps.OperatingModesBitmap)
+        ExpiringUserTimeout = _attr(__module__, __qualname__, "ExpiringUserTimeout", 0x00000101, 0x00000035, "typing.Optional[uint]", None)
 
-            value: DoorLock.Bitmaps.OperatingModesBitmap = 0
+        AliroReaderVerificationKey = _attr(__module__, __qualname__, "AliroReaderVerificationKey", 0x00000101, 0x00000080, "typing.Union[None, Nullable, bytes]", None)
 
-        @dataclass
-        class DefaultConfigurationRegister(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000027
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[DoorLock.Bitmaps.ConfigurationRegisterBitmap])
+        AliroReaderGroupIdentifier = _attr(__module__, __qualname__, "AliroReaderGroupIdentifier", 0x00000101, 0x00000081, "typing.Union[None, Nullable, bytes]", None)
 
-            value: typing.Optional[DoorLock.Bitmaps.ConfigurationRegisterBitmap] = None
+        AliroReaderGroupSubIdentifier = _attr(__module__, __qualname__, "AliroReaderGroupSubIdentifier", 0x00000101, 0x00000082, "typing.Optional[bytes]", None)
 
-        @dataclass
-        class EnableLocalProgramming(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000028
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        AliroExpeditedTransactionSupportedProtocolVersions = _attr(__module__, __qualname__, "AliroExpeditedTransactionSupportedProtocolVersions", 0x00000101, 0x00000083, "typing.Optional[typing.List[bytes]]", None)
 
-            value: typing.Optional[bool] = None
+        AliroGroupResolvingKey = _attr(__module__, __qualname__, "AliroGroupResolvingKey", 0x00000101, 0x00000084, "typing.Union[None, Nullable, bytes]", None)
 
-        @dataclass
-        class EnableOneTouchLocking(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000029
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        AliroSupportedBLEUWBProtocolVersions = _attr(__module__, __qualname__, "AliroSupportedBLEUWBProtocolVersions", 0x00000101, 0x00000085, "typing.Optional[typing.List[bytes]]", None)
 
-            value: typing.Optional[bool] = None
+        AliroBLEAdvertisingVersion = _attr(__module__, __qualname__, "AliroBLEAdvertisingVersion", 0x00000101, 0x00000086, "typing.Optional[uint]", None)
 
-        @dataclass
-        class EnableInsideStatusLED(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000002A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        NumberOfAliroCredentialIssuerKeysSupported = _attr(__module__, __qualname__, "NumberOfAliroCredentialIssuerKeysSupported", 0x00000101, 0x00000087, "typing.Optional[uint]", None)
 
-            value: typing.Optional[bool] = None
+        NumberOfAliroEndpointKeysSupported = _attr(__module__, __qualname__, "NumberOfAliroEndpointKeysSupported", 0x00000101, 0x00000088, "typing.Optional[uint]", None)
 
-        @dataclass
-        class EnablePrivacyModeButton(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000002B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000101, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[bool] = None
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000101, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class LocalProgrammingFeatures(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000002C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[DoorLock.Bitmaps.LocalProgrammingFeaturesBitmap])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000101, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[DoorLock.Bitmaps.LocalProgrammingFeaturesBitmap] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000101, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class WrongCodeEntryLimit(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class UserCodeTemporaryDisableTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class SendPINOverTheAir(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000032
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class RequirePINforRemoteOperation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class SecurityLevel(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000034
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ExpiringUserTimeout(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000035
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class AliroReaderVerificationKey(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000080
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, bytes])
-
-            value: typing.Union[None, Nullable, bytes] = None
-
-        @dataclass
-        class AliroReaderGroupIdentifier(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000081
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, bytes])
-
-            value: typing.Union[None, Nullable, bytes] = None
-
-        @dataclass
-        class AliroReaderGroupSubIdentifier(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000082
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bytes])
-
-            value: typing.Optional[bytes] = None
-
-        @dataclass
-        class AliroExpeditedTransactionSupportedProtocolVersions(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000083
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[bytes]])
-
-            value: typing.Optional[typing.List[bytes]] = None
-
-        @dataclass
-        class AliroGroupResolvingKey(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000084
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, bytes])
-
-            value: typing.Union[None, Nullable, bytes] = None
-
-        @dataclass
-        class AliroSupportedBLEUWBProtocolVersions(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000085
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[bytes]])
-
-            value: typing.Optional[typing.List[bytes]] = None
-
-        @dataclass
-        class AliroBLEAdvertisingVersion(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000086
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class NumberOfAliroCredentialIssuerKeysSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000087
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class NumberOfAliroEndpointKeysSupported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000088
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000101
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000101, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

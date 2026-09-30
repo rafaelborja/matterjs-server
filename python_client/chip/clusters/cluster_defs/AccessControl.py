@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -239,213 +239,31 @@ class AccessControl(Cluster):
             token: uint = 0
 
     class Attributes:
-        @dataclass
-        class Acl(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
+        Acl = _attr(__module__, __qualname__, "Acl", 0x0000001F, 0x00000000, "typing.List[AccessControl.Structs.AccessControlEntryStruct]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        Extension = _attr(__module__, __qualname__, "Extension", 0x0000001F, 0x00000001, "typing.Optional[typing.List[AccessControl.Structs.AccessControlExtensionStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[AccessControl.Structs.AccessControlEntryStruct])
+        SubjectsPerAccessControlEntry = _attr(__module__, __qualname__, "SubjectsPerAccessControlEntry", 0x0000001F, 0x00000002, "uint", 0)
 
-            value: typing.List[AccessControl.Structs.AccessControlEntryStruct] = field(default_factory=lambda: [])
+        TargetsPerAccessControlEntry = _attr(__module__, __qualname__, "TargetsPerAccessControlEntry", 0x0000001F, 0x00000003, "uint", 0)
 
-        @dataclass
-        class Extension(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
+        AccessControlEntriesPerFabric = _attr(__module__, __qualname__, "AccessControlEntriesPerFabric", 0x0000001F, 0x00000004, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        CommissioningARL = _attr(__module__, __qualname__, "CommissioningARL", 0x0000001F, 0x00000005, "typing.Optional[typing.List[AccessControl.Structs.CommissioningAccessRestrictionEntryStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[AccessControl.Structs.AccessControlExtensionStruct]])
+        Arl = _attr(__module__, __qualname__, "Arl", 0x0000001F, 0x00000006, "typing.Optional[typing.List[AccessControl.Structs.AccessRestrictionEntryStruct]]", None)
 
-            value: typing.Optional[typing.List[AccessControl.Structs.AccessControlExtensionStruct]] = None
+        AuxiliaryAcl = _attr(__module__, __qualname__, "AuxiliaryAcl", 0x0000001F, 0x00000007, "typing.Optional[typing.List[AccessControl.Structs.AccessControlEntryStruct]]", None)
 
-        @dataclass
-        class SubjectsPerAccessControlEntry(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x0000001F, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x0000001F, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x0000001F, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: uint = 0
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x0000001F, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class TargetsPerAccessControlEntry(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class AccessControlEntriesPerFabric(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class CommissioningARL(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[AccessControl.Structs.CommissioningAccessRestrictionEntryStruct]])
-
-            value: typing.Optional[typing.List[AccessControl.Structs.CommissioningAccessRestrictionEntryStruct]] = None
-
-        @dataclass
-        class Arl(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[AccessControl.Structs.AccessRestrictionEntryStruct]])
-
-            value: typing.Optional[typing.List[AccessControl.Structs.AccessRestrictionEntryStruct]] = None
-
-        @dataclass
-        class AuxiliaryAcl(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[AccessControl.Structs.AccessControlEntryStruct]])
-
-            value: typing.Optional[typing.List[AccessControl.Structs.AccessControlEntryStruct]] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000001F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x0000001F, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

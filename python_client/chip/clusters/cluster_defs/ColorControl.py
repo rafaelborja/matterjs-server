@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -697,914 +697,116 @@ class ColorControl(Cluster):
             optionsOverride: ColorControl.Bitmaps.OptionsBitmap = 0
 
     class Attributes:
-        @dataclass
-        class CurrentHue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class CurrentSaturation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class RemainingTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class CurrentX(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class CurrentY(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class DriftCompensation(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[ColorControl.Enums.DriftCompensationEnum])
-
-            value: typing.Optional[ColorControl.Enums.DriftCompensationEnum] = None
-
-        @dataclass
-        class CompensationText(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
+        CurrentHue = _attr(__module__, __qualname__, "CurrentHue", 0x00000300, 0x00000000, "typing.Optional[uint]", None)
 
-            value: typing.Optional[str] = None
+        CurrentSaturation = _attr(__module__, __qualname__, "CurrentSaturation", 0x00000300, 0x00000001, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ColorTemperatureMireds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        RemainingTime = _attr(__module__, __qualname__, "RemainingTime", 0x00000300, 0x00000002, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        CurrentX = _attr(__module__, __qualname__, "CurrentX", 0x00000300, 0x00000003, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ColorMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=ColorControl.Enums.ColorModeEnum)
+        CurrentY = _attr(__module__, __qualname__, "CurrentY", 0x00000300, 0x00000004, "typing.Optional[uint]", None)
 
-            value: ColorControl.Enums.ColorModeEnum = 0
+        DriftCompensation = _attr(__module__, __qualname__, "DriftCompensation", 0x00000300, 0x00000005, "typing.Optional[ColorControl.Enums.DriftCompensationEnum]", None)
 
-        @dataclass
-        class Options(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000F
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=ColorControl.Bitmaps.OptionsBitmap)
+        CompensationText = _attr(__module__, __qualname__, "CompensationText", 0x00000300, 0x00000006, "typing.Optional[str]", None)
 
-            value: ColorControl.Bitmaps.OptionsBitmap = 0
+        ColorTemperatureMireds = _attr(__module__, __qualname__, "ColorTemperatureMireds", 0x00000300, 0x00000007, "typing.Optional[uint]", None)
 
-        @dataclass
-        class NumberOfPrimaries(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, uint])
+        ColorMode = _attr(__module__, __qualname__, "ColorMode", 0x00000300, 0x00000008, "ColorControl.Enums.ColorModeEnum", 0)
 
-            value: typing.Union[Nullable, uint] = NullValue
+        Options = _attr(__module__, __qualname__, "Options", 0x00000300, 0x0000000F, "ColorControl.Bitmaps.OptionsBitmap", 0)
 
-        @dataclass
-        class Primary1X(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000011
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        NumberOfPrimaries = _attr(__module__, __qualname__, "NumberOfPrimaries", 0x00000300, 0x00000010, "typing.Union[Nullable, uint]", NullValue)
 
-            value: typing.Optional[uint] = None
+        Primary1X = _attr(__module__, __qualname__, "Primary1X", 0x00000300, 0x00000011, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary1Y(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000012
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Primary1Y = _attr(__module__, __qualname__, "Primary1Y", 0x00000300, 0x00000012, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        Primary1Intensity = _attr(__module__, __qualname__, "Primary1Intensity", 0x00000300, 0x00000013, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Primary1Intensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000013
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        Primary2X = _attr(__module__, __qualname__, "Primary2X", 0x00000300, 0x00000015, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        Primary2Y = _attr(__module__, __qualname__, "Primary2Y", 0x00000300, 0x00000016, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary2X(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000015
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Primary2Intensity = _attr(__module__, __qualname__, "Primary2Intensity", 0x00000300, 0x00000017, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[uint] = None
+        Primary3X = _attr(__module__, __qualname__, "Primary3X", 0x00000300, 0x00000019, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary2Y(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000016
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Primary3Y = _attr(__module__, __qualname__, "Primary3Y", 0x00000300, 0x0000001A, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        Primary3Intensity = _attr(__module__, __qualname__, "Primary3Intensity", 0x00000300, 0x0000001B, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Primary2Intensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000017
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        Primary4X = _attr(__module__, __qualname__, "Primary4X", 0x00000300, 0x00000020, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        Primary4Y = _attr(__module__, __qualname__, "Primary4Y", 0x00000300, 0x00000021, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary3X(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000019
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Primary4Intensity = _attr(__module__, __qualname__, "Primary4Intensity", 0x00000300, 0x00000022, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[uint] = None
+        Primary5X = _attr(__module__, __qualname__, "Primary5X", 0x00000300, 0x00000024, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary3Y(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Primary5Y = _attr(__module__, __qualname__, "Primary5Y", 0x00000300, 0x00000025, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        Primary5Intensity = _attr(__module__, __qualname__, "Primary5Intensity", 0x00000300, 0x00000026, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Primary3Intensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000001B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        Primary6X = _attr(__module__, __qualname__, "Primary6X", 0x00000300, 0x00000028, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        Primary6Y = _attr(__module__, __qualname__, "Primary6Y", 0x00000300, 0x00000029, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary4X(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000020
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        Primary6Intensity = _attr(__module__, __qualname__, "Primary6Intensity", 0x00000300, 0x0000002A, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[uint] = None
+        WhitePointX = _attr(__module__, __qualname__, "WhitePointX", 0x00000300, 0x00000030, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary4Y(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000021
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        WhitePointY = _attr(__module__, __qualname__, "WhitePointY", 0x00000300, 0x00000031, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        ColorPointRX = _attr(__module__, __qualname__, "ColorPointRX", 0x00000300, 0x00000032, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary4Intensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000022
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        ColorPointRY = _attr(__module__, __qualname__, "ColorPointRY", 0x00000300, 0x00000033, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ColorPointRIntensity = _attr(__module__, __qualname__, "ColorPointRIntensity", 0x00000300, 0x00000034, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Primary5X(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000024
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ColorPointGX = _attr(__module__, __qualname__, "ColorPointGX", 0x00000300, 0x00000036, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        ColorPointGY = _attr(__module__, __qualname__, "ColorPointGY", 0x00000300, 0x00000037, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary5Y(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000025
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ColorPointGIntensity = _attr(__module__, __qualname__, "ColorPointGIntensity", 0x00000300, 0x00000038, "typing.Union[None, Nullable, uint]", None)
 
-            value: typing.Optional[uint] = None
+        ColorPointBX = _attr(__module__, __qualname__, "ColorPointBX", 0x00000300, 0x0000003A, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Primary5Intensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000026
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        ColorPointBY = _attr(__module__, __qualname__, "ColorPointBY", 0x00000300, 0x0000003B, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ColorPointBIntensity = _attr(__module__, __qualname__, "ColorPointBIntensity", 0x00000300, 0x0000003C, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class Primary6X(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000028
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        EnhancedCurrentHue = _attr(__module__, __qualname__, "EnhancedCurrentHue", 0x00000300, 0x00004000, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        EnhancedColorMode = _attr(__module__, __qualname__, "EnhancedColorMode", 0x00000300, 0x00004001, "ColorControl.Enums.EnhancedColorModeEnum", 0)
 
-        @dataclass
-        class Primary6Y(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000029
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ColorLoopActive = _attr(__module__, __qualname__, "ColorLoopActive", 0x00000300, 0x00004002, "typing.Optional[Globals.Enums.enum8]", None)
 
-            value: typing.Optional[uint] = None
+        ColorLoopDirection = _attr(__module__, __qualname__, "ColorLoopDirection", 0x00000300, 0x00004003, "typing.Optional[ColorControl.Enums.ColorLoopDirectionEnum]", None)
 
-        @dataclass
-        class Primary6Intensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000002A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        ColorLoopTime = _attr(__module__, __qualname__, "ColorLoopTime", 0x00000300, 0x00004004, "typing.Optional[uint]", None)
 
-            value: typing.Union[None, Nullable, uint] = None
+        ColorLoopStartEnhancedHue = _attr(__module__, __qualname__, "ColorLoopStartEnhancedHue", 0x00000300, 0x00004005, "typing.Optional[uint]", None)
 
-        @dataclass
-        class WhitePointX(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000030
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ColorLoopStoredEnhancedHue = _attr(__module__, __qualname__, "ColorLoopStoredEnhancedHue", 0x00000300, 0x00004006, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        ColorCapabilities = _attr(__module__, __qualname__, "ColorCapabilities", 0x00000300, 0x0000400A, "ColorControl.Bitmaps.ColorCapabilitiesBitmap", 0)
 
-        @dataclass
-        class WhitePointY(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ColorTempPhysicalMinMireds = _attr(__module__, __qualname__, "ColorTempPhysicalMinMireds", 0x00000300, 0x0000400B, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        ColorTempPhysicalMaxMireds = _attr(__module__, __qualname__, "ColorTempPhysicalMaxMireds", 0x00000300, 0x0000400C, "typing.Optional[uint]", None)
 
-        @dataclass
-        class ColorPointRX(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000032
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        CoupleColorTempToLevelMinMireds = _attr(__module__, __qualname__, "CoupleColorTempToLevelMinMireds", 0x00000300, 0x0000400D, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        StartUpColorTemperatureMireds = _attr(__module__, __qualname__, "StartUpColorTemperatureMireds", 0x00000300, 0x00004010, "typing.Union[None, Nullable, uint]", None)
 
-        @dataclass
-        class ColorPointRY(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000300, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[uint] = None
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000300, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class ColorPointRIntensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000034
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000300, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Union[None, Nullable, uint] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000300, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class ColorPointGX(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000036
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorPointGY(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000037
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorPointGIntensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000038
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class ColorPointBX(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000003A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorPointBY(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000003B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorPointBIntensity(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000003C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class EnhancedCurrentHue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class EnhancedColorMode(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=ColorControl.Enums.EnhancedColorModeEnum)
-
-            value: ColorControl.Enums.EnhancedColorModeEnum = 0
-
-        @dataclass
-        class ColorLoopActive(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[Globals.Enums.enum8])
-
-            value: typing.Optional[Globals.Enums.enum8] = None
-
-        @dataclass
-        class ColorLoopDirection(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[ColorControl.Enums.ColorLoopDirectionEnum])
-
-            value: typing.Optional[ColorControl.Enums.ColorLoopDirectionEnum] = None
-
-        @dataclass
-        class ColorLoopTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorLoopStartEnhancedHue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorLoopStoredEnhancedHue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorCapabilities(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000400A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=ColorControl.Bitmaps.ColorCapabilitiesBitmap)
-
-            value: ColorControl.Bitmaps.ColorCapabilitiesBitmap = 0
-
-        @dataclass
-        class ColorTempPhysicalMinMireds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000400B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class ColorTempPhysicalMaxMireds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000400C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class CoupleColorTempToLevelMinMireds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000400D
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class StartUpColorTemperatureMireds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00004010
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[None, Nullable, uint])
-
-            value: typing.Union[None, Nullable, uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000300
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000300, 0x0000FFFD, "uint", 0)

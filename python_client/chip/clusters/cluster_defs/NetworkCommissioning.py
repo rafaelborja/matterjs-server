@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -347,258 +347,34 @@ class NetworkCommissioning(Cluster):
             errorValue: typing.Union[Nullable, int] = NullValue
 
     class Attributes:
-        @dataclass
-        class MaxNetworks(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
+        MaxNetworks = _attr(__module__, __qualname__, "MaxNetworks", 0x00000031, 0x00000000, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        Networks = _attr(__module__, __qualname__, "Networks", 0x00000031, 0x00000001, "typing.List[NetworkCommissioning.Structs.NetworkInfoStruct]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
+        ScanMaxTimeSeconds = _attr(__module__, __qualname__, "ScanMaxTimeSeconds", 0x00000031, 0x00000002, "typing.Optional[uint]", None)
 
-            value: uint = 0
+        ConnectMaxTimeSeconds = _attr(__module__, __qualname__, "ConnectMaxTimeSeconds", 0x00000031, 0x00000003, "typing.Optional[uint]", None)
 
-        @dataclass
-        class Networks(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
+        InterfaceEnabled = _attr(__module__, __qualname__, "InterfaceEnabled", 0x00000031, 0x00000004, "bool", False)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        LastNetworkingStatus = _attr(__module__, __qualname__, "LastNetworkingStatus", 0x00000031, 0x00000005, "typing.Union[Nullable, NetworkCommissioning.Enums.NetworkCommissioningStatusEnum]", NullValue)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[NetworkCommissioning.Structs.NetworkInfoStruct])
+        LastNetworkID = _attr(__module__, __qualname__, "LastNetworkID", 0x00000031, 0x00000006, "typing.Union[Nullable, bytes]", NullValue)
 
-            value: typing.List[NetworkCommissioning.Structs.NetworkInfoStruct] = field(default_factory=lambda: [])
+        LastConnectErrorValue = _attr(__module__, __qualname__, "LastConnectErrorValue", 0x00000031, 0x00000007, "typing.Union[Nullable, int]", NullValue)
 
-        @dataclass
-        class ScanMaxTimeSeconds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
+        SupportedWiFiBands = _attr(__module__, __qualname__, "SupportedWiFiBands", 0x00000031, 0x00000008, "typing.Optional[typing.List[NetworkCommissioning.Enums.WiFiBandEnum]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        SupportedThreadFeatures = _attr(__module__, __qualname__, "SupportedThreadFeatures", 0x00000031, 0x00000009, "typing.Optional[NetworkCommissioning.Bitmaps.ThreadCapabilitiesBitmap]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        ThreadVersion = _attr(__module__, __qualname__, "ThreadVersion", 0x00000031, 0x0000000A, "typing.Optional[uint]", None)
 
-            value: typing.Optional[uint] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000031, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class ConnectMaxTimeSeconds(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000031, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000031, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000031, 0x0000FFFC, "uint", 0)
 
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class InterfaceEnabled(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
-
-            value: bool = False
-
-        @dataclass
-        class LastNetworkingStatus(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, NetworkCommissioning.Enums.NetworkCommissioningStatusEnum])
-
-            value: typing.Union[Nullable, NetworkCommissioning.Enums.NetworkCommissioningStatusEnum] = NullValue
-
-        @dataclass
-        class LastNetworkID(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, bytes])
-
-            value: typing.Union[Nullable, bytes] = NullValue
-
-        @dataclass
-        class LastConnectErrorValue(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Union[Nullable, int])
-
-            value: typing.Union[Nullable, int] = NullValue
-
-        @dataclass
-        class SupportedWiFiBands(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[NetworkCommissioning.Enums.WiFiBandEnum]])
-
-            value: typing.Optional[typing.List[NetworkCommissioning.Enums.WiFiBandEnum]] = None
-
-        @dataclass
-        class SupportedThreadFeatures(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[NetworkCommissioning.Bitmaps.ThreadCapabilitiesBitmap])
-
-            value: typing.Optional[NetworkCommissioning.Bitmaps.ThreadCapabilitiesBitmap] = None
-
-        @dataclass
-        class ThreadVersion(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000031
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000031, 0x0000FFFD, "uint", 0)

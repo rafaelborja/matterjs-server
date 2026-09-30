@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 from .Globals import Globals
 
@@ -722,306 +722,40 @@ class JointFabricDatastore(Cluster):
             nodeID: uint = 0
 
     class Attributes:
-        @dataclass
-        class AnchorRootCA(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bytes)
-
-            value: bytes = b""
-
-        @dataclass
-        class AnchorNodeID(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class AnchorVendorID(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class FriendlyName(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=str)
-
-            value: str = ""
-
-        @dataclass
-        class GroupKeySetList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreGroupKeySetStruct])
-
-            value: typing.List[JointFabricDatastore.Structs.DatastoreGroupKeySetStruct] = field(default_factory=lambda: [])
-
-        @dataclass
-        class GroupList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreGroupInformationEntryStruct])
-
-            value: typing.List[JointFabricDatastore.Structs.DatastoreGroupInformationEntryStruct] = field(default_factory=lambda: [])
-
-        @dataclass
-        class NodeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreNodeInformationEntryStruct])
+        AnchorRootCA = _attr(__module__, __qualname__, "AnchorRootCA", 0x00000752, 0x00000000, "bytes", b"")
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreNodeInformationEntryStruct] = field(default_factory=lambda: [])
+        AnchorNodeID = _attr(__module__, __qualname__, "AnchorNodeID", 0x00000752, 0x00000001, "uint", 0)
 
-        @dataclass
-        class AdminList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreAdministratorInformationEntryStruct])
+        AnchorVendorID = _attr(__module__, __qualname__, "AnchorVendorID", 0x00000752, 0x00000002, "uint", 0)
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreAdministratorInformationEntryStruct] = field(default_factory=lambda: [])
+        FriendlyName = _attr(__module__, __qualname__, "FriendlyName", 0x00000752, 0x00000003, "str", "")
 
-        @dataclass
-        class Status(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=JointFabricDatastore.Structs.DatastoreStatusEntryStruct)
+        GroupKeySetList = _attr(__module__, __qualname__, "GroupKeySetList", 0x00000752, 0x00000004, "typing.List[JointFabricDatastore.Structs.DatastoreGroupKeySetStruct]", None, "[]")
 
-            value: JointFabricDatastore.Structs.DatastoreStatusEntryStruct = field(default_factory=lambda: JointFabricDatastore.Structs.DatastoreStatusEntryStruct())
+        GroupList = _attr(__module__, __qualname__, "GroupList", 0x00000752, 0x00000005, "typing.List[JointFabricDatastore.Structs.DatastoreGroupInformationEntryStruct]", None, "[]")
 
-        @dataclass
-        class EndpointGroupIDList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreEndpointGroupIDEntryStruct])
+        NodeList = _attr(__module__, __qualname__, "NodeList", 0x00000752, 0x00000006, "typing.List[JointFabricDatastore.Structs.DatastoreNodeInformationEntryStruct]", None, "[]")
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreEndpointGroupIDEntryStruct] = field(default_factory=lambda: [])
+        AdminList = _attr(__module__, __qualname__, "AdminList", 0x00000752, 0x00000007, "typing.List[JointFabricDatastore.Structs.DatastoreAdministratorInformationEntryStruct]", None, "[]")
 
-        @dataclass
-        class EndpointBindingList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreEndpointBindingEntryStruct])
+        Status = _attr(__module__, __qualname__, "Status", 0x00000752, 0x00000008, "JointFabricDatastore.Structs.DatastoreStatusEntryStruct", None, "JointFabricDatastore.Structs.DatastoreStatusEntryStruct()")
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreEndpointBindingEntryStruct] = field(default_factory=lambda: [])
+        EndpointGroupIDList = _attr(__module__, __qualname__, "EndpointGroupIDList", 0x00000752, 0x00000009, "typing.List[JointFabricDatastore.Structs.DatastoreEndpointGroupIDEntryStruct]", None, "[]")
 
-        @dataclass
-        class NodeKeySetList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000B
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreNodeKeySetEntryStruct])
+        EndpointBindingList = _attr(__module__, __qualname__, "EndpointBindingList", 0x00000752, 0x0000000A, "typing.List[JointFabricDatastore.Structs.DatastoreEndpointBindingEntryStruct]", None, "[]")
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreNodeKeySetEntryStruct] = field(default_factory=lambda: [])
+        NodeKeySetList = _attr(__module__, __qualname__, "NodeKeySetList", 0x00000752, 0x0000000B, "typing.List[JointFabricDatastore.Structs.DatastoreNodeKeySetEntryStruct]", None, "[]")
 
-        @dataclass
-        class NodeACLList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000C
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreACLEntryStruct])
+        NodeACLList = _attr(__module__, __qualname__, "NodeACLList", 0x00000752, 0x0000000C, "typing.List[JointFabricDatastore.Structs.DatastoreACLEntryStruct]", None, "[]")
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreACLEntryStruct] = field(default_factory=lambda: [])
+        NodeEndpointList = _attr(__module__, __qualname__, "NodeEndpointList", 0x00000752, 0x0000000D, "typing.List[JointFabricDatastore.Structs.DatastoreEndpointEntryStruct]", None, "[]")
 
-        @dataclass
-        class NodeEndpointList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000752, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000D
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000752, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[JointFabricDatastore.Structs.DatastoreEndpointEntryStruct])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000752, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.List[JointFabricDatastore.Structs.DatastoreEndpointEntryStruct] = field(default_factory=lambda: [])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000752, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000752
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000752, 0x0000FFFD, "uint", 0)

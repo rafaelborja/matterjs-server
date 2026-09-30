@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -89,149 +89,23 @@ class DishwasherAlarm(Cluster):
             mask: DishwasherAlarm.Bitmaps.AlarmBitmap = 0
 
     class Attributes:
-        @dataclass
-        class Mask(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
+        Mask = _attr(__module__, __qualname__, "Mask", 0x0000005D, 0x00000000, "DishwasherAlarm.Bitmaps.AlarmBitmap", 0)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        Latch = _attr(__module__, __qualname__, "Latch", 0x0000005D, 0x00000001, "typing.Optional[DishwasherAlarm.Bitmaps.AlarmBitmap]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=DishwasherAlarm.Bitmaps.AlarmBitmap)
+        State = _attr(__module__, __qualname__, "State", 0x0000005D, 0x00000002, "DishwasherAlarm.Bitmaps.AlarmBitmap", 0)
 
-            value: DishwasherAlarm.Bitmaps.AlarmBitmap = 0
+        Supported = _attr(__module__, __qualname__, "Supported", 0x0000005D, 0x00000003, "DishwasherAlarm.Bitmaps.AlarmBitmap", 0)
 
-        @dataclass
-        class Latch(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x0000005D, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x0000005D, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[DishwasherAlarm.Bitmaps.AlarmBitmap])
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x0000005D, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            value: typing.Optional[DishwasherAlarm.Bitmaps.AlarmBitmap] = None
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x0000005D, 0x0000FFFC, "uint", 0)
 
-        @dataclass
-        class State(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=DishwasherAlarm.Bitmaps.AlarmBitmap)
-
-            value: DishwasherAlarm.Bitmaps.AlarmBitmap = 0
-
-        @dataclass
-        class Supported(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=DishwasherAlarm.Bitmaps.AlarmBitmap)
-
-            value: DishwasherAlarm.Bitmaps.AlarmBitmap = 0
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000005D
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x0000005D, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -264,261 +264,37 @@ class GeneralDiagnostics(Cluster):
             payload: bytes = b""
 
     class Attributes:
-        @dataclass
-        class NetworkInterfaces(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
+        NetworkInterfaces = _attr(__module__, __qualname__, "NetworkInterfaces", 0x00000033, 0x00000000, "typing.List[GeneralDiagnostics.Structs.NetworkInterface]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        RebootCount = _attr(__module__, __qualname__, "RebootCount", 0x00000033, 0x00000001, "uint", 0)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[GeneralDiagnostics.Structs.NetworkInterface])
+        UpTime = _attr(__module__, __qualname__, "UpTime", 0x00000033, 0x00000002, "uint", 0)
 
-            value: typing.List[GeneralDiagnostics.Structs.NetworkInterface] = field(default_factory=lambda: [])
+        TotalOperationalHours = _attr(__module__, __qualname__, "TotalOperationalHours", 0x00000033, 0x00000003, "typing.Optional[uint]", None)
 
-        @dataclass
-        class RebootCount(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
+        BootReason = _attr(__module__, __qualname__, "BootReason", 0x00000033, 0x00000004, "typing.Optional[GeneralDiagnostics.Enums.BootReasonEnum]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        ActiveHardwareFaults = _attr(__module__, __qualname__, "ActiveHardwareFaults", 0x00000033, 0x00000005, "typing.Optional[typing.List[GeneralDiagnostics.Enums.HardwareFaultEnum]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
+        ActiveRadioFaults = _attr(__module__, __qualname__, "ActiveRadioFaults", 0x00000033, 0x00000006, "typing.Optional[typing.List[GeneralDiagnostics.Enums.RadioFaultEnum]]", None)
 
-            value: uint = 0
+        ActiveNetworkFaults = _attr(__module__, __qualname__, "ActiveNetworkFaults", 0x00000033, 0x00000007, "typing.Optional[typing.List[GeneralDiagnostics.Enums.NetworkFaultEnum]]", None)
 
-        @dataclass
-        class UpTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
+        TestEventTriggersEnabled = _attr(__module__, __qualname__, "TestEventTriggersEnabled", 0x00000033, 0x00000008, "bool", False)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        DoNotUse = _attr(__module__, __qualname__, "DoNotUse", 0x00000033, 0x00000009, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
+        DeviceLoadStatus = _attr(__module__, __qualname__, "DeviceLoadStatus", 0x00000033, 0x0000000A, "typing.Optional[GeneralDiagnostics.Structs.DeviceLoadStruct]", None)
 
-            value: uint = 0
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x00000033, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class TotalOperationalHours(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x00000033, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x00000033, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x00000033, 0x0000FFFC, "uint", 0)
 
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class BootReason(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[GeneralDiagnostics.Enums.BootReasonEnum])
-
-            value: typing.Optional[GeneralDiagnostics.Enums.BootReasonEnum] = None
-
-        @dataclass
-        class ActiveHardwareFaults(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[GeneralDiagnostics.Enums.HardwareFaultEnum]])
-
-            value: typing.Optional[typing.List[GeneralDiagnostics.Enums.HardwareFaultEnum]] = None
-
-        @dataclass
-        class ActiveRadioFaults(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[GeneralDiagnostics.Enums.RadioFaultEnum]])
-
-            value: typing.Optional[typing.List[GeneralDiagnostics.Enums.RadioFaultEnum]] = None
-
-        @dataclass
-        class ActiveNetworkFaults(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[GeneralDiagnostics.Enums.NetworkFaultEnum]])
-
-            value: typing.Optional[typing.List[GeneralDiagnostics.Enums.NetworkFaultEnum]] = None
-
-        @dataclass
-        class TestEventTriggersEnabled(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
-
-            value: bool = False
-
-        @dataclass
-        class DoNotUse(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class DeviceLoadStatus(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[GeneralDiagnostics.Structs.DeviceLoadStruct])
-
-            value: typing.Optional[GeneralDiagnostics.Structs.DeviceLoadStruct] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x00000033
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x00000033, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

@@ -10,7 +10,7 @@ from ... import ChipUtility
 from ...clusters.enum import MatterIntEnum
 from ...tlv import float32, uint
 from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,
-                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)
+                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)
 from ..Types import Nullable, NullValue
 
 
@@ -455,261 +455,37 @@ class ContentControl(Cluster):
             PINCode: str = ""
 
     class Attributes:
-        @dataclass
-        class Enabled(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
+        Enabled = _attr(__module__, __qualname__, "Enabled", 0x0000050F, 0x00000000, "bool", False)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000000
+        OnDemandRatings = _attr(__module__, __qualname__, "OnDemandRatings", 0x0000050F, 0x00000001, "typing.Optional[typing.List[ContentControl.Structs.RatingNameStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=bool)
+        OnDemandRatingThreshold = _attr(__module__, __qualname__, "OnDemandRatingThreshold", 0x0000050F, 0x00000002, "typing.Optional[str]", None)
 
-            value: bool = False
+        ScheduledContentRatings = _attr(__module__, __qualname__, "ScheduledContentRatings", 0x0000050F, 0x00000003, "typing.Optional[typing.List[ContentControl.Structs.RatingNameStruct]]", None)
 
-        @dataclass
-        class OnDemandRatings(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
+        ScheduledContentRatingThreshold = _attr(__module__, __qualname__, "ScheduledContentRatingThreshold", 0x0000050F, 0x00000004, "typing.Optional[str]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000001
+        ScreenDailyTime = _attr(__module__, __qualname__, "ScreenDailyTime", 0x0000050F, 0x00000005, "typing.Optional[uint]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ContentControl.Structs.RatingNameStruct]])
+        RemainingScreenTime = _attr(__module__, __qualname__, "RemainingScreenTime", 0x0000050F, 0x00000006, "typing.Optional[uint]", None)
 
-            value: typing.Optional[typing.List[ContentControl.Structs.RatingNameStruct]] = None
+        BlockUnrated = _attr(__module__, __qualname__, "BlockUnrated", 0x0000050F, 0x00000007, "typing.Optional[bool]", None)
 
-        @dataclass
-        class OnDemandRatingThreshold(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
+        BlockChannelList = _attr(__module__, __qualname__, "BlockChannelList", 0x0000050F, 0x00000008, "typing.Optional[typing.List[ContentControl.Structs.BlockChannelStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000002
+        BlockApplicationList = _attr(__module__, __qualname__, "BlockApplicationList", 0x0000050F, 0x00000009, "typing.Optional[typing.List[ContentControl.Structs.AppInfoStruct]]", None)
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
+        BlockContentTimeWindow = _attr(__module__, __qualname__, "BlockContentTimeWindow", 0x0000050F, 0x0000000A, "typing.Optional[typing.List[ContentControl.Structs.TimeWindowStruct]]", None)
 
-            value: typing.Optional[str] = None
+        GeneratedCommandList = _attr(__module__, __qualname__, "GeneratedCommandList", 0x0000050F, 0x0000FFF8, "typing.List[uint]", None, "[]")
 
-        @dataclass
-        class ScheduledContentRatings(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
+        AcceptedCommandList = _attr(__module__, __qualname__, "AcceptedCommandList", 0x0000050F, 0x0000FFF9, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000003
+        AttributeList = _attr(__module__, __qualname__, "AttributeList", 0x0000050F, 0x0000FFFB, "typing.List[uint]", None, "[]")
 
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ContentControl.Structs.RatingNameStruct]])
+        FeatureMap = _attr(__module__, __qualname__, "FeatureMap", 0x0000050F, 0x0000FFFC, "uint", 0)
 
-            value: typing.Optional[typing.List[ContentControl.Structs.RatingNameStruct]] = None
-
-        @dataclass
-        class ScheduledContentRatingThreshold(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000004
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[str])
-
-            value: typing.Optional[str] = None
-
-        @dataclass
-        class ScreenDailyTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000005
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class RemainingScreenTime(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000006
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[uint])
-
-            value: typing.Optional[uint] = None
-
-        @dataclass
-        class BlockUnrated(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000007
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[bool])
-
-            value: typing.Optional[bool] = None
-
-        @dataclass
-        class BlockChannelList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000008
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ContentControl.Structs.BlockChannelStruct]])
-
-            value: typing.Optional[typing.List[ContentControl.Structs.BlockChannelStruct]] = None
-
-        @dataclass
-        class BlockApplicationList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x00000009
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ContentControl.Structs.AppInfoStruct]])
-
-            value: typing.Optional[typing.List[ContentControl.Structs.AppInfoStruct]] = None
-
-        @dataclass
-        class BlockContentTimeWindow(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000000A
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.Optional[typing.List[ContentControl.Structs.TimeWindowStruct]])
-
-            value: typing.Optional[typing.List[ContentControl.Structs.TimeWindowStruct]] = None
-
-        @dataclass
-        class GeneratedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF8
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AcceptedCommandList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFF9
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class AttributeList(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFB
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=typing.List[uint])
-
-            value: typing.List[uint] = field(default_factory=lambda: [])
-
-        @dataclass
-        class FeatureMap(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFC
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
-
-        @dataclass
-        class ClusterRevision(ClusterAttributeDescriptor):
-            @ChipUtility.classproperty
-            def cluster_id(cls) -> int:
-                return 0x0000050F
-
-            @ChipUtility.classproperty
-            def attribute_id(cls) -> int:
-                return 0x0000FFFD
-
-            @ChipUtility.classproperty
-            def attribute_type(cls) -> ClusterObjectFieldDescriptor:
-                return ClusterObjectFieldDescriptor(Type=uint)
-
-            value: uint = 0
+        ClusterRevision = _attr(__module__, __qualname__, "ClusterRevision", 0x0000050F, 0x0000FFFD, "uint", 0)
 
     class Events:
         @dataclass

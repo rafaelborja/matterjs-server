@@ -1,150 +1,10 @@
-"""Auto-generated cluster imports (DO NOT edit)."""
+"""Auto-generated cluster imports (DO NOT edit).
 
-from .Globals import Globals
-from .AccessControl import AccessControl
-from .AccountLogin import AccountLogin
-from .Actions import Actions
-from .ActivatedCarbonFilterMonitoring import ActivatedCarbonFilterMonitoring
-from .AdministratorCommissioning import AdministratorCommissioning
-from .AirQuality import AirQuality
-from .AmbientContextSensing import AmbientContextSensing
-from .ApplicationBasic import ApplicationBasic
-from .ApplicationLauncher import ApplicationLauncher
-from .AudioOutput import AudioOutput
-from .BasicInformation import BasicInformation
-from .Binding import Binding
-from .BooleanState import BooleanState
-from .BooleanStateConfiguration import BooleanStateConfiguration
-from .BridgedDeviceBasicInformation import BridgedDeviceBasicInformation
-from .CameraAvSettingsUserLevelManagement import CameraAvSettingsUserLevelManagement
-from .CameraAvStreamManagement import CameraAvStreamManagement
-from .CarbonDioxideConcentrationMeasurement import CarbonDioxideConcentrationMeasurement
-from .CarbonMonoxideConcentrationMeasurement import CarbonMonoxideConcentrationMeasurement
-from .Channel import Channel
-from .Chime import Chime
-from .ClosureControl import ClosureControl
-from .ClosureDimension import ClosureDimension
-from .ColorControl import ColorControl
-from .CommissionerControl import CommissionerControl
-from .CommodityMetering import CommodityMetering
-from .CommodityPrice import CommodityPrice
-from .CommodityTariff import CommodityTariff
-from .ContentAppObserver import ContentAppObserver
-from .ContentControl import ContentControl
-from .ContentLauncher import ContentLauncher
-from .Descriptor import Descriptor
-from .DeviceEnergyManagement import DeviceEnergyManagement
-from .DeviceEnergyManagementMode import DeviceEnergyManagementMode
-from .DiagnosticLogs import DiagnosticLogs
-from .DishwasherAlarm import DishwasherAlarm
-from .DishwasherMode import DishwasherMode
-from .DoorLock import DoorLock
-from .DraftElectricalMeasurementCluster import DraftElectricalMeasurementCluster
-from .EcosystemInformation import EcosystemInformation
-from .ElectricalEnergyMeasurement import ElectricalEnergyMeasurement
-from .ElectricalGridConditions import ElectricalGridConditions
-from .ElectricalPowerMeasurement import ElectricalPowerMeasurement
-from .EnergyEvse import EnergyEvse
-from .EnergyEvseMode import EnergyEvseMode
-from .EnergyPreference import EnergyPreference
-from .EthernetNetworkDiagnostics import EthernetNetworkDiagnostics
-from .EveCluster import EveCluster
-from .FanControl import FanControl
-from .FixedLabel import FixedLabel
-from .FlowMeasurement import FlowMeasurement
-from .FormaldehydeConcentrationMeasurement import FormaldehydeConcentrationMeasurement
-from .GeneralCommissioning import GeneralCommissioning
-from .GeneralDiagnostics import GeneralDiagnostics
-from .GroupKeyManagement import GroupKeyManagement
-from .Groupcast import Groupcast
-from .Groups import Groups
-from .HeimanCluster import HeimanCluster
-from .HepaFilterMonitoring import HepaFilterMonitoring
-from .IcdManagement import IcdManagement
-from .Identify import Identify
-from .IlluminanceMeasurement import IlluminanceMeasurement
-from .InovelliCluster import InovelliCluster
-from .JointFabricAdministrator import JointFabricAdministrator
-from .JointFabricDatastore import JointFabricDatastore
-from .KeypadInput import KeypadInput
-from .LaundryDryerControls import LaundryDryerControls
-from .LaundryWasherControls import LaundryWasherControls
-from .LaundryWasherMode import LaundryWasherMode
-from .LevelControl import LevelControl
-from .LocalizationConfiguration import LocalizationConfiguration
-from .LowPower import LowPower
-from .MediaInput import MediaInput
-from .MediaPlayback import MediaPlayback
-from .Messages import Messages
-from .MeterIdentification import MeterIdentification
-from .MicrowaveOvenControl import MicrowaveOvenControl
-from .MicrowaveOvenMode import MicrowaveOvenMode
-from .ModeSelect import ModeSelect
-from .NeoCluster import NeoCluster
-from .NetworkCommissioning import NetworkCommissioning
-from .NitrogenDioxideConcentrationMeasurement import NitrogenDioxideConcentrationMeasurement
-from .OccupancySensing import OccupancySensing
-from .OnOff import OnOff
-from .OperationalCredentials import OperationalCredentials
-from .OperationalState import OperationalState
-from .OtaSoftwareUpdateProvider import OtaSoftwareUpdateProvider
-from .OtaSoftwareUpdateRequestor import OtaSoftwareUpdateRequestor
-from .OvenCavityOperationalState import OvenCavityOperationalState
-from .OvenMode import OvenMode
-from .OzoneConcentrationMeasurement import OzoneConcentrationMeasurement
-from .Pm10ConcentrationMeasurement import Pm10ConcentrationMeasurement
-from .Pm1ConcentrationMeasurement import Pm1ConcentrationMeasurement
-from .Pm25ConcentrationMeasurement import Pm25ConcentrationMeasurement
-from .PowerSource import PowerSource
-from .PowerSourceConfiguration import PowerSourceConfiguration
-from .PowerTopology import PowerTopology
-from .PressureMeasurement import PressureMeasurement
-from .PumpConfigurationAndControl import PumpConfigurationAndControl
-from .PushAvStreamTransport import PushAvStreamTransport
-from .RadonConcentrationMeasurement import RadonConcentrationMeasurement
-from .RefrigeratorAlarm import RefrigeratorAlarm
-from .RefrigeratorAndTemperatureControlledCabinetMode import RefrigeratorAndTemperatureControlledCabinetMode
-from .RelativeHumidityMeasurement import RelativeHumidityMeasurement
-from .RvcCleanMode import RvcCleanMode
-from .RvcOperationalState import RvcOperationalState
-from .RvcRunMode import RvcRunMode
-from .ScenesManagement import ScenesManagement
-from .ServiceArea import ServiceArea
-from .SmokeCoAlarm import SmokeCoAlarm
-from .SoftwareDiagnostics import SoftwareDiagnostics
-from .SoilMeasurement import SoilMeasurement
-from .Switch import Switch
-from .TargetNavigator import TargetNavigator
-from .TclDehumidifierCluster import TclDehumidifierCluster
-from .TemperatureAlarm import TemperatureAlarm
-from .TemperatureControl import TemperatureControl
-from .TemperatureMeasurement import TemperatureMeasurement
-from .Thermostat import Thermostat
-from .ThermostatUserInterfaceConfiguration import ThermostatUserInterfaceConfiguration
-from .ThirdRealityMeteringCluster import ThirdRealityMeteringCluster
-from .ThreadBorderRouterManagement import ThreadBorderRouterManagement
-from .ThreadNetworkDiagnostics import ThreadNetworkDiagnostics
-from .ThreadNetworkDirectory import ThreadNetworkDirectory
-from .TimeFormatLocalization import TimeFormatLocalization
-from .TimeSynchronization import TimeSynchronization
-from .TlsCertificateManagement import TlsCertificateManagement
-from .TlsClientManagement import TlsClientManagement
-from .TotalVolatileOrganicCompoundsConcentrationMeasurement import TotalVolatileOrganicCompoundsConcentrationMeasurement
-from .UnitLocalization import UnitLocalization
-from .UserLabel import UserLabel
-from .ValveConfigurationAndControl import ValveConfigurationAndControl
-from .WagoCluster import WagoCluster
-from .WakeOnLan import WakeOnLan
-from .WaterHeaterManagement import WaterHeaterManagement
-from .WaterHeaterMode import WaterHeaterMode
-from .WaterTankLevelMonitoring import WaterTankLevelMonitoring
-from .WebRtcTransportDefinitions import WebRtcTransportDefinitions
-from .WebRtcTransportProvider import WebRtcTransportProvider
-from .WebRtcTransportRequestor import WebRtcTransportRequestor
-from .WiFiNetworkDiagnostics import WiFiNetworkDiagnostics
-from .WiFiNetworkManagement import WiFiNetworkManagement
-from .WindowCovering import WindowCovering
-from .ZoneManagement import ZoneManagement
+Each cluster module is imported on first attribute access instead of at package import.
+"""
+
+import sys as _sys
+import types as _types
 
 __all__ = [
     "Globals",
@@ -294,3 +154,40 @@ __all__ = [
     "ZoneManagement",
 ]
 
+_NAMES = frozenset(__all__)
+
+
+class _ClusterDefsModule(_types.ModuleType):
+    # Keep attribute X bound to class X, as the eager package did, when submodule X is imported
+    # directly or returned as a pending lazy submodule (Python 3.15 lazy imports).
+    def __setattr__(self, name: str, value: object) -> None:
+        if isinstance(value, _types.ModuleType) and name in _NAMES and value.__name__ == self.__name__ + "." + name:
+            value = getattr(value, name)
+        super().__setattr__(name, value)
+
+    def __getattribute__(self, name: str) -> object:
+        value = super().__getattribute__(name)
+        if isinstance(value, _types.ModuleType) and name in _NAMES:
+            value = getattr(value, name)
+            _types.ModuleType.__setattr__(self, name, value)
+        return value
+
+
+_sys.modules[__name__].__class__ = _ClusterDefsModule
+
+
+def __getattr__(name: str) -> object:
+    if name in _NAMES:
+        full = __name__ + "." + name
+        module = _sys.modules.get(full)
+        if module is None:
+            __import__(full)
+            module = _sys.modules[full]
+        value = getattr(module, name)
+        globals()[name] = value
+        return value
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | _NAMES)

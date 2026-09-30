@@ -782,6 +782,7 @@ class PythonWriter {
 interface ClusterGenResult {
     fileName: string;
     className: string;
+    clusterId?: number;
     content: string;
     crossClusterImports: Set<string>;
 }
@@ -884,7 +885,7 @@ function generateClusterFile(
     w.line(
         "from ..ClusterObjects import (Cluster, ClusterAttributeDescriptor, ClusterCommand, ClusterEvent, ClusterObject,",
     );
-    w.line("                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor)");
+    w.line("                              ClusterObjectDescriptor, ClusterObjectFieldDescriptor, _attr)");
     w.line("from ..Types import Nullable, NullValue");
 
     // We'll add cross-cluster imports after generating the body
@@ -1100,6 +1101,7 @@ function generateClusterFile(
     return {
         fileName: `${clusterName}.py`,
         className: clusterName,
+        clusterId,
         content,
         crossClusterImports,
     };
@@ -1459,35 +1461,7 @@ function generateAttribute(
     const attrId = model.id ?? 0;
     const pyType = resolveType(model);
     const attrClassName = toChipPythonClassName(model.name, clusterName);
-
-    w.line("@dataclass");
-    w.line(`class ${attrClassName}(ClusterAttributeDescriptor):`);
-    w.pushIndent();
-
-    w.line("@ChipUtility.classproperty");
-    w.line("def cluster_id(cls) -> int:");
-    w.pushIndent();
-    w.line(`return ${hex8(clusterId)}`);
-    w.popIndent();
-    w.blankLine();
-
-    w.line("@ChipUtility.classproperty");
-    w.line("def attribute_id(cls) -> int:");
-    w.pushIndent();
-    w.line(`return ${hex8(attrId)}`);
-    w.popIndent();
-    w.blankLine();
-
-    w.line("@ChipUtility.classproperty");
-    w.line("def attribute_type(cls) -> ClusterObjectFieldDescriptor:");
-    w.pushIndent();
-    w.line(`return ClusterObjectFieldDescriptor(Type=${pyType.annotation})`);
-    w.popIndent();
-    w.blankLine();
-
-    w.line(`value: ${pyType.annotation} = ${pyType.defaultValue}`);
-
-    w.popIndent();
+    writeCompactAttribute(w, attrClassName, clusterId, attrId, pyType.annotation, pyType.defaultValue);
 }
 
 function generateGlobalAttribute(
@@ -1499,35 +1473,36 @@ function generateGlobalAttribute(
 ): void {
     const isListType = typeStr.startsWith("typing.List");
     const defaultValue = isListType ? "field(default_factory=lambda: [])" : "0";
+    writeCompactAttribute(w, name, clusterId, attrId, typeStr, defaultValue);
+}
 
-    w.line("@dataclass");
-    w.line(`class ${name}(ClusterAttributeDescriptor):`);
-    w.pushIndent();
-
-    w.line("@ChipUtility.classproperty");
-    w.line("def cluster_id(cls) -> int:");
-    w.pushIndent();
-    w.line(`return ${hex8(clusterId)}`);
-    w.popIndent();
-    w.blankLine();
-
-    w.line("@ChipUtility.classproperty");
-    w.line("def attribute_id(cls) -> int:");
-    w.pushIndent();
-    w.line(`return ${hex8(attrId)}`);
-    w.popIndent();
-    w.blankLine();
-
-    w.line("@ChipUtility.classproperty");
-    w.line("def attribute_type(cls) -> ClusterObjectFieldDescriptor:");
-    w.pushIndent();
-    w.line(`return ClusterObjectFieldDescriptor(Type=${typeStr})`);
-    w.popIndent();
-    w.blankLine();
-
-    w.line(`value: ${typeStr} = ${defaultValue}`);
-
-    w.popIndent();
+/**
+ * Emit one attribute as a subclass of the shared _CompactAttributeDescriptor (see ClusterObjects._attr)
+ * instead of a dataclass per attribute. The type and any default factory are kept as source strings and
+ * evaluated in the cluster module on first use, as the classproperty/lambda bodies were before.
+ */
+function writeCompactAttribute(
+    w: PythonWriter,
+    name: string,
+    clusterId: number,
+    attrId: number,
+    typeStr: string,
+    defaultValue: string,
+): void {
+    const factoryPrefix = "field(default_factory=lambda: ";
+    let defaultArgs: string;
+    if (defaultValue.startsWith(factoryPrefix) && defaultValue.endsWith(")")) {
+        const factory = defaultValue.slice(factoryPrefix.length, -1);
+        defaultArgs = `, None, ${JSON.stringify(factory)}`;
+    } else if (defaultValue.startsWith("field(")) {
+        throw new Error(`Unsupported attribute default for ${name}: ${defaultValue}`);
+    } else {
+        defaultArgs = `, ${defaultValue}`;
+    }
+    w.line(
+        `${name} = _attr(__module__, __qualname__, ${JSON.stringify(name)}, ${hex8(clusterId)}, ${hex8(attrId)}, ` +
+            `${JSON.stringify(typeStr)}${defaultArgs})`,
+    );
 }
 
 // ============================================================================
@@ -1689,8 +1664,8 @@ function generateObjectsReexport(clusterNames: string[]): string {
     w.line(" Users can import chip.clusters.Objects to get all cluster definitions.");
     w.line('"""');
     w.blankLine();
-    w.line("# Re-export all cluster classes from per-cluster files");
-    w.line("from chip.clusters.cluster_defs import *  # noqa: F401,F403");
+    w.line("# Cluster classes resolve from their per-cluster files on first access.");
+    w.line("from chip.clusters import cluster_defs as _cluster_defs");
     w.blankLine();
     w.line("# Also re-export base classes and primitive types for backward compatibility");
     w.line("from chip.clusters.ClusterObjects import (  # noqa: F401");
@@ -1725,6 +1700,24 @@ function generateObjectsReexport(clusterNames: string[]): string {
     }
     w.popIndent();
     w.line("]");
+    w.blankLine();
+    w.blankLine();
+    w.line("def __getattr__(name: str) -> object:");
+    w.pushIndent();
+    w.line("if name in _cluster_defs._NAMES:");
+    w.pushIndent();
+    w.line("value = getattr(_cluster_defs, name)");
+    w.line("globals()[name] = value");
+    w.line("return value");
+    w.popIndent();
+    w.line('raise AttributeError(f"module {__name__!r} has no attribute {name!r}")');
+    w.popIndent();
+    w.blankLine();
+    w.blankLine();
+    w.line("def __dir__() -> list[str]:");
+    w.pushIndent();
+    w.line("return sorted(set(globals()) | _cluster_defs._NAMES)");
+    w.popIndent();
 
     return w.toString();
 }
@@ -1736,13 +1729,13 @@ function generateObjectsReexport(clusterNames: string[]): string {
 function generateObjectsInit(clusterNames: string[]): string {
     const w = new PythonWriter();
 
-    w.line('"""Auto-generated cluster imports (DO NOT edit)."""');
+    w.line('"""Auto-generated cluster imports (DO NOT edit).');
     w.blankLine();
-
-    for (const name of clusterNames) {
-        w.line(`from .${name} import ${name}`);
-    }
-
+    w.line("Each cluster module is imported on first attribute access instead of at package import.");
+    w.line('"""');
+    w.blankLine();
+    w.line("import sys as _sys");
+    w.line("import types as _types");
     w.blankLine();
     w.line("__all__ = [");
     w.pushIndent();
@@ -1752,6 +1745,87 @@ function generateObjectsInit(clusterNames: string[]): string {
     w.popIndent();
     w.line("]");
     w.blankLine();
+    w.line("_NAMES = frozenset(__all__)");
+    w.blankLine();
+    w.blankLine();
+    w.line("class _ClusterDefsModule(_types.ModuleType):");
+    w.pushIndent();
+    w.line("# Keep attribute X bound to class X, as the eager package did, when submodule X is imported");
+    w.line("# directly or returned as a pending lazy submodule (Python 3.15 lazy imports).");
+    w.line("def __setattr__(self, name: str, value: object) -> None:");
+    w.pushIndent();
+    w.line('if isinstance(value, _types.ModuleType) and name in _NAMES and value.__name__ == self.__name__ + "." + name:');
+    w.pushIndent();
+    w.line("value = getattr(value, name)");
+    w.popIndent();
+    w.line("super().__setattr__(name, value)");
+    w.popIndent();
+    w.blankLine();
+    w.line("def __getattribute__(self, name: str) -> object:");
+    w.pushIndent();
+    w.line("value = super().__getattribute__(name)");
+    w.line("if isinstance(value, _types.ModuleType) and name in _NAMES:");
+    w.pushIndent();
+    w.line("value = getattr(value, name)");
+    w.line("_types.ModuleType.__setattr__(self, name, value)");
+    w.popIndent();
+    w.line("return value");
+    w.popIndent();
+    w.popIndent();
+    w.blankLine();
+    w.blankLine();
+    w.line("_sys.modules[__name__].__class__ = _ClusterDefsModule");
+    w.blankLine();
+    w.blankLine();
+    w.line("def __getattr__(name: str) -> object:");
+    w.pushIndent();
+    w.line("if name in _NAMES:");
+    w.pushIndent();
+    w.line('full = __name__ + "." + name');
+    w.line("module = _sys.modules.get(full)");
+    w.line("if module is None:");
+    w.pushIndent();
+    w.line("__import__(full)");
+    w.line("module = _sys.modules[full]");
+    w.popIndent();
+    w.line("value = getattr(module, name)");
+    w.line("globals()[name] = value");
+    w.line("return value");
+    w.popIndent();
+    w.line('raise AttributeError(f"module {__name__!r} has no attribute {name!r}")');
+    w.popIndent();
+    w.blankLine();
+    w.blankLine();
+    w.line("def __dir__() -> list[str]:");
+    w.pushIndent();
+    w.line("return sorted(set(globals()) | _NAMES)");
+    w.popIndent();
+
+    return w.toString();
+}
+
+// ============================================================================
+// chip/clusters/cluster_index.py
+// ============================================================================
+
+function generateClusterIndex(results: ClusterGenResult[]): string {
+    const w = new PythonWriter();
+
+    w.line('"""Cluster id -> cluster_defs module name (auto-generated, DO NOT edit)."""');
+    w.blankLine();
+    w.line("CLUSTER_ID_TO_MODULE: dict[int, str] = {");
+    w.pushIndent();
+    const seen = new Map<number, string>();
+    for (const r of [...results].sort((a, b) => (a.clusterId ?? 0) - (b.clusterId ?? 0))) {
+        if (r.clusterId === undefined) continue;
+        if (seen.has(r.clusterId)) {
+            throw new Error(`Cluster id ${hex8(r.clusterId)} in both ${seen.get(r.clusterId)} and ${r.className}`);
+        }
+        seen.set(r.clusterId, r.className);
+        w.line(`${hex8(r.clusterId)}: ${JSON.stringify(r.className)},`);
+    }
+    w.popIndent();
+    w.line("}");
 
     return w.toString();
 }
@@ -1773,6 +1847,30 @@ function generateDeviceTypes(): string {
     w.blankLine();
     w.line("from chip.clusters import Objects as all_clusters");
     w.line("from chip.clusters.ClusterObjects import Cluster");
+    w.blankLine();
+    w.blankLine();
+    w.line("class _LazyClusterSet:");
+    w.pushIndent();
+    w.line('"""The set of cluster classes, resolved from their names on first read."""');
+    w.blankLine();
+    w.line('__slots__ = ("_names", "_value")');
+    w.blankLine();
+    w.line("def __init__(self, names: tuple[str, ...]) -> None:");
+    w.pushIndent();
+    w.line("self._names = names");
+    w.line("self._value: set[type[Cluster]] | None = None");
+    w.popIndent();
+    w.blankLine();
+    w.line("def __get__(self, obj: object, owner: type | None = None) -> set[type[Cluster]]:");
+    w.pushIndent();
+    w.line("if self._value is None:");
+    w.pushIndent();
+    w.line("self._value = {getattr(all_clusters, n) for n in self._names}");
+    w.popIndent();
+    w.line("return self._value");
+    w.popIndent();
+    w.popIndent();
+    w.blankLine();
     w.blankLine();
 
     // Collect cluster names for lookup
@@ -1817,7 +1915,7 @@ function generateDeviceTypes(): string {
         for (const req of requirements) {
             const clusterName = req.name;
             if (clustersByName.has(clusterName)) {
-                clusterRefs.push(`all_clusters.${clusterName}`);
+                clusterRefs.push(clusterName);
             }
         }
 
@@ -1828,13 +1926,17 @@ function generateDeviceTypes(): string {
         if (clusterRefs.length === 0) {
             w.line("clusters: set[type[Cluster]] = set()");
         } else {
-            w.line("clusters: set[type[Cluster]] = {");
+            w.line("clusters: set[type[Cluster]] = _LazyClusterSet(  # type: ignore[assignment]");
+            w.pushIndent();
+            w.line("(");
             w.pushIndent();
             for (const ref of clusterRefs.sort()) {
-                w.line(`${ref},`);
+                w.line(`${JSON.stringify(ref)},`);
             }
             w.popIndent();
-            w.line("}");
+            w.line(")");
+            w.popIndent();
+            w.line(")");
         }
 
         w.popIndent();
@@ -1902,6 +2004,9 @@ function main(): void {
     const allNames = ["Globals", ...results.map(r => r.className).sort()];
     const initContent = generateObjectsInit(allNames);
     writeFileSync(join(objectsDir, "__init__.py"), initContent);
+
+    // Generate the cluster id -> module index used by the lazy registries in ClusterObjects.py
+    writeFileSync(join(pythonClientDir, "chip", "clusters", "cluster_index.py"), generateClusterIndex(results));
 
     // Generate Objects.py re-export
     const objectsContent = generateObjectsReexport(allNames);
